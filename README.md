@@ -37,7 +37,7 @@ Built with ASP.NET Core, React, and PostgreSQL. Log workouts, follow friends, jo
   npm create vite@latest . --template react
   npm install axios react-router-dom recharts
   npm run dev
-
+  ```
 - App runs at http://localhost:5173
 
 
