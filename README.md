@@ -8,7 +8,7 @@ Built with ASP.NET Core, React, and PostgreSQL. Log workouts, follow friends, jo
 ## 🚀 Tech Stack
 
 - **Backend**: ASP.NET Core, EF Core, SignalR, JWT 🔒  
-- **Database**: PostgreSQL (Railway free tier) 🐘  
+- **Database**: PostgreSQL (Railway) 🐘  
 - **Frontend**: React (Vite), Axios, React Router, Recharts, Google Maps API 🌐  
 
 ---
