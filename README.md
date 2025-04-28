@@ -19,7 +19,7 @@ Find wheelchair-friendly locations, view accessibility scores, and contribute co
 - Map of locations with **wheelchair accessibility ratings** 🛞
 - User-submitted **real-time reports** (broken elevators, blocked ramps) 📢
 - "Accessibility Score" badge for restaurants, shops, etc. 🏆
-- Filter places by **accessibility amenities** (elevators, ramps, bathrooms) 🚻
+- Filter places by **accessibility amenities** (elevators, ramps) 🚻
 - Community upvoting for accurate reports 👍
 - Admin dashboard for managing reports 🛠️
 - Mobile-friendly UI 📱
