@@ -1,15 +1,28 @@
-# 🚴‍♂️ FitSync
+# 🏙️ AccessibleCity
 
-**FitSync** – Social fitness tracker (in progress)  
-Built with ASP.NET Core, React, and PostgreSQL. Log workouts, follow friends, join challenges, view leaderboards and stats.
+**AccessibleCity** – Real-time accessibility mapping app (in progress)  
+Built with ASP.NET Core, React, and PostgreSQL.  
+Find wheelchair-friendly locations, view accessibility scores, and contribute community updates!
 
 ---
 
 ## 🚀 Tech Stack
 
 - **Backend**: ASP.NET Core, EF Core, SignalR, JWT 🔒  
-- **Database**: PostgreSQL (Railway) 🐘  
-- **Frontend**: React (Vite), Axios, React Router, Recharts, Google Maps API 🌐  
+- **Database**: PostgreSQL (Railway free tier) 🐘  
+- **Frontend**: React (Vite), Axios, React Router, Recharts, Google Maps API 🗺️  
+
+---
+
+## ✨ Features (Planned)
+
+- Map of locations with **wheelchair accessibility ratings** 🛞
+- User-submitted **real-time reports** (broken elevators, blocked ramps) 📢
+- "Accessibility Score" badge for restaurants, shops, etc. 🏆
+- Filter places by **accessibility amenities** (elevators, ramps, bathrooms) 🚻
+- Community upvoting for accurate reports 👍
+- Admin dashboard for managing reports 🛠️
+- Mobile-friendly UI 📱
 
 ---
 
