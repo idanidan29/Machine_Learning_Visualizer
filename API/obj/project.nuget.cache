@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EIy+QJeQKzpKFv2qUPKuIVaqoyshVRUMMead5EXieGgbXZX5Dwdj+prv1JjhjIwfeHrHdoMJDfsQq0HmfyxE7Q==",
+  "dgSpecHash": "7AYJz5OQqW65JH5BTHT4WSIbhZ+rzv+QWQXPinLp2uVPPPhzxMDeICmiJjegbGRyJ0k6tGeQkvT7yHHaZCkPfg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\fitness-social-app\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\remote-space-app\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\29ida\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\29ida\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.1\\microsoft.aspnetcore.openapi.8.0.1.nupkg.sha512",
