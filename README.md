@@ -14,7 +14,7 @@ A **work-in-progress** web app to help users track their job applications from s
 
 * **Backend**: C# .NET 7 Web API, Entity Framework Core, PostgreSQL 🐘
 * **Frontend**: Next.js (TypeScript), Tailwind CSS / ShadCN UI ✨
-* **Auth**: JWT-based authentication, role-based authorization
+* **Auth**: JWT-based authentication
 * **Deployment**: Docker & docker-compose, Vercel (frontend), Azure or Linux server (backend) 🐳
 
 > **Status:** In development 🔧
