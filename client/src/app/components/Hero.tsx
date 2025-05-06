@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import Link from 'next/link'
-import { SignupFormDemo } from './LogIn'
+import { LogInForm } from './LogIn'
+import { SliderToggle } from './ui/SliderToggle'
+import { useState } from 'react';
+import { RegisterForm } from './Register';
 
 export default function HeroSection() {
+  const [selected, setSelected] = useState<"Log In" | "Register">("Log In");
     return (
     <>
-      <section className="bg-gray-100 dark:bg-gray-900 py-6 overflow-hidden min-h-screen w-screen flex flex-col relative">
+      <section className="bg-gray-900 py-6 overflow-hidden min-h-screen w-screen flex flex-col relative">
         {/* Background elements */}
         <div className="absolute top-0 left-0 -translate-x-[54%] -translate-y-[70%] w-2/5 rounded-full aspect-square bg-blue-600/70
           backdrop-filter blur-3xl opacity-50" />
@@ -25,15 +30,15 @@ export default function HeroSection() {
         </div>
         
         {/* Content container with responsive layout */}
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-10 md:px-12 lg:px-5 flex flex-col md:flex-row h-full">
+        <div className="mx-auto w-full max-w-7xl p-5 flex flex-col h-full">
           
           {/* Hero content */}
-          <div className="flex-1 flex flex-col items-center md:items-center justify-center pl-6">
+          <div className="flex flex-col items-center justify-center p-6 mb-8">
             <div className="text-center flex flex-col items-center space-y-6 md:space-y-7 max-w-4xl">
-              <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-50 dark:bg-gray-950 bg-opacity-50 text-gray-700 dark:text-gray-300">
+              <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-700 dark:text-gray-300">
                 Track Your Career Journey
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/tight xl:text-6xl/tight text-gray-900 dark:text-white font-bold capitalize text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/tight xl:text-6xl/tight text-white font-bold capitalize text-center">
                 Organize & Optimize Your Job Search Process
               </h1>
               <p className="text-base text-gray-700 dark:text-gray-300 text-center max-w-xl">
@@ -41,7 +46,7 @@ export default function HeroSection() {
                 with powerful tools designed to help you land your dream role faster.
               </p>
               <div className="flex justify-center pb-8">
-                <Link href="/register" className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-blue-700 text-white hover:bg-opacity-80">
+                <Link href="/#login" className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-blue-700 text-white hover:bg-opacity-80">
                   Dont have a account?
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -53,10 +58,12 @@ export default function HeroSection() {
             </div>
           </div>
           
-          {/* Login form section - stacks below on mobile */}
-          <div className="flex-1 flex flex-col justify-center items-center md:items-end">
-            <div className="w-full max-w-md bg-white dark:bg-gray-800 p-4 md:p-5 rounded-xl shadow-lg">
-              <SignupFormDemo />
+          {/* Login form section - placed below everything */}
+          <div className="flex justify-center items-center mt-4 mb-10">
+            <div className="w-full max-w-md bg-white dark:bg-gray-800 p-3 rounded-xl shadow-l" id='login'> 
+              
+              <SliderToggle selected={selected} setSelected={setSelected} /> {selected === "Log In" ? <LogInForm/> : <RegisterForm/>} 
+              
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { MdOutlinePassword } from "react-icons/md";
-import { LuImageUp } from "react-icons/lu";
+import { FiLogIn } from "react-icons/fi";
 
 const TOGGLE_CLASSES =
   "text-sm font-medium flex items-center gap-2 px-3 md:pl-3 md:pr-3.5 py-3 md:py-1.5 transition-colors relative z-10";
@@ -12,7 +12,7 @@ interface SliderToggleProps {
 
 export const SliderToggle: React.FC<SliderToggleProps> = ({ selected, setSelected }) => {
   return (
-    <div id="Encoder" className="flex justify-center w-full">
+    <div id="Encoder" className="flex justify-center w-full pb-2">
       <div className="relative flex w-fit items-center rounded-full">
         <button
           className={`${TOGGLE_CLASSES} ${selected === "Log In" ? "text-white" : "text-slate-300"}`}
@@ -20,11 +20,11 @@ export const SliderToggle: React.FC<SliderToggleProps> = ({ selected, setSelecte
             setSelected("Log In");
           }}
         >
-          <LuImageUp className="relative z-10 text-lg md:text-sm" />
+          <FiLogIn className="relative z-10 text-lg md:text-sm" />
           <span className="relative z-10">Log In</span>
         </button>
         <button
-          className={`${TOGGLE_CLASSES} ${selected === "Register" ? "text-white" : "text-slate-800"}`}
+          className={`${TOGGLE_CLASSES} ${selected === "Register" ? "text-white" : "text-slate-300"}`}
           onClick={() => {
             setSelected("Register");
           }}
