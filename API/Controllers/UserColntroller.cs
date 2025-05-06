@@ -1,7 +1,8 @@
 // Controllers/UserController.cs
-using Microsoft.AspNetCore.Mvc;
 using FitSync.API.Data;
-using FitSync.API.Models;
+using Microsoft.AspNetCore.Mvc;
+
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FitSync.API.Controllers
