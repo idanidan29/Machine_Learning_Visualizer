@@ -35,13 +35,13 @@ export default function HeroSection() {
           {/* Hero content */}
           <div className="flex flex-col items-center justify-center p-6 mb-8">
             <div className="text-center flex flex-col items-center space-y-6 md:space-y-7 max-w-4xl">
-              <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-700 dark:text-gray-300">
+              <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-300">
                 Track Your Career Journey
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/tight xl:text-6xl/tight text-white font-bold capitalize text-center">
                 Organize & Optimize Your Job Search Process
               </h1>
-              <p className="text-base text-gray-700 dark:text-gray-300 text-center max-w-xl">
+              <p className="text-base text-gray-300 text-center max-w-xl">
                 Keep track of every application, interview, and offer in one place. Take control of your job search
                 with powerful tools designed to help you land your dream role faster.
               </p>
@@ -60,7 +60,7 @@ export default function HeroSection() {
           
           {/* Login form section - placed below everything */}
           <div className="flex justify-center items-center mt-4 mb-10">
-            <div className="w-full max-w-md bg-white dark:bg-gray-800 p-3 rounded-xl shadow-l" id='login'> 
+            <div className="w-full max-w-md bg-gray-800 p-3 rounded-xl shadow-l" id='login'> 
               
               <SliderToggle selected={selected} setSelected={setSelected} /> {selected === "Log In" ? <LogInForm/> : <RegisterForm/>} 
               
