@@ -22,7 +22,7 @@ export function LogInForm() {
         log in and access your dashboard and manage your applications!
       </p>
  
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-6" onSubmit={handleSubmit}>
         
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
@@ -37,7 +37,7 @@ export function LogInForm() {
           className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br  font-medium text-white bg-zinc-800 from-zinc-900 to-zinc-900 shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
           type="submit"
         >
-          Sign In &rarr;
+          Log In &rarr;
           <BottomGradient />
         </button>
  

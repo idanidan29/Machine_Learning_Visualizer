@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem; /* Adds padding to account for any fixed headers */
+}
+
+/* Optional: Add this if you have elements with overflow that need smooth scrolling */
+* {
+  scroll-margin-top: 2rem; /* Ensures elements with IDs have proper spacing when scrolled to */
+}

@@ -16,13 +16,13 @@ export function RegisterForm() {
   return (
     <div className="shadow-input mx-auto w-full max-w-md p-4 rounded-2xl md:p-8 bg-black">
       <h2 className="text-xl font-bold text-neutral-200">
-        Welcome to JobJourney
+        Sing Up to JobJourney
       </h2>
       <p className="mt-2 max-w-sm text-sm  text-neutral-300">
-        Sign up now to start tracking your applications and stay organized!
+      
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-2" onSubmit={handleSubmit}>
         <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
