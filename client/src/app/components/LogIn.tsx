@@ -14,7 +14,7 @@ export function LogInForm() {
     console.log("Form submitted");
   };
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-black p-4 md:rounded-2xl md:p-8">
+    <div className="shadow-input mx-auto w-full max-w-md bg-black p-4 rounded-2xl  md:p-8">
       <h2 className="text-xl font-bold text-neutral-200">
         Log In to JobJourney
       </h2>
@@ -26,7 +26,7 @@ export function LogInForm() {
         
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="yourEmail@fgmail.com" type="email" />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
