@@ -18,11 +18,11 @@ export function LogInForm() {
       <h2 className="text-xl font-bold text-neutral-200">
         Log In to JobJourney
       </h2>
-      <p className="mt-2 max-w-sm text-sm text-neutral-300">
-        
+      <p className="mt-2 max-w-sm text-sm  text-neutral-300">
+        log in and access your dashboard and manage your applications!
       </p>
  
-      <form className="" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={handleSubmit}>
         
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>

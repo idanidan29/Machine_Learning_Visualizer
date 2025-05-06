@@ -16,11 +16,10 @@ export function RegisterForm() {
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none  p-4 md:rounded-2xl md:p-8 bg-black">
       <h2 className="text-xl font-bold text-neutral-200">
-        Welcome to Aceternity
+        Welcome to JobJourney
       </h2>
       <p className="mt-2 max-w-sm text-sm  text-neutral-300">
-        Login to aceternity if you can because we don&apos;t have a login flow
-        yet
+        Sign up now to start tracking your applications and stay organized!
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
