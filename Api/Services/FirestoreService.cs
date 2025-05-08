@@ -1,7 +1,7 @@
 // Services/FirestoreService.cs
 using Google.Cloud.Firestore;
 
-namespace JobTrackerApi.Services
+namespace Api.Services
 {
     public class FirestoreService
     {

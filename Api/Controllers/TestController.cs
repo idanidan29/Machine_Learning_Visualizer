@@ -1,10 +1,10 @@
 // Controllers/TestController.cs
 using Microsoft.AspNetCore.Mvc;
 using Google.Cloud.Firestore;
-using JobTrackerApi.Services;
-using JobTrackerApi.Models;
+using Api.Services;
+using Api.Models;
 
-namespace JobTrackerApi.Controllers
+namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -60,3 +60,6 @@ C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\obj\Debug\
 C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\obj\Debug\net8.0\JobTracker.Api.pdb
 C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\obj\Debug\net8.0\JobTracker.Api.genruntimeconfig.cache
 C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\obj\Debug\net8.0\ref\JobTracker.Api.dll
+C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\29ida\OneDrive\Documents\GitHub\job_application_tracking\Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

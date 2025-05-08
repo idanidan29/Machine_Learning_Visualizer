@@ -1,6 +1,6 @@
 using Google.Cloud.Firestore;
 
-namespace JobTrackerApi.Models
+namespace Api.Models
 {
     [FirestoreData]
     public class JobApplication
