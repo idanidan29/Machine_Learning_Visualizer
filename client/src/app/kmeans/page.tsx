@@ -90,6 +90,19 @@ export default function KMeansPage() {
               </button>
             </div>
 
+            {/* Overview Section */}
+            <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-6 mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
+              <div className="prose prose-invert max-w-none">
+                <p className="text-gray-300">
+                  K-means clustering is an unsupervised learning algorithm that groups similar data points into clusters.
+                  It&apos;s one of the most popular and widely used clustering algorithms in machine learning. The algorithm
+                  works by partitioning a dataset into K distinct, non-overlapping groups where each data point belongs
+                  to the cluster with the nearest mean (centroid).
+                </p>
+              </div>
+            </section>
+
             {/* Visualization Section */}
             <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-6 mb-8">
               <KMeansVisualization />
@@ -97,19 +110,6 @@ export default function KMeansPage() {
 
             {/* Documentation Sections */}
             <div className="space-y-8">
-              {/* Overview Section */}
-              <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
-                <div className="prose prose-invert max-w-none">
-                  <p className="text-gray-300">
-                    K-means clustering is an unsupervised learning algorithm that groups similar data points into clusters.
-                    It&apos;s one of the most popular and widely used clustering algorithms in machine learning. The algorithm
-                    works by partitioning a dataset into K distinct, non-overlapping groups where each data point belongs
-                    to the cluster with the nearest mean (centroid).
-                  </p>
-                </div>
-              </section>
-
               {/* When to Use It Section */}
               <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-6">
                 <h2 className="text-2xl font-semibold text-white mb-4">When to Use It</h2>
