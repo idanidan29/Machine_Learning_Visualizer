@@ -27,8 +27,14 @@ const PointSphere: React.FC<{
 }> = ({ position, color, is2D }) => {
   return (
     <mesh position={position}>
-      <sphereGeometry args={[0.2, 16, 16]} />
-      <meshStandardMaterial color={color} />
+      <sphereGeometry args={[0.25, 16, 16]} />
+      <meshStandardMaterial 
+        color={color} 
+        emissive={color}
+        emissiveIntensity={0.2}
+        metalness={0.3}
+        roughness={0.4}
+      />
     </mesh>
   );
 };
@@ -40,8 +46,14 @@ const CentroidSphere: React.FC<{
 }> = ({ position, color, is2D }) => {
   return (
     <mesh position={position}>
-      <sphereGeometry args={[0.4, 32, 32]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.2} />
+      <sphereGeometry args={[0.5, 32, 32]} />
+      <meshStandardMaterial 
+        color={color} 
+        emissive={color} 
+        emissiveIntensity={0.5}
+        metalness={0.5}
+        roughness={0.2}
+      />
     </mesh>
   );
 };
@@ -55,12 +67,13 @@ const Scene: React.FC<{
 }> = ({ points, centroids, colors, showClusters, is2D }) => {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+      <ambientLight intensity={0.7} />
+      <pointLight position={[10, 10, 10]} intensity={1.2} />
+      <pointLight position={[-10, -10, -10]} intensity={0.8} />
       {is2D && (
-        <mesh position={[0, 0, -0.3]}>
+        <mesh position={[0, 0, -0.1]}>
           <planeGeometry args={[20, 20]} />
-          <meshBasicMaterial color="#ffffff" />
+          <meshBasicMaterial color="#1a1a1a" />
         </mesh>
       )}
       {points.map((point, index) => (
@@ -69,11 +82,11 @@ const Scene: React.FC<{
           position={[
             point.x - 5, 
             point.y - 5, 
-            is2D ? -0.1 : point.z - 5
+            is2D ? 0 : point.z - 5
           ]}
           color={showClusters && point.cluster !== undefined 
             ? colors[point.cluster % colors.length]
-            : '#666666'}
+            : '#ffffff'}
           is2D={is2D}
         />
       ))}
@@ -83,13 +96,18 @@ const Scene: React.FC<{
           position={[
             centroid.x - 5, 
             centroid.y - 5, 
-            is2D ? 0 : centroid.z - 5
+            is2D ? 0.1 : centroid.z - 5
           ]}
           color={centroid.color}
           is2D={is2D}
         />
       ))}
-      {!is2D && <gridHelper args={[20, 20]} />}
+      {!is2D && (
+        <gridHelper 
+          args={[20, 20, '#4a4a4a', '#2a2a2a']} 
+          position={[0, 0, -5]}
+        />
+      )}
     </>
   );
 };
@@ -107,14 +125,14 @@ const KMeansVisualization: React.FC = () => {
   const [isStepByStep, setIsStepByStep] = useState<boolean>(false);
 
   const colors = [
-    '#FF6B6B',
-    '#4ECDC4',
-    '#45B7D1',
-    '#96CEB4',
-    '#FFEEAD',
-    '#D4A5A5',
-    '#9B59B6',
-    '#3498DB',
+    '#FF6B6B', // Bright Coral
+    '#4ECDC4', // Turquoise
+    '#FFD93D', // Bright Yellow
+    '#95E1D3', // Mint
+    '#FF8B94', // Salmon Pink
+    '#A8E6CF', // Light Mint
+    '#FFB6B9', // Light Pink
+    '#6C5CE7', // Bright Purple
   ];
 
   const generateRandomPoints = (count: number) => {
@@ -251,217 +269,156 @@ const KMeansVisualization: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-8 bg-gradient-to-b from-gray-50 to-white min-h-screen">
-      <div className="w-full max-w-4xl">
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="flex flex-wrap gap-6 mb-6">
-            <div className="flex-1 min-w-[200px]">
-              <label htmlFor="k-value" className="block text-sm font-medium text-gray-700 mb-2">
-                Number of Clusters (K)
-              </label>
-              <input
-                id="k-value"
-                type="number"
-                min="2"
-                max="8"
-                value={k}
-                onChange={(e) => setK(parseInt(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              />
-            </div>
-            <div className="flex-1 min-w-[200px]">
-              <label htmlFor="speed" className="block text-sm font-medium text-gray-700 mb-2">
-                Animation Speed
-              </label>
-              <div className="flex items-center gap-3">
-                <input
-                  id="speed"
-                  type="range"
-                  min="100"
-                  max="2000"
-                  step="100"
-                  value={speed}
-                  onChange={(e) => setSpeed(parseInt(e.target.value))}
-                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  disabled={isStepByStep}
-                />
-                <span className="text-sm font-medium text-gray-600 min-w-[60px]">{speed}ms</span>
-              </div>
-            </div>
-            <div className="flex-1 min-w-[200px]">
-              <label htmlFor="dimension" className="block text-sm font-medium text-gray-700 mb-2">
-                Visualization Mode
-              </label>
-              <select
-                id="dimension"
-                value={is2D ? "2D" : "3D"}
-                onChange={(e) => setIs2D(e.target.value === "2D")}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              >
-                <option value="2D">2D View</option>
-                <option value="3D">3D View</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1 min-w-[200px]">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Execution Mode
-              </label>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    setIsStepByStep(false);
-                    setIsRunning(false);
-                    setIsPaused(false);
-                  }}
-                  className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
-                    !isStepByStep
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Continuous
-                </button>
-                <button
-                  onClick={() => {
-                    setIsStepByStep(true);
-                    setIsRunning(false);
-                    setIsPaused(false);
-                  }}
-                  className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
-                    isStepByStep
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Step by Step
-                </button>
-              </div>
-            </div>
-            <div className="flex gap-4 flex-1 min-w-[200px]">
-              <button
-                onClick={handleStartPauseResume}
-                className={`flex-1 px-6 py-3 rounded-lg font-medium transition-all ${
-                  isPaused
-                    ? 'bg-green-500 hover:bg-green-600 text-white'
-                    : isRunning
-                      ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-center gap-4 p-4 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+        <button
+          onClick={handleStartPauseResume}
+          className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+            isRunning && !isPaused
+              ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20'
+              : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20'
+          }`}
+        >
+          {isStepByStep 
+            ? 'Next Step'
+            : isRunning && !isPaused 
+              ? 'Pause' 
+              : isPaused 
+                ? 'Resume' 
+                : 'Start'}
+        </button>
+        <button
+          onClick={handleReset}
+          className="px-6 py-2 rounded-md font-medium bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 shadow-lg shadow-gray-700/20"
+        >
+          Reset
+        </button>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="k-value" className="text-gray-300 font-medium">
+            Clusters (k):
+          </label>
+          <input
+            id="k-value"
+            type="number"
+            min="1"
+            max="8"
+            value={k}
+            onChange={(e) => setK(parseInt(e.target.value))}
+            className="w-16 px-2 py-1 rounded-md bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
+            disabled={isRunning && !isPaused}
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="speed" className="text-gray-300 font-medium">
+            Speed:
+          </label>
+          <input
+            id="speed"
+            type="range"
+            min="100"
+            max="2000"
+            step="100"
+            value={speed}
+            onChange={(e) => setSpeed(parseInt(e.target.value))}
+            className="w-32 accent-purple-600"
+            disabled={isStepByStep}
+          />
+        </div>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
+            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-purple-400' : 'text-gray-400'}`}>2D</span>
+            <button
+              onClick={() => {
+                setIs2D(!is2D);
+                if (!is2D) {
+                  // Reset camera position when switching to 2D
+                  const camera = document.querySelector('canvas')?.parentElement?.querySelector('canvas');
+                  if (camera) {
+                    camera.style.transform = 'translate3d(0px, 0px, 0px)';
+                  }
+                }
+              }}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
+                is2D ? 'bg-purple-600' : 'bg-gray-600'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                  is2D ? 'translate-x-6' : 'translate-x-1'
                 }`}
-              >
-                {isStepByStep 
-                  ? 'Next Step'
-                  : isPaused
-                    ? 'Resume'
-                    : isRunning
-                      ? 'Pause'
-                      : 'Start Clustering'}
-              </button>
-              <button
-                onClick={handleReset}
-                className="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-all"
-              >
-                Reset
-              </button>
-            </div>
+              />
+            </button>
+            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-purple-400' : 'text-gray-400'}`}>3D</span>
           </div>
-        </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">Clustering Visualization</h2>
-            <div className="text-sm font-medium text-gray-600">
-              Iteration: <span className="text-blue-600">{iteration}</span>
-            </div>
-          </div>
-          <div className="w-full aspect-square border border-gray-200 rounded-lg overflow-hidden">
-            <Canvas>
-              <PerspectiveCamera 
-                makeDefault 
-                position={is2D ? [0, 0, 20] : [15, 15, 15]} 
-                fov={is2D ? 45 : 75}
-                near={0.1}
-                far={1000}
+          <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
+            <span className={`text-sm font-medium transition-colors duration-200 ${!isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Auto</span>
+            <button
+              onClick={() => {
+                setIsStepByStep(!isStepByStep);
+                if (!isStepByStep) {
+                  setIsRunning(false);
+                  setIsPaused(false);
+                }
+              }}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
+                isStepByStep ? 'bg-purple-600' : 'bg-gray-600'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                  isStepByStep ? 'translate-x-6' : 'translate-x-1'
+                }`}
               />
-              <OrbitControls 
-                enableDamping 
-                dampingFactor={0.05}
-                maxPolarAngle={is2D ? Math.PI / 2 : Math.PI}
-                minPolarAngle={is2D ? Math.PI / 2 : 0}
-                maxDistance={is2D ? 30 : 50}
-                minDistance={is2D ? 10 : 5}
-                enableRotate={!is2D}
-                enablePan={true}
-                enableZoom={true}
-              />
-              <Scene 
-                points={points} 
-                centroids={centroids} 
-                colors={colors} 
-                showClusters={showClusters}
-                is2D={is2D}
-              />
-              {!is2D && <gridHelper args={[20, 20]} />}
-            </Canvas>
+            </button>
+            <span className={`text-sm font-medium transition-colors duration-200 ${isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Step</span>
           </div>
         </div>
+      </div>
 
-        <div className="mt-6 bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">Controls</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Navigation</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                {is2D ? (
-                  <>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Right click + drag: Pan view
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Scroll: Zoom in/out
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Left click + drag: Rotate view
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Right click + drag: Pan view
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Scroll: Zoom in/out
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      In 3D mode, you can rotate to see the depth
-                    </li>
-                  </>
-                )}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Legend</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {colors.slice(0, k).map((color, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div 
-                      className="w-4 h-4 rounded-full" 
-                      style={{ backgroundColor: color }}
-                    />
-                    <span className="text-sm text-gray-600">Cluster {index + 1}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      <div className="relative w-full h-[500px] bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+        <Canvas>
+          <PerspectiveCamera 
+            makeDefault 
+            position={is2D ? [0, 0, 20] : [0, 0, 15]} 
+            fov={is2D ? 50 : 75}
+          />
+          <OrbitControls 
+            enablePan={true} 
+            enableZoom={true} 
+            enableRotate={!is2D}
+            dampingFactor={0.05}
+            rotateSpeed={0.5}
+            minDistance={is2D ? 15 : 5}
+            maxDistance={is2D ? 30 : 30}
+          />
+          <Scene
+            points={points}
+            centroids={centroids}
+            colors={colors}
+            showClusters={showClusters}
+            is2D={is2D}
+          />
+        </Canvas>
+      </div>
+
+      <div className="flex justify-center items-center space-x-4 text-gray-300 bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm">
+        <div className="flex items-center space-x-2">
+          <span className="w-3 h-3 rounded-full bg-purple-600 animate-pulse"></span>
+          <span className="font-medium">Iteration: {iteration}</span>
         </div>
+        {isPaused && !isStepByStep && (
+          <div className="flex items-center space-x-2">
+            <span className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse"></span>
+            <span className="font-medium">Paused</span>
+          </div>
+        )}
+        {isStepByStep && (
+          <div className="flex items-center space-x-2">
+            <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+            <span className="font-medium">Step Mode</span>
+          </div>
+        )}
       </div>
     </div>
   );
