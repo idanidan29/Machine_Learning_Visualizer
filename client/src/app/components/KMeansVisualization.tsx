@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
@@ -70,19 +71,14 @@ const Scene: React.FC<{
       <ambientLight intensity={0.7} />
       <pointLight position={[10, 10, 10]} intensity={1.2} />
       <pointLight position={[-10, -10, -10]} intensity={0.8} />
-      {is2D && (
-        <mesh position={[0, 0, -0.1]}>
-          <planeGeometry args={[20, 20]} />
-          <meshBasicMaterial color="#1a1a1a" />
-        </mesh>
-      )}
+      
       {points.map((point, index) => (
         <PointSphere
           key={`point-${index}`}
           position={[
-            point.x - 5, 
-            point.y - 5, 
-            is2D ? 0 : point.z - 5
+            point.x, 
+            point.y, 
+            is2D ? 0 : point.z
           ]}
           color={showClusters && point.cluster !== undefined 
             ? colors[point.cluster % colors.length]
@@ -94,20 +90,14 @@ const Scene: React.FC<{
         <CentroidSphere
           key={`centroid-${index}`}
           position={[
-            centroid.x - 5, 
-            centroid.y - 5, 
-            is2D ? 0.1 : centroid.z - 5
+            centroid.x, 
+            centroid.y, 
+            is2D ? 0.1 : centroid.z
           ]}
           color={centroid.color}
           is2D={is2D}
         />
       ))}
-      {!is2D && (
-        <gridHelper 
-          args={[20, 20, '#4a4a4a', '#2a2a2a']} 
-          position={[0, 0, -5]}
-        />
-      )}
     </>
   );
 };
@@ -139,9 +129,9 @@ const KMeansVisualization: React.FC = () => {
     const newPoints: Point[] = [];
     for (let i = 0; i < count; i++) {
       newPoints.push({
-        x: Math.random() * 10,
-        y: Math.random() * 10,
-        z: is2D ? 0 : Math.random() * 10, // Set z to 0 in 2D mode
+        x: (Math.random() - 0.5) * 10,
+        y: (Math.random() - 0.5) * 10,
+        z: is2D ? 0 : (Math.random() - 0.5) * 10,
       });
     }
     return newPoints;
@@ -151,9 +141,9 @@ const KMeansVisualization: React.FC = () => {
     const newCentroids: Centroid[] = [];
     for (let i = 0; i < k; i++) {
       newCentroids.push({
-        x: Math.random() * 10,
-        y: Math.random() * 10,
-        z: is2D ? 0 : Math.random() * 10, // Set z to 0 in 2D mode
+        x: (Math.random() - 0.5) * 10,
+        y: (Math.random() - 0.5) * 10,
+        z: is2D ? 0 : (Math.random() - 0.5) * 10,
         color: colors[i % colors.length],
       });
     }
@@ -205,7 +195,7 @@ const KMeansVisualization: React.FC = () => {
         ...centroid,
         x: sumX / count,
         y: sumY / count,
-        z: is2D ? 5 : sumZ / count, // Keep z at 5 in 2D mode
+        z: is2D ? 0 : sumZ / count,
       };
     });
   };
@@ -326,7 +316,7 @@ const KMeansVisualization: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
-            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-purple-400' : 'text-gray-400'}`}>2D</span>
+            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-gray-400' : 'text-purple-400'}`}>2D</span>
             <button
               onClick={() => {
                 setIs2D(!is2D);
@@ -348,7 +338,7 @@ const KMeansVisualization: React.FC = () => {
                 }`}
               />
             </button>
-            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-purple-400' : 'text-gray-400'}`}>3D</span>
+            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-gray-400' : 'text-purple-400'}`}>3D</span>
           </div>
 
           <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
@@ -424,4 +414,4 @@ const KMeansVisualization: React.FC = () => {
   );
 };
 
-export default KMeansVisualization; 
+export default KMeansVisualization;
