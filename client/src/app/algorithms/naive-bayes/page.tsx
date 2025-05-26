@@ -204,8 +204,8 @@ export default function NaiveBayesPage() {
                     
                     <div className="flex flex-col items-center space-y-6 sm:space-y-8">
                       {/* Main Formula */}
-                      <div className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl overflow-x-auto">
-                        <div className="text-center text-lg sm:text-2xl text-white font-mono whitespace-nowrap">
+                      <div  className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
+                        <div className="text-center text-2xl text-white font-mono">
                           P(class|features) = <span className="text-purple-400">P(features|class) × P(class)</span> / P(features)
                         </div>
                       </div>

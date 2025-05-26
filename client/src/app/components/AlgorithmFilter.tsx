@@ -47,9 +47,9 @@ const algorithms = [
   {
     name: 'Decision Trees',
     description: 'A tree-like model of decisions and their possible consequences, including chance event outcomes.',
-    path: '/algorithms/decision-trees',
+    path: '/decision-tree',
     icon: '🌳',
-    categories: ['supervised', 'classification', 'regression']
+    categories: ['supervised', 'classification']
   },
   {
     name: 'Naive Bayes',
@@ -61,7 +61,7 @@ const algorithms = [
   {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points into clusters.',
-    path: '/kmeans',
+    path: '/algorithms/kmeans',
     icon: '🎯',
     categories: ['unsupervised', 'clustering']
   },

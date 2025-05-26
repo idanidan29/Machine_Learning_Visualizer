@@ -23,6 +23,7 @@ export default function KMeansPage() {
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
@@ -211,6 +212,213 @@ export default function KMeansPage() {
                       The algorithm minimizes the within-cluster sum of squares, effectively creating
                       compact, well-separated clusters.
                     </p>
+                  </div>
+                </section>
+
+                {/* Practical Example Section */}
+                <section id="practical-example" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example: Customer Segmentation</h2>
+                  <div className="space-y-6">
+                    <p className="text-gray-300 text-sm sm:text-base">
+                      Let's solve a customer segmentation problem using K-means clustering. We'll analyze customer spending patterns
+                      to identify distinct customer groups.
+                    </p>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Step 1: Data Preparation</h3>
+                      <p className="text-gray-300 text-sm sm:text-base">
+                        We have a dataset of customer spending in two categories: Groceries and Electronics.
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-900 rounded-lg">
+                          <thead>
+                            <tr className="text-gray-300">
+                              <th className="px-4 py-2">Customer ID</th>
+                              <th className="px-4 py-2">Groceries ($)</th>
+                              <th className="px-4 py-2">Electronics ($)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1200</td>
+                              <td className="px-4 py-2 border-t border-gray-700">300</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">800</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1200</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">3</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1500</td>
+                              <td className="px-4 py-2 border-t border-gray-700">200</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">4</td>
+                              <td className="px-4 py-2 border-t border-gray-700">600</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1500</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">5</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1000</td>
+                              <td className="px-4 py-2 border-t border-gray-700">800</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Step 2: Initialization (K=2)</h3>
+                      <p className="text-gray-300 text-sm sm:text-base">
+                        Randomly initialize two centroids:
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-900 rounded-lg">
+                          <thead>
+                            <tr className="text-gray-300">
+                              <th className="px-4 py-2">Centroid</th>
+                              <th className="px-4 py-2">Groceries ($)</th>
+                              <th className="px-4 py-2">Electronics ($)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">C1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1000</td>
+                              <td className="px-4 py-2 border-t border-gray-700">500</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">C2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">700</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1000</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Step 3: First Iteration</h3>
+                      <p className="text-gray-300 text-sm sm:text-base">
+                        Assign points to nearest centroid and recalculate centroids:
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-900 rounded-lg">
+                          <thead>
+                            <tr className="text-gray-300">
+                              <th className="px-4 py-2">Customer ID</th>
+                              <th className="px-4 py-2">Assigned Cluster</th>
+                              <th className="px-4 py-2">Distance to C1</th>
+                              <th className="px-4 py-2">Distance to C2</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">C1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">200</td>
+                              <td className="px-4 py-2 border-t border-gray-700">700</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">C2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">500</td>
+                              <td className="px-4 py-2 border-t border-gray-700">200</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">3</td>
+                              <td className="px-4 py-2 border-t border-gray-700">C1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">300</td>
+                              <td className="px-4 py-2 border-t border-gray-700">800</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">4</td>
+                              <td className="px-4 py-2 border-t border-gray-700">C2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">600</td>
+                              <td className="px-4 py-2 border-t border-gray-700">500</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">5</td>
+                              <td className="px-4 py-2 border-t border-gray-700">C1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">300</td>
+                              <td className="px-4 py-2 border-t border-gray-700">400</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Step 4: New Centroids</h3>
+                      <p className="text-gray-300 text-sm sm:text-base">
+                        Calculate new centroids based on cluster assignments:
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-900 rounded-lg">
+                          <thead>
+                            <tr className="text-gray-300">
+                              <th className="px-4 py-2">Cluster</th>
+                              <th className="px-4 py-2">New Groceries ($)</th>
+                              <th className="px-4 py-2">New Electronics ($)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">C1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1233</td>
+                              <td className="px-4 py-2 border-t border-gray-700">433</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">C2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">700</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1350</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Step 5: Final Results</h3>
+                      <p className="text-gray-300 text-sm sm:text-base">
+                        After convergence, we identify two distinct customer segments:
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-900 rounded-lg">
+                          <thead>
+                            <tr className="text-gray-300">
+                              <th className="px-4 py-2">Cluster</th>
+                              <th className="px-4 py-2">Characteristics</th>
+                              <th className="px-4 py-2">Customers</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">Cluster 1</td>
+                              <td className="px-4 py-2 border-t border-gray-700">High grocery spenders, low electronics</td>
+                              <td className="px-4 py-2 border-t border-gray-700">1, 3, 5</td>
+                            </tr>
+                            <tr className="text-gray-300">
+                              <td className="px-4 py-2 border-t border-gray-700">Cluster 2</td>
+                              <td className="px-4 py-2 border-t border-gray-700">Low grocery spenders, high electronics</td>
+                              <td className="px-4 py-2 border-t border-gray-700">2, 4</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="bg-purple-900/30 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                        <li>Cluster 1 represents customers who spend more on groceries and less on electronics</li>
+                        <li>Cluster 2 represents customers who spend more on electronics and less on groceries</li>
+                        <li>This segmentation can help in targeted marketing and personalized recommendations</li>
+                        <li>The algorithm converged after just a few iterations due to the clear separation in spending patterns</li>
+                      </ul>
+                    </div>
                   </div>
                 </section>
 
