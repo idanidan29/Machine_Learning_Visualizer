@@ -4,11 +4,14 @@ import { LogInForm } from './LogIn'
 import { SliderToggle } from './ui/SliderToggle'
 import { useState } from 'react';
 import { RegisterForm } from './Register';
+import Navbar from './Navbar'
+import AlgorithmFilter from './AlgorithmFilter'
 
 export default function HeroSection() {
   const [selected, setSelected] = useState<"Log In" | "Register">("Log In");
   return (
     <>
+      <Navbar />
       <section className="bg-gray-900 py-6 overflow-hidden min-h-screen w-screen flex flex-col relative">
         {/* Background elements */}
         <div className="absolute top-0 left-0 -translate-x-[54%] -translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
@@ -27,7 +30,7 @@ export default function HeroSection() {
         {/* Content container */}
         <div className="mx-auto w-full max-w-7xl p-5 flex flex-col h-full">
           {/* Hero content */}
-          <div className="flex flex-col items-center justify-center p-6 mb-8">
+          <div className="flex flex-col items-center justify-center p-6 mb-8 mt-16">
             <div className="text-center flex flex-col items-center space-y-6 md:space-y-7 max-w-4xl">
               <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-300">
                 ML Visualizer
@@ -39,7 +42,7 @@ export default function HeroSection() {
                 Interactively visualize KNN, decision trees, clustering, and more. Change parameters on the fly and see how algorithms make decisions in real time.
               </p>
               <div className="flex justify-center pb-8">
-                <Link href="/#visualizer" className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-purple-700 text-white hover:bg-opacity-80">
+                <Link href="/#algorithms" className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-purple-700 text-white hover:bg-opacity-80">
                   Get Started
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -51,8 +54,13 @@ export default function HeroSection() {
             </div>
           </div>
 
+          {/* Algorithm Filter Section */}
+          <div id="algorithms" className="mt-8">
+            <AlgorithmFilter />
+          </div>
+
           {/* Auth form section toggler */}
-          <div className="flex justify-center items-center mt-4 mb-10" id="visualizer">
+          <div className="flex justify-center items-center mt-4 mb-10">
             {/* <div className="w-full max-w-md bg-gray-800 p-3 rounded-xl shadow-l">
               <SliderToggle selected={selected} setSelected={setSelected} />
               {selected === "Log In" ? <LogInForm /> : <RegisterForm />}
