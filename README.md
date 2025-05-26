@@ -1,24 +1,23 @@
-# Job Application Management App 🚧 *(In Development)*
+# Machine Learning Visualizer App 🤖 *(In Development🚧)*
 
-Welcome to the **Job Application Management App**, a full‑stack solution to track, filter, and analyze your job applications.
+Welcome to the **Machine Learning Visualizer App**, an interactive full-stack platform to explore, understand, and compare machine learning algorithms through live visualizations and pseudocode walkthroughs.
 
-> ⚠️ **Note**: This project is still in active development—expect frequent updates and changes!
+> ⚠️ **Note**: This project is still in active development—expect frequent updates and features!
 
 ---
 
 ## 🔍 Overview
 
-A single‑page web application that helps job seekers manage their applications from a central dashboard. You can register, log in, add new applications, filter by status or date, view statistics, and export your data to Excel.
+An interactive web application that lets users visually explore how different machine learning algorithms behave in real-time. Users can switch between algorithms, understand their workings through animations and pseudocode, and learn when and why to use each.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend**: Next.js (React + TypeScript + Tailwind CSS)
-* **Backend**: C# ASP.NET Core Web API (.NET 7+)
-* **Database**: Firebase Cloud Firestore (NoSQL)
-* **Authentication**: JWT‑based via ASP.NET Core
-* **Export**: Excel (XLSX) generation using a .NET library
+* **Frontend**: Next.js (React + TypeScript + Tailwind CSS + Framer Motion)
+* **Backend**: TBD (Planned Python/Flask or Node.js for algorithm processing if needed)
+* **Visualization**: D3.js or React Canvas / Chart libraries
+* **Authentication**: JWT-based (placeholder login/register supported)
 
 ---
 
@@ -27,20 +26,31 @@ A single‑page web application that helps job seekers manage their applications
 1. **User Authentication** 🔐
 
    * Registration & login
-   * JWT issuance & protected API routes
-2. **Job Applications** 📄
+   * JWT issuance & protected user sessions
 
-   * Create, read, update, delete (CRUD) applications
-   * Store data in Firestore
-3. **Filtering & Search** 🔎
+2. **Algorithm Visualizer** 🤖
 
-   * Filter by status, date range, company, and more
-4. **Dashboard** 📊
+   * Switch between ML algorithms (e.g., KNN, SVM, Decision Tree, K-Means)
+   * Interactive canvas: input data and see decision boundaries or clusters live
 
-   * Real‑time statistics and charts (counts by status, timeline)
-5. **Excel Export** 📥
+3. **Algorithm Docs** 📄
 
-   * Generate and download `.xlsx` report with applied filters
+   * Each algorithm has:
+
+     * Overview
+     * When to use it
+     * How it works
+     * Pseudocode
+     * Key properties
+
+4. **Learning Mode** 📖
+
+   * Step-through animations explaining how data flows through the algorithm
+   * Optionally toggle labels, confidence, or metrics overlays
+
+5. **Custom Dataset Uploads** 📂 *(Planned)*
+
+   * Upload simple CSV files to test algorithms on your own data
 
 ---
 
@@ -49,76 +59,42 @@ A single‑page web application that helps job seekers manage their applications
 ### Prerequisites
 
 * **Node.js** (v16+) & **npm** or **yarn**
-* **.NET 7 SDK**
-* **Firebase account** with a Firestore database
-* **Service account key** JSON file for Firestore access
 
 ### Installation
 
 1. **Clone the repo**
 
    ```bash
-   git clone https://github.com/your‑username/job‑application‑tracker.git
-   cd job‑application‑tracker
+   git clone https://github.com/your-username/ml-visualizer.git
+   cd ml-visualizer
    ```
 
-2. **Backend setup**
+2. **Frontend setup**
 
    ```bash
-   cd API
-   dotnet restore
-   ```
-
-3. **Frontend setup**
-
-   ```bash
-   cd ../frontend
    npm install
    # or yarn install
    ```
 
 ### Configuration
 
-1. **Firestore credentials**
+Create a `.env.local` file in the root of your frontend with:
 
-   * Place your `serviceAccountKey.json` in the `API` folder
-   * Set environment variable:
-
-     ```bash
-     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/API/serviceAccountKey.json"
-     ```
-2. **appsettings.json** (API)
-
-   ```json
-   {
-     "Firebase": { "ProjectId": "<YOUR_PROJECT_ID>" },
-     "JwtSettings": { ... },
-     "ConnectionStrings": { "DefaultConnection": "<not used for Firestore>" }
-   }
-   ```
-3. **Next.js env** (frontend `.env.local`)
-
-   ```env
-   NEXT_PUBLIC_API_URL=http://localhost:5000/api
-   ```
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
 
 ---
 
 ## ▶️ Running Locally
 
-1. **Start the API**
+1. **Start the frontend**
 
    ```bash
-   cd API
-   dotnet run
-   ```
-2. **Start the frontend**
-
-   ```bash
-   cd ../frontend
    npm run dev
    ```
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+2. Open [http://localhost:3000](http://localhost:3000) in your browser to explore.
 
 ---
 
@@ -128,5 +104,4 @@ A single‑page web application that helps job seekers manage their applications
 2. Create a feature branch: `git checkout -b feature/YourFeature`
 3. Commit your changes: `git commit -m "Add new feature"`
 4. Push to the branch: `git push origin feature/YourFeature`
-5. Open a Pull Request please describe your changes and link any related issues.
-
+5. Open a Pull Request describing your changes and referencing any related issues
