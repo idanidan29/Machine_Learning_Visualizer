@@ -114,6 +114,7 @@ const KMeansVisualization: React.FC = () => {
   const [showClusters, setShowClusters] = useState<boolean>(false);
   const [is2D, setIs2D] = useState<boolean>(false);
   const [isStepByStep, setIsStepByStep] = useState<boolean>(false);
+  const [isControlsExpanded, setIsControlsExpanded] = useState<boolean>(true);
 
   const colors = [
     '#FF6B6B', // Bright Coral
@@ -261,114 +262,153 @@ const KMeansVisualization: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-center gap-4 p-4 bg-gray-800/50 rounded-lg backdrop-blur-sm">
-        <button
-          onClick={handleStartPauseResume}
-          className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
-            isRunning && !isPaused
-              ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20'
-              : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20'
-          }`}
-        >
-          {isStepByStep 
-            ? 'Next Step'
-            : isRunning && !isPaused 
-              ? 'Pause' 
-              : isPaused 
-                ? 'Resume' 
-                : 'Start'}
-        </button>
-        <button
-          onClick={handleReset}
-          className="px-6 py-2 rounded-md font-medium bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 shadow-lg shadow-gray-700/20"
-        >
-          Reset
-        </button>
-        <div className="flex items-center space-x-2">
-          <label htmlFor="k-value" className="text-gray-300 font-medium">
-            Clusters (k):
-          </label>
-          <input
-            id="k-value"
-            type="number"
-            min="1"
-            max="8"
-            value={k}
-            onChange={(e) => setK(parseInt(e.target.value))}
-            className="w-16 px-2 py-1 rounded-md bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
-            disabled={isRunning && !isPaused}
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <label htmlFor="speed" className="text-gray-300 font-medium">
-            Speed:
-          </label>
-          <input
-            id="speed"
-            type="range"
-            min="100"
-            max="2000"
-            step="100"
-            value={speed}
-            onChange={(e) => setSpeed(parseInt(e.target.value))}
-            className="w-32 accent-purple-600"
-            disabled={isStepByStep}
-          />
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
-            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-purple-400' : 'text-gray-400'}`}>3D</span>
+    <div className="space-y-4">
+      {/* Control Panel */}
+      <div className="bg-gray-800/50 rounded-lg backdrop-blur-sm">
+        {/* Main Controls - Always Visible */}
+        <div className="flex items-center justify-between p-3 border-b border-gray-700">
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                setIs2D(!is2D);
-                if (!is2D) {
-                  // Reset camera position when switching to 2D
-                  const camera = document.querySelector('canvas')?.parentElement?.querySelector('canvas');
-                  if (camera) {
-                    camera.style.transform = 'translate3d(0px, 0px, 0px)';
-                  }
-                }
-              }}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
-                is2D ? 'bg-purple-600' : 'bg-gray-600'
+              onClick={handleStartPauseResume}
+              className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-200 text-sm ${
+                isRunning && !isPaused
+                  ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20'
+                  : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20'
               }`}
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
-                  is2D ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
+              {isStepByStep 
+                ? 'Next Step'
+                : isRunning && !isPaused 
+                  ? 'Pause' 
+                  : isPaused 
+                    ? 'Resume' 
+                    : 'Start'}
             </button>
-            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-purple-400' : 'text-gray-400'}`}>2D</span>
+            <button
+              onClick={handleReset}
+              className="px-3 py-1.5 rounded-lg font-medium bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 shadow-lg shadow-gray-700/20 text-sm"
+            >
+              Reset
+            </button>
           </div>
-
-          <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
-            <span className={`text-sm font-medium transition-colors duration-200 ${!isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Auto</span>
-            <button
-              onClick={() => {
-                setIsStepByStep(!isStepByStep);
-                if (!isStepByStep) {
-                  setIsRunning(false);
-                  setIsPaused(false);
-                }
-              }}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
-                isStepByStep ? 'bg-purple-600' : 'bg-gray-600'
+          <button
+            onClick={() => setIsControlsExpanded(!isControlsExpanded)}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            <svg
+              className={`w-5 h-5 text-gray-300 transform transition-transform duration-200 ${
+                isControlsExpanded ? 'rotate-180' : ''
               }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
-                  isStepByStep ? 'translate-x-6' : 'translate-x-1'
-                }`}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
               />
-            </button>
-            <span className={`text-sm font-medium transition-colors duration-200 ${isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Step</span>
+            </svg>
+          </button>
+        </div>
+
+        {/* Additional Controls - Collapsible on Mobile */}
+        <div className={`${isControlsExpanded ? 'block' : 'hidden'} lg:block`}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3">
+            {/* Clusters Control */}
+            <div className="flex items-center gap-2 bg-gray-800/50 p-2 rounded-lg">
+              <label htmlFor="k-value" className="text-gray-300 font-medium text-sm whitespace-nowrap">
+                Clusters (k):
+              </label>
+              <input
+                id="k-value"
+                type="number"
+                min="1"
+                max="8"
+                value={k}
+                onChange={(e) => setK(parseInt(e.target.value))}
+                className="w-14 px-2 py-1 rounded-md bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200 text-sm"
+                disabled={isRunning && !isPaused}
+              />
+            </div>
+
+            {/* Speed Control */}
+            <div className="flex items-center gap-2 bg-gray-800/50 p-2 rounded-lg">
+              <label htmlFor="speed" className="text-gray-300 font-medium text-sm whitespace-nowrap">
+                Speed:
+              </label>
+              <input
+                id="speed"
+                type="range"
+                min="100"
+                max="2000"
+                step="100"
+                value={speed}
+                onChange={(e) => setSpeed(parseInt(e.target.value))}
+                className="flex-1 accent-purple-600"
+                disabled={isStepByStep}
+              />
+            </div>
+
+            {/* View Controls */}
+            <div className="flex items-center justify-between gap-2 bg-gray-800/50 p-2 rounded-lg">
+              {/* 2D/3D Toggle */}
+              <div className="flex items-center gap-2">
+                <span className={`text-xs font-medium transition-colors duration-200 ${!is2D ? 'text-purple-400' : 'text-gray-400'}`}>3D</span>
+                <button
+                  onClick={() => {
+                    setIs2D(!is2D);
+                    if (!is2D) {
+                      const camera = document.querySelector('canvas')?.parentElement?.querySelector('canvas');
+                      if (camera) {
+                        camera.style.transform = 'translate3d(0px, 0px, 0px)';
+                      }
+                    }
+                  }}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
+                    is2D ? 'bg-purple-600' : 'bg-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                      is2D ? 'translate-x-5' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+                <span className={`text-xs font-medium transition-colors duration-200 ${is2D ? 'text-purple-400' : 'text-gray-400'}`}>2D</span>
+              </div>
+
+              {/* Auto/Step Toggle */}
+              <div className="flex items-center gap-2">
+                <span className={`text-xs font-medium transition-colors duration-200 ${!isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Auto</span>
+                <button
+                  onClick={() => {
+                    setIsStepByStep(!isStepByStep);
+                    if (!isStepByStep) {
+                      setIsRunning(false);
+                      setIsPaused(false);
+                    }
+                  }}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${
+                    isStepByStep ? 'bg-purple-600' : 'bg-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                      isStepByStep ? 'translate-x-5' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+                <span className={`text-xs font-medium transition-colors duration-200 ${isStepByStep ? 'text-purple-400' : 'text-gray-400'}`}>Step</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="relative w-full h-[400px] bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+      {/* Visualization Canvas */}
+      <div className="relative w-full h-[400px] bg-gray-900 rounded-lg overflow-hidden">
         <Canvas>
           <PerspectiveCamera 
             makeDefault 
@@ -394,21 +434,22 @@ const KMeansVisualization: React.FC = () => {
         </Canvas>
       </div>
 
-      <div className="flex justify-center items-center space-x-4 text-gray-300 bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm">
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 rounded-full bg-purple-600 animate-pulse"></span>
-          <span className="font-medium">Iteration: {iteration}</span>
+      {/* Status Bar */}
+      <div className="flex flex-wrap justify-center items-center gap-4 text-gray-300 bg-gray-800/50 p-3 rounded-lg backdrop-blur-sm">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
+          <span className="font-medium text-sm">Iteration: {iteration}</span>
         </div>
         {isPaused && !isStepByStep && (
-          <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse"></span>
-            <span className="font-medium">Paused</span>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+            <span className="font-medium text-sm">Paused</span>
           </div>
         )}
         {isStepByStep && (
-          <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="font-medium">Step Mode</span>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span className="font-medium text-sm">Step Mode</span>
           </div>
         )}
       </div>
