@@ -129,6 +129,24 @@ export default function KMeansQuiz() {
               </h3>
             </div>
 
+            {showExplanation && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 bg-gray-700/50 rounded-lg"
+              >
+                <p className="text-gray-300">
+                  {questions[currentQuestion].explanation}
+                </p>
+                <button
+                  onClick={handleNextQuestion}
+                  className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
+                >
+                  {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+                </button>
+              </motion.div>
+            )}
+
             <div className="space-y-3">
               {questions[currentQuestion].options.map((option, index) => (
                 <motion.button
@@ -149,24 +167,6 @@ export default function KMeansQuiz() {
                 </motion.button>
               ))}
             </div>
-
-            {showExplanation && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-4 bg-gray-700/50 rounded-lg"
-              >
-                <p className="text-gray-300">
-                  {questions[currentQuestion].explanation}
-                </p>
-                <button
-                  onClick={handleNextQuestion}
-                  className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-                >
-                  {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
-                </button>
-              </motion.div>
-            )}
           </motion.div>
         ) : (
           <motion.div
