@@ -155,7 +155,7 @@ export default function DecisionTreePage() {
                 <div className="prose prose-invert max-w-none">
                   <p className="text-gray-300 text-sm sm:text-base">
                     A Decision Tree is a supervised learning algorithm that uses a tree-like model of decisions and their possible consequences.
-                    It's a powerful and intuitive algorithm that can be used for both classification and regression tasks. The algorithm works by
+                    It&apos;s a powerful and intuitive algorithm that can be used for both classification and regression tasks. The algorithm works by
                     recursively splitting the data into subsets based on the most significant features, creating a tree structure where each
                     internal node represents a decision based on a feature, and each leaf node represents a prediction.
                   </p>
@@ -261,7 +261,7 @@ export default function DecisionTreePage() {
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example: Loan Approval</h2>
                 <div className="space-y-6">
                   <p className="text-gray-300 text-sm sm:text-base">
-                    Let's solve a loan approval problem using a Decision Tree. We'll analyze customer features to predict
+                    Let&apos;s solve a loan approval problem using a Decision Tree. We&apos;ll analyze customer features to predict
                     whether a loan should be approved or not.
                   </p>
 
