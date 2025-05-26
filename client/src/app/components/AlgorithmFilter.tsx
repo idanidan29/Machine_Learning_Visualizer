@@ -23,6 +23,16 @@ const categories = [
     id: 'regression',
     name: 'Regression',
     description: 'Algorithms for predicting continuous values'
+  },
+  {
+    id: 'classification',
+    name: 'Classification',
+    description: 'Algorithms for predicting discrete categories'
+  },
+  {
+    id: 'clustering',
+    name: 'Clustering',
+    description: 'Algorithms for grouping similar data points'
   }
 ]
 
@@ -32,35 +42,84 @@ const algorithms = [
     description: 'A simple, instance-based learning algorithm that stores all available cases and classifies new cases based on a similarity measure.',
     path: '/algorithms/knn',
     icon: '🔍',
-    category: 'supervised'
+    categories: ['supervised', 'classification']
   },
   {
     name: 'Decision Trees',
     description: 'A tree-like model of decisions and their possible consequences, including chance event outcomes.',
     path: '/algorithms/decision-trees',
     icon: '🌳',
-    category: 'supervised'
+    categories: ['supervised', 'classification', 'regression']
   },
   {
     name: 'Naive Bayes',
     description: 'A probabilistic classifier based on Bayes theorem that assumes independence between features.',
     path: '/algorithms/naive-bayes',
     icon: '📊',
-    category: 'supervised'
+    categories: ['supervised', 'classification']
   },
   {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points into clusters.',
     path: '/kmeans',
     icon: '🎯',
-    category: 'unsupervised'
+    categories: ['unsupervised', 'clustering']
   },
   {
     name: 'Linear Regression',
     description: 'A linear approach to modeling the relationship between a dependent variable and one or more independent variables.',
     path: '/algorithms/linear-regression',
     icon: '📈',
-    category: 'regression'
+    categories: ['supervised', 'regression']
+  },
+  {
+    name: 'Logistic Regression',
+    description: 'A statistical model that uses a logistic function to model binary dependent variables.',
+    path: '/algorithms/logistic-regression',
+    icon: '📉',
+    categories: ['supervised', 'classification']
+  },
+  {
+    name: 'Support Vector Machines',
+    description: 'A supervised learning model that finds the optimal hyperplane to separate classes in high-dimensional space.',
+    path: '/algorithms/svm',
+    icon: '⚡',
+    categories: ['supervised', 'classification']
+  },
+  {
+    name: 'Random Forest',
+    description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
+    path: '/algorithms/random-forest',
+    icon: '🌲',
+    categories: ['supervised', 'classification', 'regression']
+  },
+  {
+    name: 'Gradient Boosting',
+    description: 'A machine learning technique that produces a prediction model in the form of an ensemble of weak prediction models.',
+    path: '/algorithms/gradient-boosting',
+    icon: '📈',
+    categories: ['supervised', 'classification', 'regression']
+  },
+  {
+    name: 'DBSCAN',
+    description: 'A density-based clustering algorithm that groups together points that are close to each other and marks outliers.',
+    path: '/algorithms/dbscan',
+    icon: '🎯',
+    categories: ['unsupervised', 'clustering']
+  },
+  {
+    name: 'Hierarchical Clustering',
+    description: 'A method of cluster analysis that builds a hierarchy of clusters by successively merging or splitting groups.',
+    path: '/algorithms/hierarchical-clustering',
+    icon: '🌳',
+    categories: ['unsupervised', 'clustering']
+  },
+  {
+    name: 'Polynomial Regression',
+    description: 'A form of regression analysis in which the relationship between variables is modeled as an nth degree polynomial.',
+    path: '/algorithms/polynomial-regression',
+    icon: '📊',
+    categories: ['supervised', 'regression']
   }
 ]
 
@@ -69,7 +128,7 @@ export default function AlgorithmFilter() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredAlgorithms = algorithms.filter(algorithm => {
-    const matchesCategory = selectedCategory === 'all' || algorithm.category === selectedCategory
+    const matchesCategory = selectedCategory === 'all' || algorithm.categories.includes(selectedCategory)
     const matchesSearch = searchQuery === '' || 
       algorithm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       algorithm.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -196,9 +255,13 @@ export default function AlgorithmFilter() {
                       <h3 className="text-xl font-semibold text-white group-hover:text-purple-400">
                         {algorithm.name}
                       </h3>
-                      <span className="text-xs text-purple-400">
-                        {categories.find(cat => cat.id === algorithm.category)?.name}
-                      </span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {algorithm.categories.map(category => (
+                          <span key={category} className="text-xs text-purple-400 bg-purple-900/30 px-2 py-0.5 rounded-full">
+                            {categories.find(cat => cat.id === category)?.name}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <p className="mt-4 text-gray-300">
