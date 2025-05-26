@@ -59,10 +59,15 @@ const algorithms = [
 
 export default function AlgorithmFilter() {
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredAlgorithms = selectedCategory === 'all'
-    ? algorithms
-    : algorithms.filter(algorithm => algorithm.category === selectedCategory)
+  const filteredAlgorithms = algorithms.filter(algorithm => {
+    const matchesCategory = selectedCategory === 'all' || algorithm.category === selectedCategory
+    const matchesSearch = searchQuery === '' || 
+      algorithm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      algorithm.description.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
 
   return (
     <div id="algorithms-section" className="py-12 px-4 sm:px-6 lg:px-8">
@@ -81,11 +86,43 @@ export default function AlgorithmFilter() {
           </p>
         </motion.div>
 
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="mt-8 max-w-md mx-auto"
+        >
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search algorithms..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
+            />
+            <svg
+              className="absolute right-3 top-2.5 h-5 w-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </motion.div>
+
         {/* Category Filter */}
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
           className="mt-8 flex flex-wrap justify-center gap-4"
         >
           {categories.map((category) => (
