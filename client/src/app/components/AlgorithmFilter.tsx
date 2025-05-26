@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const categories = [
   {
@@ -66,20 +67,32 @@ export default function AlgorithmFilter() {
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-center"
+        >
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
             Explore ML Algorithms
           </h2>
           <p className="mt-4 text-lg text-gray-300">
             Select an algorithm to visualize and understand its behavior
           </p>
-        </div>
+        </motion.div>
 
         {/* Category Filter */}
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="mt-8 flex flex-wrap justify-center gap-4"
+        >
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category.id}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setSelectedCategory(category.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                 ${selectedCategory === category.id
@@ -88,66 +101,106 @@ export default function AlgorithmFilter() {
                 }`}
             >
               {category.name}
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Selected Category Description */}
-        <div className="mt-4 text-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="mt-4 text-center"
+        >
           <p className="text-gray-400 text-sm">
             {categories.find(cat => cat.id === selectedCategory)?.description}
           </p>
-        </div>
+        </motion.div>
 
         {/* Algorithm Cards */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredAlgorithms.map((algorithm) => (
-            <Link
-              key={algorithm.name}
-              href={algorithm.path}
-              className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200"
-            >
-              <div className="flex items-center space-x-4">
-                <span className="text-4xl">{algorithm.icon}</span>
-                <div>
-                  <h3 className="text-xl font-semibold text-white group-hover:text-purple-400">
-                    {algorithm.name}
-                  </h3>
-                  <span className="text-xs text-purple-400">
-                    {categories.find(cat => cat.id === algorithm.category)?.name}
-                  </span>
-                </div>
-              </div>
-              <p className="mt-4 text-gray-300">
-                {algorithm.description}
-              </p>
-              <div className="mt-6 flex items-center text-purple-400 group-hover:text-purple-300">
-                <span className="text-sm font-medium">Learn more</span>
-                <svg
-                  className="ml-2 h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+          <AnimatePresence mode="popLayout">
+            {filteredAlgorithms.map((algorithm, index) => (
+              <motion.div
+                key={algorithm.name}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ 
+                  duration: 0.2,
+                  delay: index * 0.05,
+                  ease: "easeOut"
+                }}
+                whileHover={{ 
+                  scale: 1.01,
+                  transition: { duration: 0.1 }
+                }}
+              >
+                <Link
+                  href={algorithm.path}
+                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200 block"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </Link>
-          ))}
+                  <div className="flex items-center space-x-4">
+                    <motion.span 
+                      className="text-4xl"
+                      whileHover={{ scale: 1.05, rotate: 2 }}
+                      transition={{ duration: 0.1 }}
+                    >
+                      {algorithm.icon}
+                    </motion.span>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400">
+                        {algorithm.name}
+                      </h3>
+                      <span className="text-xs text-purple-400">
+                        {categories.find(cat => cat.id === algorithm.category)?.name}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-gray-300">
+                    {algorithm.description}
+                  </p>
+                  <motion.div 
+                    className="mt-6 flex items-center text-purple-400 group-hover:text-purple-300"
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.1 }}
+                  >
+                    <span className="text-sm font-medium">Learn more</span>
+                    <svg
+                      className="ml-2 h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </motion.div>
+                </Link>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         {/* No Results Message */}
-        {filteredAlgorithms.length === 0 && (
-          <div className="text-center mt-12">
-            <p className="text-gray-400 text-lg">
-              No algorithms found in this category.
-            </p>
-          </div>
-        )}
+        <AnimatePresence>
+          {filteredAlgorithms.length === 0 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="text-center mt-12"
+            >
+              <p className="text-gray-400 text-lg">
+                No algorithms found in this category.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
