@@ -9,6 +9,7 @@ import NaiveBayesQuiz from '../../components/NaiveBayesQuiz';
 export default function NaiveBayesPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -19,6 +20,7 @@ export default function NaiveBayesPage() {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -37,8 +39,46 @@ export default function NaiveBayesPage() {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       <div className="pt-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex">
-          {/* Table of Contents Sidebar */}
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row">
+          {/* Mobile Table of Contents */}
+          <div className="lg:hidden mb-6">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="w-full bg-gray-800 text-white p-4 rounded-xl flex items-center justify-between"
+            >
+              <span className="font-medium">Contents</span>
+              <svg
+                className={`w-5 h-5 transform transition-transform ${isMobileMenuOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {isMobileMenuOpen && (
+              <div className="mt-2 bg-gray-800 rounded-xl shadow-xl p-4">
+                <nav className="space-y-1">
+                  {sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
+                        activeSection === section.id
+                          ? 'bg-purple-600 text-white'
+                          : 'text-gray-300 hover:bg-gray-700'
+                      }`}
+                    >
+                      <span className="text-lg">{section.icon}</span>
+                      <span className="font-medium">{section.title}</span>
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table of Contents Sidebar */}
           <div className="hidden lg:block w-64 flex-shrink-0 mr-8">
             <div className="sticky top-24">
               <div className="bg-gray-800 rounded-xl shadow-xl p-4">
@@ -70,17 +110,17 @@ export default function NaiveBayesPage() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              <h1 className="text-4xl font-bold text-white mb-4">
+              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                 Naive Bayes Classification
               </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-6">
+              <p className="text-gray-300 max-w-2xl mx-auto mb-6 px-4">
                 Explore how Naive Bayes uses probability to classify data points.
                 Watch how the algorithm calculates posterior probabilities and makes predictions
                 based on feature independence assumptions.
               </p>
               <button
                 onClick={() => scrollToSection('quiz')}
-                className="inline-flex items-center px-6 py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
+                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
               >
                 Test Your Knowledge
                 <svg
@@ -100,10 +140,10 @@ export default function NaiveBayesPage() {
               </button>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {/* Overview Section */}
-              <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
+              <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Overview</h2>
                 <div className="prose prose-invert max-w-none">
                   <p className="text-gray-300">
                     Naive Bayes is a probabilistic classifier based on Bayes' theorem with an assumption of independence
@@ -115,13 +155,13 @@ export default function NaiveBayesPage() {
               </section>
 
               {/* Visualization Section */}
-              <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-6">
+              <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <NaiveBayesVisualization />
               </section>
 
               {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">When to Use It</h2>
+              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use It</h2>
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-lg font-medium text-purple-400 mb-2">Ideal Use Cases</h3>
@@ -145,8 +185,8 @@ export default function NaiveBayesPage() {
               </section>
 
               {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">How It Works</h2>
+              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
                 <div className="space-y-4">
                   <p className="text-gray-300">
                     The Naive Bayes algorithm works through these steps:
@@ -159,19 +199,19 @@ export default function NaiveBayesPage() {
                   </ol>
 
                   {/* Formula Section */}
-                  <div  className="mt-8 bg-gray-900 rounded-lg p-8">
+                  <div className="mt-8 bg-gray-900 rounded-lg p-4 sm:p-8">
                     <h3 className="text-xl font-semibold text-white mb-6 text-center">Bayes' Theorem</h3>
                     
-                    <div className="flex flex-col items-center space-y-8">
+                    <div className="flex flex-col items-center space-y-6 sm:space-y-8">
                       {/* Main Formula */}
-                      <div  className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                        <div className="text-center text-2xl text-white font-mono">
+                      <div className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl overflow-x-auto">
+                        <div className="text-center text-lg sm:text-2xl text-white font-mono whitespace-nowrap">
                           P(class|features) = <span className="text-purple-400">P(features|class) × P(class)</span> / P(features)
                         </div>
                       </div>
 
                       {/* Formula Components */}
-                      <div className="grid md:grid-cols-2 gap-6 w-full max-w-2xl">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-2xl">
                         <div className="bg-gray-800 p-4 rounded-lg">
                           <h4 className="text-purple-400 font-semibold mb-2">Posterior Probability</h4>
                           <p className="text-gray-300 text-sm">P(class|features)</p>
@@ -195,10 +235,9 @@ export default function NaiveBayesPage() {
                       </div>
 
                       {/* Naive Bayes Formula */}
-                      
-                      <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                        <h4  className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
-                        <div className="text-center text-lg text-white font-mono">
+                      <div className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl overflow-x-auto">
+                        <h4 className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
+                        <div className="text-center text-base sm:text-lg text-white font-mono whitespace-nowrap">
                           P(class|features) ∝ P(class) × <span className="text-purple-400">∏</span> P(feature<sub>i</sub>|class)
                         </div>
                         <p className="text-gray-400 text-sm mt-4 text-center">
@@ -214,7 +253,7 @@ export default function NaiveBayesPage() {
                   </p>
 
                   {/* Detailed Example Section */}
-                  <div id="example" className="mt-8 bg-gray-900 rounded-lg p-6">
+                  <div id="example" className="mt-8 bg-gray-900 rounded-lg p-4 sm:p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">Detailed Example</h3>
                     <p className="text-gray-300 mb-4">
                       Let's solve a simple spam detection problem using Naive Bayes:
@@ -228,36 +267,36 @@ export default function NaiveBayesPage() {
                           <table className="min-w-full bg-gray-800 rounded-lg">
                             <thead>
                               <tr>
-                                <th className="px-4 py-2 text-left text-gray-300">Email</th>
-                                <th className="px-4 py-2 text-left text-gray-300">Contains "money"</th>
-                                <th className="px-4 py-2 text-left text-gray-300">Contains "urgent"</th>
-                                <th className="px-4 py-2 text-left text-gray-300">Class</th>
+                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Email</th>
+                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "money"</th>
+                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "urgent"</th>
+                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Class</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td className="px-4 py-2 text-gray-300">Email 1</td>
-                                <td className="px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-4 py-2 text-gray-300">Spam</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 1</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
                               </tr>
                               <tr>
-                                <td className="px-4 py-2 text-gray-300">Email 2</td>
-                                <td className="px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-4 py-2 text-gray-300">No</td>
-                                <td className="px-4 py-2 text-gray-300">Spam</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 2</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
                               </tr>
                               <tr>
-                                <td className="px-4 py-2 text-gray-300">Email 3</td>
-                                <td className="px-4 py-2 text-gray-300">No</td>
-                                <td className="px-4 py-2 text-gray-300">No</td>
-                                <td className="px-4 py-2 text-gray-300">Not Spam</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 3</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
                               </tr>
                               <tr>
-                                <td className="px-4 py-2 text-gray-300">Email 4</td>
-                                <td className="px-4 py-2 text-gray-300">No</td>
-                                <td className="px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-4 py-2 text-gray-300">Not Spam</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 4</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                                <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
                               </tr>
                             </tbody>
                           </table>
@@ -307,12 +346,10 @@ export default function NaiveBayesPage() {
                 </div>
               </section>
 
-              
-
               {/* Characteristics Section */}
-              <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">Key Characteristics</h2>
-                <div className="grid md:grid-cols-2 gap-6">
+              <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Key Characteristics</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
                       <h3 className="text-lg font-medium text-purple-400 mb-2">Type & Category</h3>
@@ -356,8 +393,8 @@ export default function NaiveBayesPage() {
               </section>
 
               {/* Limitations Section */}
-              <section id="limitations" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">When Not to Use It</h2>
+              <section id="limitations" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When Not to Use It</h2>
                 <div className="space-y-4">
                   <p className="text-gray-300">
                     Naive Bayes may not be suitable in the following scenarios:
@@ -377,7 +414,7 @@ export default function NaiveBayesPage() {
               </section>
 
               {/* Quiz Section */}
-              <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-6">
+              <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <NaiveBayesQuiz />
               </section>
             </div>

@@ -189,9 +189,9 @@ export default function NaiveBayesVisualization() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
         <h2 className="text-xl font-semibold text-white">Naive Bayes Visualization</h2>
-        <div className="space-x-2">
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setSelectedClass(selectedClass === 0 ? null : 0)}
             className={`px-4 py-2 rounded-lg transition-colors ${
