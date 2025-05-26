@@ -117,8 +117,8 @@ export default function KMeansPage() {
             {/* Pseudo-code Section */}
             <section className="bg-gray-800 rounded-xl shadow-xl p-6">
               <h2 className="text-2xl font-semibold text-white mb-4">Pseudo-code</h2>
-              <div className="bg-gray-900 rounded-lg p-4">
-                <pre className="text-gray-300 font-mono text-sm">
+              <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                <pre className="text-gray-300 font-mono text-sm md:text-base whitespace-pre-wrap md:whitespace-pre">
 {`function KMeans(data, k):
     # Initialize k centroids randomly
     centroids = random_points(data, k)
