@@ -1,397 +1,287 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface Point {
   x: number;
   y: number;
   class: number;
-  probability?: number;
-  features?: { [key: string]: number };
 }
 
-interface ClassBoundary {
-  points: THREE.Vector2[];
-  color: string;
-  probability?: number;
-}
-
-const PointSphere: React.FC<{ 
-  position: [number, number, number]; 
-  color: string;
-  probability?: number;
-  size?: number;
-}> = ({ position, color, probability, size = 0.25 }) => {
-  return (
-    <mesh position={position}>
-      <sphereGeometry args={[size, 16, 16]} />
-      <meshStandardMaterial 
-        color={color} 
-        emissive={color}
-        emissiveIntensity={0.2}
-        metalness={0.3}
-        roughness={0.4}
-        transparent={probability !== undefined}
-        opacity={probability !== undefined ? 0.5 + (probability * 0.5) : 1}
-      />
-    </mesh>
-  );
-};
-
-const ProbabilitySurface: React.FC<{
-  points: Point[];
-  resolution: number;
-  showClass: number;
-}> = ({ points, resolution, showClass }) => {
-  const vertices: number[] = [];
-  const colors: number[] = [];
-  const indices: number[] = [];
-
-  // Create a grid of points
-  for (let i = 0; i < resolution; i++) {
-    for (let j = 0; j < resolution; j++) {
-      const x = (i / (resolution - 1) - 0.5) * 10;
-      const y = (j / (resolution - 1) - 0.5) * 10;
-      
-      // Calculate probability at this point
-      const probability = calculateProbabilityAtPoint(x, y, points, showClass);
-      
-      // Ensure all values are valid numbers
-      if (!isNaN(probability)) {
-        vertices.push(x, y, probability * 2); // Scale height for visibility
-        
-        // Color based on probability
-        const color = new THREE.Color(showClass === 0 ? '#FF6B6B' : '#4ECDC4');
-        color.multiplyScalar(0.5 + probability * 0.5);
-        colors.push(color.r, color.g, color.b);
-      } else {
-        // Fallback values if probability is NaN
-        vertices.push(x, y, 0);
-        const color = new THREE.Color(showClass === 0 ? '#FF6B6B' : '#4ECDC4');
-        colors.push(color.r, color.g, color.b);
-      }
-    }
-  }
-
-  // Create triangles only if we have valid vertices
-  if (vertices.length > 0) {
-    for (let i = 0; i < resolution - 1; i++) {
-      for (let j = 0; j < resolution - 1; j++) {
-        const a = i * resolution + j;
-        const b = a + 1;
-        const c = a + resolution;
-        const d = c + 1;
-
-        // Only add triangles if all vertices are valid
-        if (a < vertices.length / 3 && b < vertices.length / 3 && 
-            c < vertices.length / 3 && d < vertices.length / 3) {
-          indices.push(a, b, c);
-          indices.push(b, d, c);
-        }
-      }
-    }
-  }
-
-  return (
-    <mesh>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={vertices.length / 3}
-          array={new Float32Array(vertices)}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={colors.length / 3}
-          array={new Float32Array(colors)}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="index"
-          count={indices.length}
-          array={new Uint32Array(indices)}
-          itemSize={1}
-        />
-      </bufferGeometry>
-      <meshStandardMaterial
-        vertexColors
-        transparent
-        opacity={0.5}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
-  );
-};
-
-const calculateProbabilityAtPoint = (x: number, y: number, points: Point[], targetClass: number): number => {
-  const classPoints = points.filter(p => p.class === targetClass);
-  const otherClassPoints = points.filter(p => p.class !== targetClass);
-
-  // Handle edge cases
-  if (classPoints.length === 0) return 0;
-
-  // Calculate mean and standard deviation for each class
-  const classMean = {
-    x: classPoints.reduce((sum, p) => sum + p.x, 0) / classPoints.length,
-    y: classPoints.reduce((sum, p) => sum + p.y, 0) / classPoints.length
-  };
-
-  // Add small epsilon to prevent division by zero
-  const epsilon = 1e-10;
-  const classStd = {
-    x: Math.sqrt(classPoints.reduce((sum, p) => sum + Math.pow(p.x - classMean.x, 2), 0) / classPoints.length) + epsilon,
-    y: Math.sqrt(classPoints.reduce((sum, p) => sum + Math.pow(p.y - classMean.y, 2), 0) / classPoints.length) + epsilon
-  };
-
-  // Calculate probability using Gaussian distribution
-  const probability = (1 / (2 * Math.PI * classStd.x * classStd.y)) *
-    Math.exp(-0.5 * (
-      Math.pow(x - classMean.x, 2) / Math.pow(classStd.x, 2) +
-      Math.pow(y - classMean.y, 2) / Math.pow(classStd.y, 2)
-    ));
-
-  // Ensure probability is a valid number and within [0,1] range
-  return Math.min(Math.max(probability * 100, 0), 1);
-};
-
-const Scene: React.FC<{
-  points: Point[];
-  boundaries: ClassBoundary[];
-  showProbabilities: boolean;
-  showProbabilitySurface: boolean;
-  selectedClass: number;
-}> = ({ points, boundaries, showProbabilities, showProbabilitySurface, selectedClass }) => {
-  return (
-    <>
-      <ambientLight intensity={0.7} />
-      <pointLight position={[10, 10, 10]} intensity={1.2} />
-      <pointLight position={[-10, -10, -10]} intensity={0.8} />
-      
-      {showProbabilitySurface && (
-        <ProbabilitySurface
-          points={points}
-          resolution={50}
-          showClass={selectedClass}
-        />
-      )}
-
-      {points.map((point, index) => (
-        <PointSphere
-          key={`point-${index}`}
-          position={[point.x, point.y, 0]}
-          color={point.class === 0 ? '#FF6B6B' : '#4ECDC4'}
-          probability={showProbabilities ? point.probability : undefined}
-          size={point.class === selectedClass ? 0.3 : 0.25}
-        />
-      ))}
-
-      {boundaries.map((boundary, index) => (
-        <mesh key={`boundary-${index}`}>
-          <shapeGeometry args={[new THREE.Shape(boundary.points)]} />
-          <meshBasicMaterial 
-            color={boundary.color} 
-            transparent 
-            opacity={0.2} 
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      ))}
-    </>
-  );
-};
-
-const NaiveBayesVisualization: React.FC = () => {
+export default function NaiveBayesVisualization() {
   const [points, setPoints] = useState<Point[]>([]);
-  const [boundaries, setBoundaries] = useState<ClassBoundary[]>([]);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [showProbabilities, setShowProbabilities] = useState<boolean>(false);
-  const [showProbabilitySurface, setShowProbabilitySurface] = useState<boolean>(false);
-  const [selectedClass, setSelectedClass] = useState<number>(0);
-  const [iteration, setIteration] = useState<number>(0);
+  const [selectedClass, setSelectedClass] = useState<number | null>(null);
+  const [showDecisionBoundary, setShowDecisionBoundary] = useState(true);
+  const [showProbabilityContours, setShowProbabilityContours] = useState(false);
+  const [hoveredPoint, setHoveredPoint] = useState<Point | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const generateRandomPoints = (count: number) => {
-    const newPoints: Point[] = [];
-    for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 10;
-      const y = (Math.random() - 0.5) * 10;
-      // Generate points in two distinct clusters
-      const class_ = Math.random() < 0.5 ? 0 : 1;
-      newPoints.push({ 
-        x, 
-        y, 
-        class_,
-        features: {
-          feature1: x,
-          feature2: y
-        }
-      });
-    }
-    return newPoints;
-  };
-
-  const calculateClassBoundaries = (points: Point[]) => {
-    // Calculate decision boundary based on probability distributions
-    const class0Points = points.filter(p => p.class === 0);
-    const class1Points = points.filter(p => p.class === 1);
-
-    const boundary0: ClassBoundary = {
-      points: [
-        new THREE.Vector2(-5, -5),
-        new THREE.Vector2(0, -5),
-        new THREE.Vector2(0, 5),
-        new THREE.Vector2(-5, 5),
-      ],
-      color: '#FF6B6B'
-    };
-
-    const boundary1: ClassBoundary = {
-      points: [
-        new THREE.Vector2(0, -5),
-        new THREE.Vector2(5, -5),
-        new THREE.Vector2(5, 5),
-        new THREE.Vector2(0, 5),
-      ],
-      color: '#4ECDC4'
-    };
-
-    return [boundary0, boundary1];
-  };
-
-  const calculateProbabilities = (points: Point[]) => {
-    return points.map(point => {
-      const class0Prob = calculateProbabilityAtPoint(point.x, point.y, points, 0);
-      const class1Prob = calculateProbabilityAtPoint(point.x, point.y, points, 1);
-      const totalProb = class0Prob + class1Prob;
-      
-      return {
-        ...point,
-        probability: point.class === 0 ? class0Prob / totalProb : class1Prob / totalProb
-      };
-    });
-  };
-
+  // Generate initial data
   useEffect(() => {
-    const newPoints = generateRandomPoints(100);
-    setPoints(newPoints);
-    setBoundaries(calculateClassBoundaries(newPoints));
+    generateInitialData();
   }, []);
 
-  const handleStartPauseResume = () => {
-    if (!isRunning) {
-      setIsRunning(true);
-      setShowProbabilities(true);
-      setShowProbabilitySurface(true);
-      setPoints(calculateProbabilities(points));
+  const generateInitialData = () => {
+    const newPoints: Point[] = [];
+    
+    // Generate Class 0 points (blue)
+    for (let i = 0; i < 30; i++) {
+      newPoints.push({
+        x: 0.2 + Math.random() * 0.2,
+        y: 0.2 + Math.random() * 0.2,
+        class: 0
+      });
+    }
+    
+    // Generate Class 1 points (red)
+    for (let i = 0; i < 30; i++) {
+      newPoints.push({
+        x: 0.6 + Math.random() * 0.2,
+        y: 0.6 + Math.random() * 0.2,
+        class: 1
+      });
+    }
+    
+    setPoints(newPoints);
+  };
+
+  const calculateProbability = (x: number, y: number, classLabel: number): number => {
+    const classPoints = points.filter(p => p.class === classLabel);
+    const totalDistance = classPoints.reduce((sum, p) => {
+      const dx = x - p.x;
+      const dy = y - p.y;
+      return sum + Math.exp(-(dx * dx + dy * dy) * 10);
+    }, 0);
+    return totalDistance / classPoints.length;
+  };
+
+  // Draw visualization
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw probability contours if enabled
+    if (showProbabilityContours && selectedClass !== null) {
+      const imageData = ctx.createImageData(canvas.width, canvas.height);
+      const data = imageData.data;
+
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const px = x / canvas.width;
+          const py = y / canvas.height;
+          
+          const probability = calculateProbability(px, py, selectedClass);
+          const intensity = Math.min(255, Math.floor(probability * 255));
+          
+          const idx = (y * canvas.width + x) * 4;
+          data[idx] = selectedClass === 0 ? 59 : 239;     // R
+          data[idx + 1] = selectedClass === 0 ? 130 : 68; // G
+          data[idx + 2] = selectedClass === 0 ? 246 : 68; // B
+          data[idx + 3] = intensity;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    // Draw decision boundary if enabled
+    if (showDecisionBoundary) {
+      const imageData = ctx.createImageData(canvas.width, canvas.height);
+      const data = imageData.data;
+
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const px = x / canvas.width;
+          const py = y / canvas.height;
+          
+          const prob0 = calculateProbability(px, py, 0);
+          const prob1 = calculateProbability(px, py, 1);
+          
+          const idx = (y * canvas.width + x) * 4;
+          if (Math.abs(prob0 - prob1) < 0.1) {
+            data[idx] = 255;
+            data[idx + 1] = 255;
+            data[idx + 2] = 255;
+            data[idx + 3] = 50;
+          }
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    // Draw points
+    points.forEach(point => {
+      const x = point.x * canvas.width;
+      const y = point.y * canvas.height;
+      
+      // Draw point
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = point.class === 0 ? '#3B82F6' : '#EF4444';
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw hover effect
+      if (hoveredPoint === point) {
+        ctx.beginPath();
+        ctx.arc(x, y, 12, 0, 2 * Math.PI);
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+    });
+  }, [points, selectedClass, showDecisionBoundary, showProbabilityContours, hoveredPoint]);
+
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    // Add new point
+    const newPoint: Point = {
+      x,
+      y,
+      class: selectedClass ?? 0
+    };
+
+    setPoints([...points, newPoint]);
+  };
+
+  const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    // Find closest point
+    const closestPoint = points.reduce((closest, point) => {
+      const distance = Math.sqrt(
+        Math.pow(point.x - x, 2) + Math.pow(point.y - y, 2)
+      );
+      return distance < closest.distance ? { point, distance } : closest;
+    }, { point: null as Point | null, distance: Infinity });
+
+    if (closestPoint.distance < 0.05) {
+      setHoveredPoint(closestPoint.point);
     } else {
-      setIsRunning(false);
-      setShowProbabilities(false);
-      setShowProbabilitySurface(false);
+      setHoveredPoint(null);
     }
   };
 
-  const handleReset = () => {
-    const newPoints = generateRandomPoints(100);
-    setPoints(newPoints);
-    setBoundaries(calculateClassBoundaries(newPoints));
-    setShowProbabilities(false);
-    setShowProbabilitySurface(false);
-    setIsRunning(false);
-    setIteration(0);
-  };
-
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-center gap-4 p-4 bg-gray-800/50 rounded-lg backdrop-blur-sm">
-        <button
-          onClick={handleStartPauseResume}
-          className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
-            isRunning
-              ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20'
-              : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20'
-          }`}
-        >
-          {isRunning ? 'Pause' : 'Start'}
-        </button>
-        <button
-          onClick={handleReset}
-          className="px-6 py-2 rounded-md font-medium bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 shadow-lg shadow-gray-700/20"
-        >
-          Reset
-        </button>
-        <div className="flex items-center space-x-2">
+    <div className="space-y-4">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-white">Naive Bayes Visualization</h2>
+        <div className="space-x-2">
           <button
-            onClick={() => setSelectedClass(0)}
-            className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
+            onClick={() => setSelectedClass(selectedClass === 0 ? null : 0)}
+            className={`px-4 py-2 rounded-lg transition-colors ${
               selectedClass === 0
-                ? 'bg-red-600 text-white'
-                : 'bg-gray-700 text-gray-300'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
             Class 0
           </button>
           <button
-            onClick={() => setSelectedClass(1)}
-            className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
+            onClick={() => setSelectedClass(selectedClass === 1 ? null : 1)}
+            className={`px-4 py-2 rounded-lg transition-colors ${
               selectedClass === 1
-                ? 'bg-teal-600 text-white'
-                : 'bg-gray-700 text-gray-300'
+                ? 'bg-red-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
             Class 1
           </button>
+          <button
+            onClick={() => setShowDecisionBoundary(!showDecisionBoundary)}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              showDecisionBoundary
+                ? 'bg-green-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            Decision Boundary
+          </button>
+          <button
+            onClick={() => setShowProbabilityContours(!showProbabilityContours)}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              showProbabilityContours
+                ? 'bg-purple-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            Probability Contours
+          </button>
+          <button
+            onClick={generateInitialData}
+            className="px-4 py-2 rounded-lg bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+          >
+            Reset
+          </button>
         </div>
       </div>
 
-      <div className="relative w-full h-[400px] bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-        <Canvas>
-          <PerspectiveCamera 
-            makeDefault 
-            position={[0, 0, 15]} 
-            fov={50}
-          />
-          <OrbitControls 
-            enablePan={true} 
-            enableZoom={true} 
-            enableRotate={false}
-            dampingFactor={0.05}
-            rotateSpeed={0.5}
-            minDistance={15}
-            maxDistance={30}
-          />
-          <Scene
-            points={points}
-            boundaries={boundaries}
-            showProbabilities={showProbabilities}
-            showProbabilitySurface={showProbabilitySurface}
-            selectedClass={selectedClass}
-          />
-        </Canvas>
+      <div className="relative">
+        <canvas
+          ref={canvasRef}
+          className="w-full h-[500px] bg-gray-900 rounded-lg"
+          onClick={handleCanvasClick}
+          onMouseMove={handleCanvasMouseMove}
+          onMouseLeave={() => setHoveredPoint(null)}
+        />
+        
+        {hoveredPoint && (
+          <div className="absolute bg-gray-800 text-white p-4 rounded-lg shadow-lg"
+               style={{
+                 left: hoveredPoint.x * 100 + '%',
+                 top: hoveredPoint.y * 100 + '%',
+                 transform: 'translate(-50%, -120%)'
+               }}>
+            <h3 className="font-semibold mb-2">Point Details</h3>
+            <p>Class: {hoveredPoint.class}</p>
+            <p>Probability Class 0: {(calculateProbability(hoveredPoint.x, hoveredPoint.y, 0) * 100).toFixed(1)}%</p>
+            <p>Probability Class 1: {(calculateProbability(hoveredPoint.x, hoveredPoint.y, 1) * 100).toFixed(1)}%</p>
+          </div>
+        )}
       </div>
 
-      <div className="flex justify-center items-center space-x-4 text-gray-300 bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm">
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 rounded-full bg-purple-600 animate-pulse"></span>
-          <span className="font-medium">Iteration: {iteration}</span>
-        </div>
-        {showProbabilities && (
-          <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="font-medium">Showing Probabilities</span>
-          </div>
-        )}
-        {showProbabilitySurface && (
-          <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
-            <span className="font-medium">Showing Probability Surface</span>
-          </div>
-        )}
+      <div className="text-gray-300 text-sm space-y-2">
+        <p className="font-semibold">How Naive Bayes Works:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li> Each point represents a data sample with two features (X and Y coordinates)</li>
+          <li> The algorithm calculates the probability of a point belonging to each class</li>
+          <li> The decision boundary (white line) shows where the probabilities are equal</li>
+          <li> Probability contours show how the probability changes across the space</li>
+          <li> Points closer to their class cluster have higher probability</li>
+        </ul>
+        <p className="mt-2">Try these steps to understand better:</p>
+        <ol className="list-decimal pl-5 space-y-1">
+          <li>Click "Reset" to start with random points</li>
+          <li>Toggle "Decision Boundary" to see where classes are equally likely</li>
+          <li>Select a class and toggle "Probability Contours" to see its probability distribution</li>
+          <li>Hover over points to see their probabilities for each class</li>
+          <li>Add new points by clicking on the plot</li>
+        </ol>
       </div>
     </div>
   );
-};
-
-export default NaiveBayesVisualization; 
+} 

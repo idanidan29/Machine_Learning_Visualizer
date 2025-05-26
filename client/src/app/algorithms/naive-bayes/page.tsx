@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -26,7 +27,6 @@ export default function NaiveBayesPage() {
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
-    { id: 'formula', title: 'Formula', icon: '📐' },
     { id: 'example', title: 'Example', icon: '📝' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
@@ -159,12 +159,12 @@ export default function NaiveBayesPage() {
                   </ol>
 
                   {/* Formula Section */}
-                  <div className="mt-8 bg-gray-900 rounded-lg p-8">
+                  <div  className="mt-8 bg-gray-900 rounded-lg p-8">
                     <h3 className="text-xl font-semibold text-white mb-6 text-center">Bayes' Theorem</h3>
                     
                     <div className="flex flex-col items-center space-y-8">
                       {/* Main Formula */}
-                      <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
+                      <div  className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
                         <div className="text-center text-2xl text-white font-mono">
                           P(class|features) = <span className="text-purple-400">P(features|class) × P(class)</span> / P(features)
                         </div>
@@ -195,8 +195,9 @@ export default function NaiveBayesPage() {
                       </div>
 
                       {/* Naive Bayes Formula */}
+                      
                       <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                        <h4 className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
+                        <h4  className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
                         <div className="text-center text-lg text-white font-mono">
                           P(class|features) ∝ P(class) × <span className="text-purple-400">∏</span> P(feature<sub>i</sub>|class)
                         </div>
@@ -213,7 +214,7 @@ export default function NaiveBayesPage() {
                   </p>
 
                   {/* Detailed Example Section */}
-                  <div className="mt-8 bg-gray-900 rounded-lg p-6">
+                  <div id="example" className="mt-8 bg-gray-900 rounded-lg p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">Detailed Example</h3>
                     <p className="text-gray-300 mb-4">
                       Let's solve a simple spam detection problem using Naive Bayes:
@@ -306,145 +307,7 @@ export default function NaiveBayesPage() {
                 </div>
               </section>
 
-              {/* Formula Section */}
-              <section id="formula" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">Formula</h2>
-                <div className="bg-gray-900 rounded-lg p-8">
-                  <h3 className="text-xl font-semibold text-white mb-6 text-center">Bayes' Theorem</h3>
-                  
-                  <div className="flex flex-col items-center space-y-8">
-                    {/* Main Formula */}
-                    <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                      <div className="text-center text-2xl text-white font-mono">
-                        P(class|features) = <span className="text-purple-400">P(features|class) × P(class)</span> / P(features)
-                      </div>
-                    </div>
-
-                    {/* Formula Components */}
-                    <div className="grid md:grid-cols-2 gap-6 w-full max-w-2xl">
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="text-purple-400 font-semibold mb-2">Posterior Probability</h4>
-                        <p className="text-gray-300 text-sm">P(class|features)</p>
-                        <p className="text-gray-400 text-xs mt-1">Probability of class given the features</p>
-                      </div>
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="text-purple-400 font-semibold mb-2">Prior Probability</h4>
-                        <p className="text-gray-300 text-sm">P(class)</p>
-                        <p className="text-gray-400 text-xs mt-1">Initial probability of the class</p>
-                      </div>
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="text-purple-400 font-semibold mb-2">Likelihood</h4>
-                        <p className="text-gray-300 text-sm">P(features|class)</p>
-                        <p className="text-gray-400 text-xs mt-1">Probability of features given the class</p>
-                      </div>
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="text-purple-400 font-semibold mb-2">Evidence</h4>
-                        <p className="text-gray-300 text-sm">P(features)</p>
-                        <p className="text-gray-400 text-xs mt-1">Probability of the features</p>
-                      </div>
-                    </div>
-
-                    {/* Naive Bayes Formula */}
-                    <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                      <h4 className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
-                      <div className="text-center text-lg text-white font-mono">
-                        P(class|features) ∝ P(class) × <span className="text-purple-400">∏</span> P(feature<sub>i</sub>|class)
-                      </div>
-                      <p className="text-gray-400 text-sm mt-4 text-center">
-                        Where ∏ represents the product of all feature probabilities
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Example Section */}
-              <section id="example" className="bg-gray-800 rounded-xl shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-white mb-4">Example</h2>
-                <div className="space-y-6">
-                  {/* Training Data */}
-                  <div>
-                    <h4 className="text-lg font-medium text-purple-400 mb-2">Training Data</h4>
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full bg-gray-800 rounded-lg">
-                        <thead>
-                          <tr>
-                            <th className="px-4 py-2 text-left text-gray-300">Email</th>
-                            <th className="px-4 py-2 text-left text-gray-300">Contains "money"</th>
-                            <th className="px-4 py-2 text-left text-gray-300">Contains "urgent"</th>
-                            <th className="px-4 py-2 text-left text-gray-300">Class</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="px-4 py-2 text-gray-300">Email 1</td>
-                            <td className="px-4 py-2 text-gray-300">Yes</td>
-                            <td className="px-4 py-2 text-gray-300">Yes</td>
-                            <td className="px-4 py-2 text-gray-300">Spam</td>
-                          </tr>
-                          <tr>
-                            <td className="px-4 py-2 text-gray-300">Email 2</td>
-                            <td className="px-4 py-2 text-gray-300">Yes</td>
-                            <td className="px-4 py-2 text-gray-300">No</td>
-                            <td className="px-4 py-2 text-gray-300">Spam</td>
-                          </tr>
-                          <tr>
-                            <td className="px-4 py-2 text-gray-300">Email 3</td>
-                            <td className="px-4 py-2 text-gray-300">No</td>
-                            <td className="px-4 py-2 text-gray-300">No</td>
-                            <td className="px-4 py-2 text-gray-300">Not Spam</td>
-                          </tr>
-                          <tr>
-                            <td className="px-4 py-2 text-gray-300">Email 4</td>
-                            <td className="px-4 py-2 text-gray-300">No</td>
-                            <td className="px-4 py-2 text-gray-300">Yes</td>
-                            <td className="px-4 py-2 text-gray-300">Not Spam</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  {/* Step 1: Prior Probabilities */}
-                  <div>
-                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 1: Calculate Prior Probabilities</h4>
-                    <div className="bg-gray-800 rounded-lg p-4">
-                      <p className="text-gray-300 mb-2">P(Spam) = 2/4 = 0.5</p>
-                      <p className="text-gray-300">P(Not Spam) = 2/4 = 0.5</p>
-                    </div>
-                  </div>
-
-                  {/* Step 2: Likelihood Probabilities */}
-                  <div>
-                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 2: Calculate Likelihood Probabilities</h4>
-                    <div className="bg-gray-800 rounded-lg p-4">
-                      <p className="text-gray-300 mb-2">For Spam class:</p>
-                      <p className="text-gray-300 mb-2">P("money"|Spam) = 2/2 = 1.0</p>
-                      <p className="text-gray-300 mb-2">P("urgent"|Spam) = 1/2 = 0.5</p>
-                      <p className="text-gray-300 mb-2">For Not Spam class:</p>
-                      <p className="text-gray-300 mb-2">P("money"|Not Spam) = 0/2 = 0.0</p>
-                      <p className="text-gray-300">P("urgent"|Not Spam) = 1/2 = 0.5</p>
-                    </div>
-                  </div>
-
-                  {/* Step 3: Classify New Email */}
-                  <div>
-                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 3: Classify New Email</h4>
-                    <p className="text-gray-300 mb-4">New email contains "money" but not "urgent"</p>
-                    <div className="bg-gray-800 rounded-lg p-4">
-                      <p className="text-gray-300 mb-2">P(Spam|features) = P(features|Spam) * P(Spam)</p>
-                      <p className="text-gray-300 mb-2">= P("money"|Spam) * P("not urgent"|Spam) * P(Spam)</p>
-                      <p className="text-gray-300 mb-2">= 1.0 * 0.5 * 0.5 = 0.25</p>
-                      <p className="text-gray-300 mb-2">P(Not Spam|features) = P(features|Not Spam) * P(Not Spam)</p>
-                      <p className="text-gray-300 mb-2">= P("money"|Not Spam) * P("not urgent"|Not Spam) * P(Not Spam)</p>
-                      <p className="text-gray-300">= 0.0 * 0.5 * 0.5 = 0.0</p>
-                    </div>
-                    <p className="text-gray-300 mt-4">
-                      Since P(Spam|features) {'>'} P(Not Spam|features), the email is classified as Spam.
-                    </p>
-                  </div>
-                </div>
-              </section>
+              
 
               {/* Characteristics Section */}
               <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-6">
