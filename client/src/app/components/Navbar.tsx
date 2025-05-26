@@ -1,11 +1,11 @@
 "use client"
 import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const router = useRouter()
+
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -14,16 +14,6 @@ export default function Navbar() {
     })
   }
 
-  const scrollToAlgorithms = () => {
-    router.push('/')
-    // Wait for the page to load before scrolling
-    setTimeout(() => {
-      const algorithmsSection = document.getElementById('algorithms-section')
-      if (algorithmsSection) {
-        algorithmsSection.scrollIntoView({ behavior: 'smooth' })
-      }
-    }, 100)
-  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
@@ -39,14 +29,8 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <button onClick={scrollToTop} className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+              <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                 Home
-              </button>
-              <button onClick={scrollToAlgorithms} className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Algorithms
-              </button>
-              <Link href="/about" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                About
               </Link>
             </div>
           </div>
@@ -88,14 +72,8 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <button onClick={scrollToTop} className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full text-left">
+            <Link href="/" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
               Home
-            </button>
-            <button onClick={scrollToAlgorithms} className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full text-left">
-              Algorithms
-            </button>
-            <Link href="/about" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
-              About
             </Link>
           </div>
         </div>

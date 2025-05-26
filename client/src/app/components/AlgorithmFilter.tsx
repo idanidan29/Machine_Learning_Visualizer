@@ -42,6 +42,13 @@ const algorithms = [
     category: 'supervised'
   },
   {
+    name: 'Naive Bayes',
+    description: 'A probabilistic classifier based on Bayes theorem that assumes independence between features.',
+    path: '/algorithms/naive-bayes',
+    icon: '📊',
+    category: 'supervised'
+  },
+  {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points into clusters.',
     path: '/kmeans',
