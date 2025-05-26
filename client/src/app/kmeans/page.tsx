@@ -220,7 +220,7 @@ export default function KMeansPage() {
                   <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example: Customer Segmentation</h2>
                   <div className="space-y-6">
                     <p className="text-gray-300 text-sm sm:text-base">
-                      Let's solve a customer segmentation problem using K-means clustering. We'll analyze customer spending patterns
+                      Let&apos;s solve a customer segmentation problem using K-means clustering. We&apos;ll analyze customer spending patterns
                       to identify distinct customer groups.
                     </p>
 
