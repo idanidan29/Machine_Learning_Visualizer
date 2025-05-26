@@ -35,7 +35,7 @@ export default function KMeansPage() {
                 </div>
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-purple-600 text-white font-semibold">2</span>
-                  <p className="text-gray-300">Click "Start" to begin the clustering process</p>
+                  <p className="text-gray-300">Click &quot;Start&quot; to begin the clustering process</p>
                 </div>
               </div>
               <div className="space-y-4">
@@ -45,7 +45,7 @@ export default function KMeansPage() {
                 </div>
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-purple-600 text-white font-semibold">4</span>
-                  <p className="text-gray-300">Use "Reset" to generate new random points and start over</p>
+                  <p className="text-gray-300">Use "Reset&quot; to generate new random points and start over</p>
                 </div>
               </div>
             </div>
