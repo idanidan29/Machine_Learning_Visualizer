@@ -3,8 +3,16 @@
 import React from 'react';
 import KMeansVisualization from '../components/KMeansVisualization';
 import Navbar from '../components/Navbar';
+import KMeansQuiz from '../components/KMeansQuiz';
 
 export default function KMeansPage() {
+  const scrollToQuiz = () => {
+    const quizSection = document.getElementById('kmeans-quiz');
+    if (quizSection) {
+      quizSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
@@ -14,11 +22,31 @@ export default function KMeansPage() {
             <h1 className="text-4xl font-bold text-white mb-4">
               K-Means Clustering
             </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto mb-6">
               Watch how the K-means algorithm groups similar data points into clusters.
               Experiment with different numbers of clusters and observe how the algorithm
               iteratively assigns points and updates cluster centers.
             </p>
+            <button
+              onClick={scrollToQuiz}
+              className="inline-flex items-center px-6 py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
+            >
+              Test Your Knowledge
+              <svg
+                className="ml-2 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </button>
           </div>
 
           <div className="bg-gray-800 rounded-xl shadow-xl p-6 mb-8">
@@ -26,7 +54,7 @@ export default function KMeansPage() {
           </div>
 
           {/* Documentation Sections */}
-          <div className="space-y-12">
+          <div className="space-y-8">
             {/* Overview Section */}
             <section className="bg-gray-800 rounded-xl shadow-xl p-6">
               <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
@@ -189,6 +217,11 @@ export default function KMeansPage() {
                 </p>
               </div>
             </section>
+
+            {/* Quiz Section */}
+            <div id="kmeans-quiz">
+              <KMeansQuiz />
+            </div>
           </div>
         </div>
       </div>
