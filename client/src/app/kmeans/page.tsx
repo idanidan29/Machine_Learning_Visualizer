@@ -33,7 +33,7 @@ export default function KMeansPage() {
               <div className="prose prose-invert max-w-none">
                 <p className="text-gray-300">
                   K-means clustering is an unsupervised learning algorithm that groups similar data points into clusters.
-                  It's one of the most popular and widely used clustering algorithms in machine learning. The algorithm
+                  It&apos;s one of the most popular and widely used clustering algorithms in machine learning. The algorithm
                   works by partitioning a dataset into K distinct, non-overlapping groups where each data point belongs
                   to the cluster with the nearest mean (centroid).
                 </p>

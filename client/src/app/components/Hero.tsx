@@ -1,15 +1,9 @@
 "use client"
 import Link from 'next/link'
-import { LogInForm } from './LogIn'
-import { SliderToggle } from './ui/SliderToggle'
-import { useState } from 'react';
-import { RegisterForm } from './Register';
 import Navbar from './Navbar'
 import AlgorithmFilter from './AlgorithmFilter'
-import Footer from './Footer';
 
 export default function HeroSection() {
-  const [selected, setSelected] = useState<"Log In" | "Register">("Log In");
   return (
     <>
       <Navbar />

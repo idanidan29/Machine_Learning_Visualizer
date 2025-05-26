@@ -132,6 +132,7 @@ const KMeansVisualization: React.FC = () => {
         x: (Math.random() - 0.5) * 10,
         y: (Math.random() - 0.5) * 10,
         z: is2D ? 0 : (Math.random() - 0.5) * 10,
+        cluster: Math.floor(Math.random() * k)
       });
     }
     return newPoints;
@@ -203,7 +204,7 @@ const KMeansVisualization: React.FC = () => {
   useEffect(() => {
     setPoints(generateRandomPoints(100));
     setCentroids(initializeCentroids(k));
-    setShowClusters(false);
+    setShowClusters(true);
   }, [k, is2D]);
 
   const runIteration = () => {
@@ -316,7 +317,7 @@ const KMeansVisualization: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
-            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-gray-400' : 'text-purple-400'}`}>2D</span>
+            <span className={`text-sm font-medium transition-colors duration-200 ${!is2D ? 'text-purple-400' : 'text-gray-400'}`}>3D</span>
             <button
               onClick={() => {
                 setIs2D(!is2D);
@@ -338,7 +339,7 @@ const KMeansVisualization: React.FC = () => {
                 }`}
               />
             </button>
-            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-gray-400' : 'text-purple-400'}`}>3D</span>
+            <span className={`text-sm font-medium transition-colors duration-200 ${is2D ? 'text-purple-400' : 'text-gray-400'}`}>2D</span>
           </div>
 
           <div className="flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
@@ -366,7 +367,7 @@ const KMeansVisualization: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative w-full h-[500px] bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+      <div className="relative w-full h-[400px] bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
         <Canvas>
           <PerspectiveCamera 
             makeDefault 
