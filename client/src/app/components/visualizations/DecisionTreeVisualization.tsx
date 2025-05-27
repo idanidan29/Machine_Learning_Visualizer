@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, JSX } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import * as d3 from 'd3';
 import classNames from 'classnames';
 
@@ -121,6 +121,23 @@ interface TreeNode {
   label?: 0 | 1;
 }
 
+// Add type for split sequence
+interface SplitStep {
+  nodeId: number;
+  depth: number;
+  axis: 'x' | 'y';
+  threshold: number;
+  entropy: number;
+  entropyLeft: number;
+  entropyRight: number;
+  infoGain: number;
+  leftCount: number;
+  rightCount: number;
+  points: DataPoint[];
+  left: DataPoint[];
+  right: DataPoint[];
+}
+
 // Build the tree and record the sequence of splits for animation
 function buildTree(
   points: DataPoint[],
@@ -128,7 +145,7 @@ function buildTree(
   minSamplesSplit: number,
   depth = 0,
   nodeId = { current: 0 },
-  splitSequence: any[] = []
+  splitSequence: SplitStep[] = []
 ): TreeNode {
   const id = nodeId.current++;
   const ent = entropy(points);
@@ -200,7 +217,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
   const [splitStep, setSplitStep] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
   const [hoveredTreeNode, setHoveredTreeNode] = useState<number | undefined>(undefined);
-  const splitSequence = useRef<any[]>([]);
+  const splitSequence = useRef<SplitStep[]>([]);
 
   // Initialize data if not provided
   useEffect(() => {
@@ -249,7 +266,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
 
   // Current split info
   const currentSplit = splitSequence.current[splitStep - 1];
-  const highlightedPoints: DataPoint[] = currentSplit ? currentSplit.points : data;
+  const highlightedPoints: DataPoint[] = currentSplit ? currentSplit.points : data ?? [];
 
   // Controls
   const handleNext = () => setSplitStep(s => Math.min(s + 1, splitSequence.current.length));
@@ -258,7 +275,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
   const handlePlay = () => setPlaying(p => !p);
 
   // Helper: Draw splitting line
-  function renderSplitLine(split: any) {
+  function renderSplitLine(split: SplitStep) {
     if (!split || !xScale || !yScale) return null;
     if (split.axis === 'x') {
       const x = xScale(split.threshold);
@@ -270,20 +287,19 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
   }
 
   // Helper: Draw points
-  function renderPoints(points: DataPoint[], highlight: boolean) {
-    if (!xScale || !yScale) return null;
-    return points.map((p, i) => (
+  function renderPoints(points: DataPoint[] | null, highlight: boolean) {
+    if (!points || !xScale || !yScale) return null;
+    return points.map((point, i) => (
       <motion.circle
         key={i}
-        cx={xScale(p.x)}
-        cy={yScale(p.y)}
-        r={highlight ? 7 : 5}
-        fill={p.label === 1 ? '#2563eb' : '#f59e42'}
-        stroke={highlight ? '#fbbf24' : '#fff'}
-        strokeWidth={highlight ? 2.5 : 1}
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        cx={xScale(point.x)}
+        cy={yScale(point.y)}
+        r={4}
+        fill={point.label === 1 ? '#4CAF50' : '#F44336'}
+        opacity={highlight ? 1 : 0.6}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
       />
     ));
   }
@@ -298,7 +314,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
     highlightId?: number
   ): JSX.Element {
     const isHighlighted = highlightId === node.id;
-    const nodeColor = node.isLeaf ? (node.label === 1 ? '#2563eb' : '#f59e42') : '#64748b';
+    const nodeColor = node.isLeaf ? (node.label === 1 ? '#4CAF50' : '#F44336') : '#64748b';
     const isLastLevel = node.depth === maxDepth - 1;
     
     // Adjust spacing for last level nodes
@@ -386,19 +402,18 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
       <div className="flex flex-col md:flex-row">
         {/* Left: Data plot */}
         <div className="bg-gray-800 p-4 flex flex-col items-center">
-          <svg width={width} height={height} className="bg-gray-900 rounded">
-            {/* Axes */}
-            <g>
-              <text x={width / 2} y={height - 5} textAnchor="middle" fontSize={13} fill="#64748b">x</text>
-              <text x={15} y={height / 2} textAnchor="middle" fontSize={13} fill="#64748b" transform={`rotate(-90 15,${height / 2})`}>y</text>
-            </g>
-            {/* All points (faded) */}
-            <g opacity={0.18}>{renderPoints(data, false)}</g>
-            {/* Highlighted points (current split or hovered node) */}
-            <g>{renderPoints(hoveredPoints ?? highlightedPoints, true)}</g>
-            {/* Splitting line (if any) */}
-            <g>{renderSplitLine(currentSplit)}</g>
-          </svg>
+          <div className="relative">
+            <svg width={width} height={height} className="border border-gray-200 rounded-lg">
+              {/* Background points */}
+              {data && <g opacity={0.18}>{renderPoints(data, false)}</g>}
+              
+              {/* Highlighted points */}
+              <g>{renderPoints(hoveredPoints ?? highlightedPoints, true)}</g>
+              
+              {/* Splitting line (if any) */}
+              {currentSplit && <g>{renderSplitLine(currentSplit)}</g>}
+            </svg>
+          </div>
           {/* Tooltip/sidebar for split info */}
           <div className="mt-3 w-[340px] min-h-[20px] bg-gray-900 rounded p-2 text-sm text-white">
             {currentSplit ? (
