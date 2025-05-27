@@ -124,16 +124,41 @@ const algorithms = [
 ]
 
 export default function AlgorithmFilter() {
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['all'])
   const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredAlgorithms = algorithms.filter(algorithm => {
-    const matchesCategory = selectedCategory === 'all' || algorithm.categories.includes(selectedCategory)
-    const matchesSearch = searchQuery === '' || 
-      algorithm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      algorithm.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
+  const handleCategoryClick = (categoryId: string) => {
+    if (categoryId === 'all') {
+      setSelectedCategories(['all'])
+    } else {
+      setSelectedCategories(prev => {
+        const newCategories = prev.filter(cat => cat !== 'all')
+        if (prev.includes(categoryId)) {
+          return newCategories.filter(cat => cat !== categoryId)
+        } else {
+          return [...newCategories, categoryId]
+        }
+      })
+    }
+  }
+
+  const filteredAlgorithms = algorithms
+    .filter(algorithm => {
+      const matchesCategory = selectedCategories.includes('all') || 
+        algorithm.categories.some(category => selectedCategories.includes(category))
+      const matchesSearch = searchQuery === '' || 
+        algorithm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        algorithm.description.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+    .sort((a, b) => {
+      if (selectedCategories.includes('all')) return 0;
+      
+      const aMatches = a.categories.filter(cat => selectedCategories.includes(cat)).length;
+      const bMatches = b.categories.filter(cat => selectedCategories.includes(cat)).length;
+      
+      return bMatches - aMatches; // Sort in descending order
+    });
 
   return (
     <div id="algorithms-section" className="py-12 px-4 sm:px-6 lg:px-8">
@@ -196,9 +221,9 @@ export default function AlgorithmFilter() {
               key={category.id}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedCategory(category.id)}
+              onClick={() => handleCategoryClick(category.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-                ${selectedCategory === category.id
+                ${selectedCategories.includes(category.id)
                   ? 'bg-purple-600 text-white'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
@@ -216,7 +241,7 @@ export default function AlgorithmFilter() {
           className="mt-4 text-center"
         >
           <p className="text-gray-400 text-sm">
-            {categories.find(cat => cat.id === selectedCategory)?.description}
+            {categories.find(cat => cat.id === selectedCategories[0])?.description}
           </p>
         </motion.div>
 
