@@ -341,75 +341,83 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
 
   // --- Render ---
   return (
-    <div className="flex flex-col md:flex-row w-full" style={{ background: 'rgb(17, 24, 39)' }}>
-      {/* Left: Data plot */}
-      <div className="bg-gray-800 p-4 flex flex-col items-center">
-        <svg width={width} height={height} className="bg-gray-900 rounded">
-          {/* Axes */}
-          <g>
-            <text x={width / 2} y={height - 5} textAnchor="middle" fontSize={13} fill="#64748b">x</text>
-            <text x={15} y={height / 2} textAnchor="middle" fontSize={13} fill="#64748b" transform={`rotate(-90 15,${height / 2})`}>y</text>
-          </g>
-          {/* All points (faded) */}
-          <g opacity={0.18}>{renderPoints(data, false)}</g>
-          {/* Highlighted points (current split or hovered node) */}
-          <g>{renderPoints(hoveredPoints ?? highlightedPoints, true)}</g>
-          {/* Splitting line (if any) */}
-          <g>{renderSplitLine(currentSplit)}</g>
-        </svg>
-        {/* Tooltip/sidebar for split info */}
-        <div className="mt-3 w-[340px] min-h-[20px] bg-gray-900 rounded p-2 text-sm text-white">
-          {currentSplit ? (
-            <>
-              <div className="font-semibold mb-1">Split: <span className="text-blue-600">{currentSplit.axis} ≤ {currentSplit.threshold.toFixed(2)}</span></div>
-              <div>Entropy before: <span className="font-mono">{currentSplit.entropy.toFixed(3)}</span></div>
-              <div>Entropy left: <span className="font-mono">{currentSplit.entropyLeft.toFixed(3)}</span> ({currentSplit.leftCount} pts)</div>
-              <div>Entropy right: <span className="font-mono">{currentSplit.entropyRight.toFixed(3)}</span> ({currentSplit.rightCount} pts)</div>
-              <div>Info gain: <span className="font-mono">{currentSplit.infoGain.toFixed(3)}</span></div>
-            </>
-          ) : (
-            <div className="text-slate-400">No split yet. Press &quot;Next Split&quot; to begin.</div>
-          )}
-        </div>
-        {/* Controls */}
-        <div className="flex items-center gap-3 mt-4">
-          <button
-            className="px-3 py-1 rounded bg-slate-200 hover:bg-slate-300 text-slate-700"
-            onClick={handlePrev}
-            disabled={splitStep === 0}
-          >Previous Split</button>
-          <button
-            className="px-3 py-1 rounded bg-blue-500 hover:bg-blue-600 text-white"
-            onClick={handleNext}
-            disabled={splitStep === splitSequence.current.length}
-          >Next Split</button>
-          <button
-            className={classNames(
-              'px-3 py-1 rounded',
-              playing ? 'bg-orange-400 hover:bg-orange-500 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-700'
+    <div className="flex flex-col w-full" style={{ background: 'rgb(17, 24, 39)' }}>
+      {/* Visualization area */}
+      <div className="flex flex-col md:flex-row">
+        {/* Left: Data plot */}
+        <div className="bg-gray-800 p-4 flex flex-col items-center">
+          <svg width={width} height={height} className="bg-gray-900 rounded">
+            {/* Axes */}
+            <g>
+              <text x={width / 2} y={height - 5} textAnchor="middle" fontSize={13} fill="#64748b">x</text>
+              <text x={15} y={height / 2} textAnchor="middle" fontSize={13} fill="#64748b" transform={`rotate(-90 15,${height / 2})`}>y</text>
+            </g>
+            {/* All points (faded) */}
+            <g opacity={0.18}>{renderPoints(data, false)}</g>
+            {/* Highlighted points (current split or hovered node) */}
+            <g>{renderPoints(hoveredPoints ?? highlightedPoints, true)}</g>
+            {/* Splitting line (if any) */}
+            <g>{renderSplitLine(currentSplit)}</g>
+          </svg>
+          {/* Tooltip/sidebar for split info */}
+          <div className="mt-3 w-[340px] min-h-[20px] bg-gray-900 rounded p-2 text-sm text-white">
+            {currentSplit ? (
+              <>
+                <div className="font-semibold mb-1">Split: <span className="text-blue-600">{currentSplit.axis} ≤ {currentSplit.threshold.toFixed(2)}</span></div>
+                <div>Entropy before: <span className="font-mono">{currentSplit.entropy.toFixed(3)}</span></div>
+                <div>Entropy left: <span className="font-mono">{currentSplit.entropyLeft.toFixed(3)}</span> ({currentSplit.leftCount} pts)</div>
+                <div>Entropy right: <span className="font-mono">{currentSplit.entropyRight.toFixed(3)}</span> ({currentSplit.rightCount} pts)</div>
+                <div>Info gain: <span className="font-mono">{currentSplit.infoGain.toFixed(3)}</span></div>
+              </>
+            ) : (
+              <div className="text-slate-400">No split yet. Press &quot;Next Split&quot; to begin.</div>
             )}
-            onClick={handlePlay}
-          >{playing ? 'Pause' : 'Play'}</button>
+          </div>
         </div>
-        <div className="flex items-center gap-2 mt-2 w-full">
-          <input
-            type="range"
-            min={0}
-            max={splitSequence.current.length}
-            value={splitStep}
-            onChange={handleSlider}
-            className="w-full accent-blue-500"
-          />
-          <span className="text-xs text-slate-500">{splitStep}/{splitSequence.current.length}</span>
+        {/* Right: Tree diagram */}
+        <div className="bg-gray-800 p-4 flex flex-col items-center w-full">
+          <svg width={340} height={height} className="bg-gray-900 rounded">
+            {renderTree(tree, 170, 30, 80, 80, hoveredTreeNode)}
+          </svg>
+          <div className="text-xs text-slate-400 mt-2">Hover a node to highlight its region</div>
         </div>
       </div>
-      {/* Right: Tree diagram */}
-      <div className="bg-gray-800 p-4 flex flex-col items-center w-full">
-    
-        <svg width={340} height={height} className="bg-gray-900 rounded">
-          {renderTree(tree, 170, 30, 80, 80, hoveredTreeNode)}
-        </svg>
-        <div className="text-xs text-slate-400 mt-2">Hover a node to highlight its region</div>
+
+      {/* Controls - now spans full width */}
+      <div className="bg-gray-800 p-4 border-t border-gray-700">
+        <div className="max-w-4xl mx-auto">
+          {/* Controls */}
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <button
+              className="px-3 py-1 rounded bg-slate-200 hover:bg-slate-300 text-slate-700"
+              onClick={handlePrev}
+              disabled={splitStep === 0}
+            >Previous Split</button>
+            <button
+              className="px-3 py-1 rounded bg-blue-500 hover:bg-blue-600 text-white"
+              onClick={handleNext}
+              disabled={splitStep === splitSequence.current.length}
+            >Next Split</button>
+            <button
+              className={classNames(
+                'px-3 py-1 rounded',
+                playing ? 'bg-orange-400 hover:bg-orange-500 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-700'
+              )}
+              onClick={handlePlay}
+            >{playing ? 'Pause' : 'Play'}</button>
+          </div>
+          <div className="flex items-center gap-2 w-full">
+            <input
+              type="range"
+              min={0}
+              max={splitSequence.current.length}
+              value={splitStep}
+              onChange={handleSlider}
+              className="w-full accent-blue-500"
+            />
+            <span className="text-xs text-slate-500">{splitStep}/{splitSequence.current.length}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
