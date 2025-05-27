@@ -4,19 +4,10 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import DecisionTreeVisualization from '../../components/visualizations/DecisionTreeVisualization';
 import Quiz from '../../components/Quiz';
+import TableOfContents from '../../components/TableOfContents';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setIsMobileMenuOpen(false);
-    }
-  };
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
@@ -36,84 +27,11 @@ export default function DecisionTreePage() {
       <Navbar />
       <div className="pt-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Mobile Table of Contents Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="fixed bottom-6 right-6 z-50 lg:hidden bg-purple-600 text-white p-4 rounded-full shadow-lg hover:bg-purple-700 transition-colors duration-200"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-
-          {/* Mobile Table of Contents Drawer */}
-          <div
-            className={`fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
-              isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <div
-              className={`fixed right-0 top-0 h-full w-64 bg-gray-800 shadow-xl transform transition-transform duration-300 ease-in-out ${
-                isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
-                <nav className="space-y-2">
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => scrollToSection(section.id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                        activeSection === section.id
-                          ? 'bg-purple-600 text-white'
-                          : 'text-gray-300 hover:bg-gray-700'
-                      }`}
-                    >
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="font-medium">{section.title}</span>
-                    </button>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </div>
-
-          {/* Desktop Table of Contents */}
-          <div className="hidden lg:block fixed top-24 left-4 w-64">
-            <div className="bg-gray-800 rounded-xl shadow-xl p-4">
-              <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
-              <nav className="space-y-1">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                      activeSection === section.id
-                        ? 'bg-purple-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700'
-                    }`}
-                  >
-                    <span className="text-lg">{section.icon}</span>
-                    <span className="font-medium">{section.title}</span>
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </div>
+          <TableOfContents
+            sections={sections}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
 
           {/* Main Content */}
           <div className="lg:ml-72">
@@ -126,7 +44,13 @@ export default function DecisionTreePage() {
                 Visualize the tree structure and understand how it splits data to make decisions.
               </p>
               <button
-                onClick={() => scrollToSection('quiz')}
+                onClick={() => {
+                  const section = document.getElementById('quiz');
+                  if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    setActiveSection('quiz');
+                  }
+                }}
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white text-sm sm:text-base font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
               >
                 Test Your Knowledge

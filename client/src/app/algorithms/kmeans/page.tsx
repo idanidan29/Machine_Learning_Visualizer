@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import KMeansVisualization from '../../components/visualizations/KMeansVisualization';
 import Navbar from '../../components/Navbar';
 import Quiz from '../../components/Quiz';
+import TableOfContents from '../../components/TableOfContents';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -35,6 +36,12 @@ export default function KMeansPage() {
       <Navbar />
       <div className="pt-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
+          <TableOfContents
+            sections={sections}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+
           {/* Mobile Table of Contents Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -126,7 +133,13 @@ export default function KMeansPage() {
                 iteratively assigns points and updates cluster centers.
               </p>
               <button
-                onClick={() => scrollToSection('quiz')}
+                onClick={() => {
+                  const section = document.getElementById('quiz');
+                  if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    setActiveSection('quiz');
+                  }
+                }}
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white text-sm sm:text-base font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
               >
                 Test Your Knowledge

@@ -5,24 +5,15 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import NaiveBayesVisualization from '../../components/visualizations/NaiveBayesVisualization';
 import Quiz from '../../components/Quiz';
+import TableOfContents from '../../components/TableOfContents';
 
 export default function NaiveBayesPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setIsMobileMenuOpen(false);
-    }
-  };
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
@@ -39,72 +30,15 @@ export default function NaiveBayesPage() {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       <div className="pt-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row">
-          {/* Mobile Table of Contents */}
-          <div className="lg:hidden mb-6">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-full bg-gray-800 text-white p-4 rounded-xl flex items-center justify-between"
-            >
-              <span className="font-medium">Contents</span>
-              <svg
-                className={`w-5 h-5 transform transition-transform ${isMobileMenuOpen ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {isMobileMenuOpen && (
-              <div className="mt-2 bg-gray-800 rounded-xl shadow-xl p-4">
-                <nav className="space-y-1">
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => scrollToSection(section.id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                        activeSection === section.id
-                          ? 'bg-purple-600 text-white'
-                          : 'text-gray-300 hover:bg-gray-700'
-                      }`}
-                    >
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="font-medium">{section.title}</span>
-                    </button>
-                  ))}
-                </nav>
-              </div>
-            )}
-          </div>
-
-          {/* Desktop Table of Contents Sidebar */}
-          <div className="hidden lg:block w-64 flex-shrink-0 mr-8">
-            <div className="sticky top-24">
-              <div className="bg-gray-800 rounded-xl shadow-xl p-4">
-                <h3 className="text-lg font-semibold text-white mb-4 px-2">Contents</h3>
-                <nav className="space-y-1">
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => scrollToSection(section.id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                        activeSection === section.id
-                          ? 'bg-purple-600 text-white'
-                          : 'text-gray-300 hover:bg-gray-700'
-                      }`}
-                    >
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="font-medium">{section.title}</span>
-                    </button>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto">
+          <TableOfContents
+            sections={sections}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
 
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="lg:ml-72">
             <div 
               className={`text-center mb-8 transition-all duration-1000 ease-out transform ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -119,7 +53,13 @@ export default function NaiveBayesPage() {
                 based on feature independence assumptions.
               </p>
               <button
-                onClick={() => scrollToSection('quiz')}
+                onClick={() => {
+                  const section = document.getElementById('quiz');
+                  if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    setActiveSection('quiz');
+                  }
+                }}
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
               >
                 Test Your Knowledge
