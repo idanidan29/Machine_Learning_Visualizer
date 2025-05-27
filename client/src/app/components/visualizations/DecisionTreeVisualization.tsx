@@ -335,16 +335,18 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
           onMouseEnter={() => setHoveredTreeNode(node.id)}
           onMouseLeave={() => setHoveredTreeNode(undefined)}
         />
-        {/* Node label - adjusted position for last level */}
-        <text 
-          x={x} 
-          y={isLastLevel ? y + 45 : y + 35} 
-          textAnchor="middle" 
-          fontSize={node.isLeaf ? 15 : 13} 
-          fill="#fff"
-        >
-          {node.isLeaf ? `Class ${node.label}` : `${node.split?.axis} ≤ ${node.split?.threshold.toFixed(2)}`}
-        </text>
+        {/* Node label - only show split condition for non-leaf nodes */}
+        {!node.isLeaf && (
+          <text 
+            x={x} 
+            y={isLastLevel ? y + 45 : y + 35} 
+            textAnchor="middle" 
+            fontSize={13} 
+            fill="#fff"
+          >
+            {`${node.split?.axis} ≤ ${node.split?.threshold.toFixed(2)}`}
+          </text>
+        )}
         {/* Children and connecting lines */}
         {node.left && (
           <>
