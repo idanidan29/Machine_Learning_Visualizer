@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
-import NaiveBayesVisualization from '../../components/NaiveBayesVisualization';
-import NaiveBayesQuiz from '../../components/NaiveBayesQuiz';
+import NaiveBayesVisualization from '../../components/visualizations/NaiveBayesVisualization';
+import Quiz from '../../components/Quiz';
 
 export default function NaiveBayesPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -415,7 +415,7 @@ export default function NaiveBayesPage() {
 
               {/* Quiz Section */}
               <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <NaiveBayesQuiz />
+                <Quiz algorithm="naive-bayes" />
               </section>
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import Navbar from './Navbar'
-import AlgorithmFilter from './AlgorithmFilter'
+import AlgorithmFilter from './AlgoFilter'
 
 export default function HeroSection() {
   return (

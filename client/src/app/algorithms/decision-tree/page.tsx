@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import DecisionTreeVisualization from '../components/DecisionTreeVisualization';
-import DecisionTreeQuiz from '../components/DecisionTreeQuiz';
+import Navbar from '../../components/Navbar';
+import DecisionTreeVisualization from '../../components/visualizations/DecisionTreeVisualization';
+import Quiz from '../../components/Quiz';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -503,7 +503,7 @@ function calculateInformationGain(data, feature, target):
 
               {/* Quiz Section */}
               <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <DecisionTreeQuiz />
+                <Quiz algorithm="decision-tree" />
               </section>
             </div>
           </div>

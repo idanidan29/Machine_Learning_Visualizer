@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import KMeansVisualization from '../../components/KMeansVisualization';
+import KMeansVisualization from '../../components/visualizations/KMeansVisualization';
 import Navbar from '../../components/Navbar';
-import KMeansQuiz from '../../components/KMeansQuiz';
+import Quiz from '../../components/Quiz';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -528,7 +528,7 @@ export default function KMeansPage() {
 
                 {/* Quiz Section */}
                 <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                  <KMeansQuiz />
+                  <Quiz algorithm="k-means" />
                 </section>
               </div>
             </div>
