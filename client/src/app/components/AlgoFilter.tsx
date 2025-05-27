@@ -157,11 +157,14 @@ export default function AlgorithmFilter() {
       const aMatches = a.categories.filter(cat => selectedCategories.includes(cat)).length;
       const bMatches = b.categories.filter(cat => selectedCategories.includes(cat)).length;
       
-      return bMatches - aMatches; // Sort in descending order
+      if (bMatches !== aMatches) {
+        return bMatches - aMatches; // Sort in descending order
+      }
+      return 0; // Maintain original order if matches are equal
     });
 
   return (
-    <div id="algorithms-section" className="py-12 px-4 sm:px-6 lg:px-8">
+    <div id="algorithms-section" className="py-12 px-4 sm:px-6 lg:px-8 min-h-[800px]">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
@@ -246,10 +249,12 @@ export default function AlgorithmFilter() {
         </motion.div>
 
         {/* Algorithm Cards */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 min-h-[400px]">
           <AnimatePresence mode="popLayout">
             {filteredAlgorithms.map((algorithm, index) => (
               <motion.div
+                layout
+                layoutId={algorithm.name}
                 key={algorithm.name}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
