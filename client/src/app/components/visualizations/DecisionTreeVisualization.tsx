@@ -401,11 +401,11 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
   return (
     <div className="flex flex-col w-full" style={{ background: 'rgb(17, 24, 39)' }}>
       {/* Visualization area */}
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col lg:flex-row">
         {/* Left: Data plot */}
-        <div className="bg-gray-800 p-4 flex flex-col items-center">
-          <div className="relative">
-            <svg width={width} height={height} className="border border-gray-200 rounded-lg">
+        <div className="bg-gray-800 p-2 sm:p-4 flex flex-col items-center lg:w-[420px]">
+          <div className="relative w-full lg:w-[420px]">
+            <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="border border-gray-200 rounded-lg">
               {/* Background points */}
               {data && <g opacity={0.18}>{renderPoints(data, false)}</g>}
               
@@ -417,7 +417,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
             </svg>
           </div>
           {/* Tooltip/sidebar for split info */}
-          <div className="mt-3 w-[340px] min-h-[20px] bg-gray-900 rounded p-2 text-sm text-white">
+          <div className="mt-3 w-full lg:w-[340px] min-h-[20px] bg-gray-900 rounded p-2 text-sm text-white">
             {currentSplit ? (
               <>
                 <div className="font-semibold mb-1">Split: <span className="text-blue-600">{currentSplit.axis} ≤ {currentSplit.threshold.toFixed(2)}</span></div>
@@ -432,32 +432,34 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
           </div>
         </div>
         {/* Right: Tree diagram */}
-        <div className="bg-gray-800 p-4 flex flex-col items-center w-full">
-          <svg width={340} height={height} className="bg-gray-900 rounded">
-            {renderTree(tree, 170, 30, 80, 80, hoveredTreeNode)}
-          </svg>
+        <div className="bg-gray-800 p-2 sm:p-4 flex flex-col items-center w-full">
+          <div className="w-full max-w-[340px]">
+            <svg width="100%" height={height} viewBox={`0 0 340 ${height}`} className="bg-gray-900 rounded">
+              {renderTree(tree, 170, 30, 80, 80, hoveredTreeNode)}
+            </svg>
+          </div>
           <div className="text-xs text-slate-400 mt-2">Hover a node to highlight its region</div>
         </div>
       </div>
 
       {/* Controls - now spans full width */}
-      <div className="bg-gray-800 p-4 border-t border-gray-700">
+      <div className="bg-gray-800 p-2 sm:p-4 border-t border-gray-700">
         <div className="max-w-4xl mx-auto">
           {/* Controls */}
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 flex-wrap">
             <button
-              className="px-3 py-1 rounded bg-slate-200 hover:bg-slate-300 text-slate-700"
+              className="px-2 sm:px-3 py-1 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm sm:text-base"
               onClick={handlePrev}
               disabled={splitStep === 0}
             >Previous Split</button>
             <button
-              className="px-3 py-1 rounded bg-blue-500 hover:bg-blue-600 text-white"
+              className="px-2 sm:px-3 py-1 rounded bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base"
               onClick={handleNext}
               disabled={splitStep === splitSequence.current.length}
             >Next Split</button>
             <button
               className={classNames(
-                'px-3 py-1 rounded',
+                'px-2 sm:px-3 py-1 rounded text-sm sm:text-base',
                 playing ? 'bg-orange-400 hover:bg-orange-500 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-700'
               )}
               onClick={handlePlay}
@@ -472,7 +474,7 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
               onChange={handleSlider}
               className="w-full accent-blue-500"
             />
-            <span className="text-xs text-slate-500">{splitStep}/{splitSequence.current.length}</span>
+            <span className="text-xs text-slate-500 whitespace-nowrap">{splitStep}/{splitSequence.current.length}</span>
           </div>
         </div>
       </div>
