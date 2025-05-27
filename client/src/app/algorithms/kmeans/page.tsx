@@ -9,16 +9,7 @@ import Code from '../../components/ui/Code';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setIsMobileMenuOpen(false);
-    }
-  };
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
