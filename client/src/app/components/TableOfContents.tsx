@@ -62,9 +62,40 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-4 h-full flex flex-col">
-            <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
-            <nav className="space-y-2 overflow-y-auto flex-1 pr-2">
+          <div className="h-full flex flex-col">
+            <div className="p-4">
+              <h3 className="text-lg font-semibold text-white">Contents</h3>
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+              <nav className="space-y-2">
+                {sections.map((section) => (
+                  <button
+                    key={section.id}
+                    onClick={() => scrollToSection(section.id)}
+                    className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
+                      activeSection === section.id
+                        ? 'bg-purple-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    <span className="text-lg">{section.icon}</span>
+                    <span className="font-medium">{section.title}</span>
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Table of Contents */}
+      <div className="hidden lg:block fixed top-24 left-4 w-64 h-[calc(100vh-6rem)]">
+        <div className="bg-gray-800 rounded-xl shadow-xl h-full flex flex-col">
+          <div className="p-4">
+            <h3 className="text-lg font-semibold text-white">Contents</h3>
+          </div>
+          <div className="flex-1 overflow-y-auto px-4 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+            <nav className="space-y-1">
               {sections.map((section) => (
                 <button
                   key={section.id}
@@ -81,29 +112,6 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
               ))}
             </nav>
           </div>
-        </div>
-      </div>
-
-      {/* Desktop Table of Contents */}
-      <div className="hidden lg:block fixed top-24 left-4 w-64">
-        <div className="bg-gray-800 rounded-xl shadow-xl p-4 max-h-[calc(100vh-8rem)] flex flex-col">
-          <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
-          <nav className="space-y-1 overflow-y-auto flex-1 pr-2">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                  activeSection === section.id
-                    ? 'bg-purple-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                <span className="text-lg">{section.icon}</span>
-                <span className="font-medium">{section.title}</span>
-              </button>
-            ))}
-          </nav>
         </div>
       </div>
     </>
