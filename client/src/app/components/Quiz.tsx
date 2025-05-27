@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Question } from '../data/quizzes/decisionTree';
 import { quizData, AlgorithmType } from '../data/quizzes';
 import { motion, AnimatePresence } from 'framer-motion';
