@@ -1,4 +1,4 @@
-# Machine Learning Visualizer App 🤖 *(In Development🚧)*
+# Machine Learning Visualizer App *(In Development🚧)*
 
 Welcome to the **Machine Learning Visualizer App**, an interactive full-stack platform to explore, understand, and compare machine learning algorithms through live visualizations and pseudocode walkthroughs.
 
