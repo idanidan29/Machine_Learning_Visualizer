@@ -299,6 +299,12 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
   ): JSX.Element {
     const isHighlighted = highlightId === node.id;
     const nodeColor = node.isLeaf ? (node.label === 1 ? '#2563eb' : '#f59e42') : '#64748b';
+    const isLastLevel = node.depth === maxDepth - 1;
+    
+    // Adjust spacing for last level nodes
+    const adjustedXStep = isLastLevel ? xStep * 1.8 : xStep;
+    const adjustedYStep = isLastLevel ? yStep * 1.2 : yStep;
+    
     return (
       <g key={node.id}>
         {/* Node circle */}
@@ -313,21 +319,55 @@ const DecisionTreeVisualizer: React.FC<DecisionTreeVisualizerProps> = ({
           onMouseEnter={() => setHoveredTreeNode(node.id)}
           onMouseLeave={() => setHoveredTreeNode(undefined)}
         />
-        {/* Node label */}
-        <text x={x} y={y +35} textAnchor="middle" fontSize={node.isLeaf ? 15 : 13} fill="#fff">
+        {/* Node label - adjusted position for last level */}
+        <text 
+          x={x} 
+          y={isLastLevel ? y + 45 : y + 35} 
+          textAnchor="middle" 
+          fontSize={node.isLeaf ? 15 : 13} 
+          fill="#fff"
+        >
           {node.isLeaf ? `Class ${node.label}` : `${node.split?.axis} ≤ ${node.split?.threshold.toFixed(2)}`}
         </text>
         {/* Children and connecting lines */}
         {node.left && (
           <>
-            <line x1={x} y1={y + 18} x2={x - xStep} y2={y + yStep - 18} stroke="#64748b" strokeWidth={2} />
-            {renderTree(node.left, x - xStep, y + yStep, xStep / 1.5, yStep, highlightId)}
+            <line 
+              x1={x} 
+              y1={y + 18} 
+              x2={x - adjustedXStep} 
+              y2={y + adjustedYStep - 18} 
+              stroke="#64748b" 
+              strokeWidth={2} 
+            />
+            {renderTree(
+              node.left, 
+              x - adjustedXStep, 
+              y + adjustedYStep, 
+              adjustedXStep / (isLastLevel ? 1.2 : 1.5), 
+              adjustedYStep, 
+              highlightId
+            )}
           </>
         )}
         {node.right && (
           <>
-            <line x1={x} y1={y + 18} x2={x + xStep} y2={y + yStep - 18} stroke="#64748b" strokeWidth={2} />
-            {renderTree(node.right, x + xStep, y + yStep, xStep / 1.5, yStep, highlightId)}
+            <line 
+              x1={x} 
+              y1={y + 18} 
+              x2={x + adjustedXStep} 
+              y2={y + adjustedYStep - 18} 
+              stroke="#64748b" 
+              strokeWidth={2} 
+            />
+            {renderTree(
+              node.right, 
+              x + adjustedXStep, 
+              y + adjustedYStep, 
+              adjustedXStep / (isLastLevel ? 1.2 : 1.5), 
+              adjustedYStep, 
+              highlightId
+            )}
           </>
         )}
       </g>
