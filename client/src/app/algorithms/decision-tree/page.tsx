@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar';
 import DecisionTreeVisualization from '../../components/visualizations/DecisionTreeVisualization';
 import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
+import Code from '../../components/ui/Code';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -306,9 +307,8 @@ export default function DecisionTreePage() {
               <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudocode</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
-                    <pre className="text-gray-300 text-sm overflow-x-auto">
-{`function buildDecisionTree(data, features, target):
+                  <Code
+                    code={`function buildDecisionTree(data, features, target):
     # Base cases
     if all samples have same target value:
         return leaf node with that value
@@ -323,8 +323,8 @@ export default function DecisionTreePage() {
     node = createDecisionNode(best_feature, best_threshold)
     
     # Split data
-    left_data = data where best_feature &lt;= best_threshold
-    right_data = data where best_feature &gt; best_threshold
+    left_data = data where best_feature <= best_threshold
+    right_data = data where best_feature > best_threshold
     
     # Recursively build subtrees
     node.left = buildDecisionTree(left_data, features - best_feature, target)
@@ -355,8 +355,8 @@ function calculateInformationGain(data, feature, target):
         weighted_child_entropy += weight * child_entropy
     
     return parent_entropy - weighted_child_entropy`}
-                    </pre>
-                  </div>
+                    language="python"
+                  />
                 </div>
               </section>
 
