@@ -13,11 +13,31 @@ interface KNNVisualizationProps {
 
 const KNNVisualization: React.FC<KNNVisualizationProps> = ({ k = 3 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [points, setPoints] = useState<Point[]>([]);
+  const [points, setPoints] = useState<Point[]>(() => {
+    // Generate 10 random points for each class
+    const initialPoints: Point[] = [];
+    for (let i = 0; i < 10; i++) {
+      initialPoints.push({
+        x: Math.random(),
+        y: Math.random(),
+        class: 0
+      });
+      initialPoints.push({
+        x: Math.random(),
+        y: Math.random(),
+        class: 1
+      });
+    }
+    return initialPoints;
+  });
   const [selectedClass, setSelectedClass] = useState<number | null>(null);
-  const [showDecisionBoundary, setShowDecisionBoundary] = useState(false);
+  const [showDecisionBoundary, setShowDecisionBoundary] = useState(true);
   const [hoveredPoint, setHoveredPoint] = useState<Point | null>(null);
   const [kValue, setKValue] = useState(k);
+
+  const resetPoints = () => {
+    setPoints([]);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -179,6 +199,12 @@ const KNNVisualization: React.FC<KNNVisualizationProps> = ({ k = 3 }) => {
           >
             Decision Boundary
           </button>
+          <button
+            onClick={resetPoints}
+            className="px-4 py-2 rounded-lg transition-colors bg-gray-700 text-gray-300 hover:bg-gray-600"
+          >
+            Clear Points
+          </button>
         </div>
       </div>
 
@@ -205,7 +231,7 @@ const KNNVisualization: React.FC<KNNVisualizationProps> = ({ k = 3 }) => {
           height={600}
           onClick={handleCanvasClick}
           onMouseMove={handleCanvasMouseMove}
-          className="w-full h-[600px] cursor-crosshair"
+          className="w-full h-[500px] cursor-crosshair"
         />
       </div>
 
@@ -216,6 +242,27 @@ const KNNVisualization: React.FC<KNNVisualizationProps> = ({ k = 3 }) => {
           Position: ({hoveredPoint.x.toFixed(2)}, {hoveredPoint.y.toFixed(2)})
         </div>
       )}
+
+      <div className="mt-6 p-4 bg-gray-800 rounded-lg text-gray-300">
+        <h3 className="text-lg font-semibold mb-2">Understanding K-Nearest Neighbors</h3>
+        <div className="space-y-2 text-sm">
+          <p>
+            <span className="text-blue-400">• Blue points</span> represent Class 0, and <span className="text-red-400">• Red points</span> represent Class 1.
+          </p>
+          <p>
+            The colored background shows the decision boundary - areas where the algorithm predicts Class 0 (blue) or Class 1 (red).
+          </p>
+          <p>
+            How it works:
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>For each point in the background, the algorithm finds the K nearest training points (K is controlled by the slider)</li>
+            <li>It then counts how many points of each class are among these K neighbors</li>
+            <li>The point is classified as the majority class among its K nearest neighbors</li>
+            <li>This creates the decision boundary you see in the background</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
