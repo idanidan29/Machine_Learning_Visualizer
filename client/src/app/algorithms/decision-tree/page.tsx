@@ -6,6 +6,7 @@ import DecisionTreeVisualization from '../../components/visualizations/DecisionT
 import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
+import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -262,17 +263,19 @@ export default function DecisionTreePage() {
                       <li>
                         <strong>Visual Representation:</strong>
                         <div className="ml-6 mt-4">
-                          <div className="bg-gray-700 p-6 rounded-lg flex flex-col items-center relative" style={{ minHeight: 200, minWidth: 420 }}>
+                          <div className="bg-gray-700 p-6 rounded-lg flex flex-col items-center relative" style={{ minHeight: 200, minWidth: '100%', maxWidth: 420 }}>
                             {/* Root Node */}
-                            <div className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg z-10 mb-2">
+                            <div className="bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg z-10 mb-2 text-sm sm:text-base">
                               Credit Score &gt; 700?
                             </div>
                             {/* SVG for lines */}
                             <svg
-                              width="420"
+                              width="100%"
                               height="120"
                               className="absolute left-1/2"
                               style={{ transform: 'translateX(-50%)', top: 60, pointerEvents: 'none', zIndex: 0 }}
+                              viewBox="0 0 420 120"
+                              preserveAspectRatio="xMidYMid meet"
                             >
                               {/* Vertical from root */}
                               <line x1="210" y1="0" x2="210" y2="30" stroke="#a3a3a3" strokeWidth="2" />
@@ -285,15 +288,15 @@ export default function DecisionTreePage() {
                             </svg>
                             {/* Branches */}
                             <div className="flex justify-between w-full" style={{ marginTop: 40, maxWidth: 420 }}>
-                              <div className="flex flex-col items-center" style={{ width: 120, marginLeft: 50 }}>
-                                <span className="text-gray-300 font-medium ">Yes</span>
-                                <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg mt-2">
+                              <div className="flex flex-col items-center" style={{ width: '45%', marginLeft: '5%' }}>
+                                <span className="text-gray-300 font-medium text-sm sm:text-base">Yes</span>
+                                <div className="bg-green-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg mt-2 text-sm sm:text-base">
                                   Approved
                                 </div>
                               </div>
-                              <div className="flex flex-col items-center" style={{ width: 160, marginRight: 80 }}>
-                                <span className="text-gray-300 font-medium">No</span>
-                                <div className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg mt-2">
+                              <div className="flex flex-col items-center" style={{ width: '45%', marginRight: '5%' }}>
+                                <span className="text-gray-300 font-medium text-sm sm:text-base">No</span>
+                                <div className="bg-red-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg mt-2 text-sm sm:text-base">
                                   Not Approved
                                 </div>
                               </div>
@@ -323,31 +326,11 @@ export default function DecisionTreePage() {
                   <p className="text-gray-300">
                     Download our example that demonstrates how to solve a complex problem using Decision Trees with advanced splitting criteria and pruning techniques.
                   </p>
-                  <div className="bg-gray-900 rounded-lg p-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex-shrink-0">
-                        <svg className="h-12 w-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-medium text-white">Decision Tree Complex Example</h3>
-                        <p className="text-gray-400 text-sm mt-1">
-                          A detailed guide with step-by-step exmaple for how to create a decition tree by comparing information gain.
-                        </p>
-                      </div>
-                      <a
-                        href="/pdfs/Decision_tree.pdf"
-                        download
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      >
-                        <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download PDF
-                      </a>
-                    </div>
-                  </div>
+                  <PDFDownloadCard
+                    title="Decision Tree Complex Example"
+                    description="A detailed guide with step-by-step example for how to create a decision tree by comparing information gain."
+                    pdfPath="/pdfs/Decision_tree.pdf"
+                  />
                 </div>
               </section>
 
