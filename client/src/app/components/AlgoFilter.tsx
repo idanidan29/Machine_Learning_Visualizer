@@ -37,13 +37,13 @@ const categories = [
 ]
 
 const algorithms = [
-  // {
-  //   name: 'K-Nearest Neighbors',
-  //   description: 'A simple, instance-based learning algorithm that stores all available cases and classifies new cases based on a similarity measure.',
-  //   path: '/algorithms/knn',
-  //   icon: '🔍',
-  //   categories: ['supervised', 'classification']
-  // },
+  {
+    name: 'K-Nearest Neighbors',
+    description: 'A simple, instance-based learning algorithm that stores all available cases and classifies new cases based on a similarity measure.',
+    path: '/algorithms/knn',
+    icon: '🔍',
+    categories: ['supervised', 'classification']
+  },
   {
     name: 'Decision Trees',
     description: 'A tree-like model of decisions and their possible consequences, including chance event outcomes.',
@@ -65,27 +65,6 @@ const algorithms = [
     icon: '🎯',
     categories: ['unsupervised', 'clustering']
   },
-  // {
-  //   name: 'Linear Regression',
-  //   description: 'A linear approach to modeling the relationship between a dependent variable and one or more independent variables.',
-  //   path: '/algorithms/linear-regression',
-  //   icon: '📈',
-  //   categories: ['supervised', 'regression']
-  // },
-  // {
-  //   name: 'Logistic Regression',
-  //   description: 'A statistical model that uses a logistic function to model binary dependent variables.',
-  //   path: '/algorithms/logistic-regression',
-  //   icon: '📉',
-  //   categories: ['supervised', 'classification']
-  // },
-  // {
-  //   name: 'Support Vector Machines',
-  //   description: 'A supervised learning model that finds the optimal hyperplane to separate classes in high-dimensional space.',
-  //   path: '/algorithms/svm',
-  //   icon: '⚡',
-  //   categories: ['supervised', 'classification']
-  // },
   {
     name: 'Random Forest',
     description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
@@ -93,34 +72,6 @@ const algorithms = [
     icon: '🌲',
     categories: ['supervised', 'classification']
   },
-  // {
-  //   name: 'Gradient Boosting',
-  //   description: 'A machine learning technique that produces a prediction model in the form of an ensemble of weak prediction models.',
-  //   path: '/algorithms/gradient-boosting',
-  //   icon: '📈',
-  //   categories: ['supervised', 'classification', 'regression']
-  // },
-  // {
-  //   name: 'DBSCAN',
-  //   description: 'A density-based clustering algorithm that groups together points that are close to each other and marks outliers.',
-  //   path: '/algorithms/dbscan',
-  //   icon: '🎯',
-  //   categories: ['unsupervised', 'clustering']
-  // },
-  // {
-  //   name: 'Hierarchical Clustering',
-  //   description: 'A method of cluster analysis that builds a hierarchy of clusters by successively merging or splitting groups.',
-  //   path: '/algorithms/hierarchical-clustering',
-  //   icon: '🌳',
-  //   categories: ['unsupervised', 'clustering']
-  // },
-  // {
-  //   name: 'Polynomial Regression',
-  //   description: 'A form of regression analysis in which the relationship between variables is modeled as an nth degree polynomial.',
-  //   path: '/algorithms/polynomial-regression',
-  //   icon: '📊',
-  //   categories: ['supervised', 'regression']
-  // }
 ]
 
 export default function AlgorithmFilter() {
