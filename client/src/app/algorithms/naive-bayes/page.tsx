@@ -336,11 +336,11 @@ export default function NaiveBayesPage() {
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Example</h2>
                 <div className="space-y-4">
                   <p className="text-gray-300">
-                    Download our example that demonstrates how to solve a complex problem using Naive Bayes with advanced probability calculations and feature analysis.
+                    Download our example that demonstrates how to solve a more complex Naive Bayes problem using leplace smoothing and m-estimate techniques.
                   </p>
                   <PDFDownloadCard
                     title="Naive Bayes Complex Example"
-                    description="A detailed guide with step-by-step example for how to implement Naive Bayes classification with probability calculations."
+                    description="A detailed guide with step-by-step example for how to implement Naive Bayes classification using Laplace smoothing and m-estimate techniques."
                     pdfPath="/pdfs/Naive_bayes.pdf"
                   />
                 </div>

@@ -324,7 +324,7 @@ export default function DecisionTreePage() {
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Example</h2>
                 <div className="space-y-4">
                   <p className="text-gray-300">
-                    Download our example that demonstrates how to solve a complex problem using Decision Trees with advanced splitting criteria and pruning techniques.
+                    Download our example that demonstrates how to solve a more complex decision tree problem using information gain.
                   </p>
                   <PDFDownloadCard
                     title="Decision Tree Complex Example"
