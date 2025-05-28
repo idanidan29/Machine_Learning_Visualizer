@@ -91,7 +91,7 @@ const algorithms = [
     description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
     path: '/algorithms/random-forest',
     icon: '🌲',
-    categories: ['supervised', 'classification', 'regression']
+    categories: ['supervised', 'classification']
   },
   // {
   //   name: 'Gradient Boosting',
@@ -127,7 +127,8 @@ export default function AlgorithmFilter() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all'])
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleCategoryClick = (categoryId: string) => {
+  const handleCategoryClick = (categoryId: string, e: React.MouseEvent) => {
+    e.preventDefault();
     if (categoryId === 'all') {
       setSelectedCategories(['all'])
     } else {
@@ -224,7 +225,7 @@ export default function AlgorithmFilter() {
               key={category.id}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => handleCategoryClick(category.id)}
+              onClick={(e) => handleCategoryClick(category.id, e)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                 ${selectedCategories.includes(category.id)
                   ? 'bg-purple-600 text-white'
@@ -249,20 +250,27 @@ export default function AlgorithmFilter() {
         </motion.div>
 
         {/* Algorithm Cards */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 min-h-[400px]">
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 min-h-[500px] relative">
           <AnimatePresence mode="popLayout">
             {filteredAlgorithms.map((algorithm, index) => (
               <motion.div
-                layout
-                layoutId={algorithm.name}
                 key={algorithm.name}
+                layout
+                layoutId={`card-${algorithm.name}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ 
-                  duration: 0.2,
+                  layout: { duration: 0.2 },
+                  opacity: { duration: 0.2 },
+                  y: { duration: 0.2 },
                   delay: index * 0.05,
                   ease: "easeOut"
+                }}
+                style={{ 
+                  position: 'relative',
+                  width: '100%',
+                  height: 'auto'
                 }}
                 whileHover={{ 
                   scale: 1.01,
@@ -271,7 +279,7 @@ export default function AlgorithmFilter() {
               >
                 <Link
                   href={algorithm.path}
-                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200 block"
+                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200 block h-[250px] flex flex-col"
                 >
                   <div className="flex items-center space-x-4">
                     <motion.span 
@@ -294,7 +302,7 @@ export default function AlgorithmFilter() {
                       </div>
                     </div>
                   </div>
-                  <p className="mt-4 text-gray-300">
+                  <p className="mt-4 text-gray-300 flex-grow">
                     {algorithm.description}
                   </p>
                   <motion.div 
