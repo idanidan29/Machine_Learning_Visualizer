@@ -261,40 +261,52 @@ export default function DecisionTreePage() {
                       <li>
                         <strong>Visual Representation:</strong>
                         <div className="ml-6 mt-4">
-                          <div className="bg-gray-700 p-6 rounded-lg">
-                            <div className="flex flex-col items-center">
-                              {/* Root Node */}
-                              <div className="bg-purple-600 text-white px-6 py-3 rounded-lg mb-4">
-                                Credit Score &gt; 700?
-                              </div>
-                              
-                              {/* Branches */}
-                              <div className="flex justify-center space-x-16 mb-4">
-                                <div className="text-gray-300">Yes</div>
-                                <div className="text-gray-300">No</div>
-                              </div>
-                              
-                              {/* Leaf Nodes */}
-                              <div className="flex justify-center space-x-16">
-                                <div className="bg-green-600 text-white px-6 py-3 rounded-lg">
+                          <div className="bg-gray-700 p-6 rounded-lg flex flex-col items-center relative" style={{ minHeight: 200, minWidth: 420 }}>
+                            {/* Root Node */}
+                            <div className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg z-10 mb-2">
+                              Credit Score &gt; 700?
+                            </div>
+                            {/* SVG for lines */}
+                            <svg
+                              width="420"
+                              height="120"
+                              className="absolute left-1/2"
+                              style={{ transform: 'translateX(-50%)', top: 60, pointerEvents: 'none', zIndex: 0 }}
+                            >
+                              {/* Vertical from root */}
+                              <line x1="210" y1="0" x2="210" y2="30" stroke="#a3a3a3" strokeWidth="2" />
+                              {/* Horizontal split */}
+                              <line x1="130" y1="30" x2="290" y2="30" stroke="#a3a3a3" strokeWidth="2" />
+                              {/* Left vertical to leaf */}
+                              <line x1="130" y1="30" x2="130" y2="90" stroke="#a3a3a3" strokeWidth="2" />
+                              {/* Right vertical to leaf */}
+                              <line x1="290" y1="30" x2="290" y2="90" stroke="#a3a3a3" strokeWidth="2" />
+                            </svg>
+                            {/* Branches */}
+                            <div className="flex justify-between w-full" style={{ marginTop: 40, maxWidth: 420 }}>
+                              <div className="flex flex-col items-center" style={{ width: 120, marginLeft: 50 }}>
+                                <span className="text-gray-300 font-medium ">Yes</span>
+                                <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg mt-2">
                                   Approved
                                 </div>
-                                <div className="bg-red-600 text-white px-6 py-3 rounded-lg">
+                              </div>
+                              <div className="flex flex-col items-center" style={{ width: 160, marginRight: 80 }}>
+                                <span className="text-gray-300 font-medium">No</span>
+                                <div className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg mt-2">
                                   Not Approved
                                 </div>
                               </div>
                             </div>
-                            
-                            {/* Tree Statistics */}
-                            <div className="mt-6 text-gray-300 text-sm">
-                              <p className="mb-2"><strong>Tree Statistics:</strong></p>
-                              <ul className="list-disc list-inside space-y-1">
-                                <li>Depth: 1</li>
-                                <li>Total Nodes: 3</li>
-                                <li>Leaf Nodes: 2</li>
-                                <li>Accuracy: 100% (on training data)</li>
-                              </ul>
-                            </div>
+                          </div>
+                          {/* Tree Statistics */}
+                          <div className=" text-gray-300 text-sm bg-gray-800 p-4 rounded-lg">
+                            <p className="mb-2 text-purple-400 font-medium">Tree Statistics:</p>
+                            <ul className="list-disc list-inside space-y-1">
+                              <li>Depth: 1</li>
+                              <li>Total Nodes: 3</li>
+                              <li>Leaf Nodes: 2</li>
+                              <li>Accuracy: 100% (on training data)</li>
+                            </ul>
                           </div>
                         </div>
                       </li>

@@ -21,9 +21,13 @@ export default function NaiveBayesPage() {
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'laplace-smoothing', title: 'Laplace Smoothing', icon: '🧮' },
+    { id: 'm-estimate', title: 'm-Estimate', icon: '📐' },
     { id: 'example', title: 'Example', icon: '📝' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
+    { id: 'pseudocode', title: 'Pseudocode', icon: '��' },
+    { id: 'pdf-download', title: 'PDF Download', icon: '📄' },
     { id: 'quiz', title: 'Quiz', icon: '❓' }
   ];
 
@@ -174,6 +178,45 @@ export default function NaiveBayesPage() {
                           <p className="text-gray-400 text-xs mt-1">Probability of the features</p>
                         </div>
                       </div>
+
+                      {/* Laplace Smoothing Section */}
+                      <section id="laplace-smoothing" className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl mt-8">
+                        <h4 className="text-purple-400 font-semibold mb-4 text-center">Laplace Smoothing</h4>
+                        <div className="text-center text-base sm:text-lg text-white font-mono mb-4">
+                          P(feature|class) = <span className="text-purple-400">(n<sub>c</sub> + 1) / (n + K)</span>
+                        </div>
+                        <div className="space-y-2 text-gray-300">
+                          <p>Where:</p>
+                          <ul className="list-disc list-inside ml-4">
+                            <li>n<sub>c</sub>: Number of times the feature appears in the class</li>
+                            <li>n: Total number of instances in the class</li>
+                            <li>K: Number of possible feature values</li>
+                          </ul>
+                          <p className="mt-4">
+                            Laplace smoothing (add-one smoothing) is used to avoid zero probabilities in Naive Bayes. If a feature value never appears in the training data for a class, its probability would be zero, which would make the entire prediction zero. Laplace smoothing adds 1 to each count, ensuring all probabilities are non-zero and the model remains robust.
+                          </p>
+                        </div>
+                      </section>
+
+                      {/* m-Estimate Section */}
+                      <section id="m-estimate" className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl mt-8">
+                        <h4 className="text-purple-400 font-semibold mb-4 text-center">m-Estimate</h4>
+                        <div className="text-center text-base sm:text-lg text-white font-mono mb-4">
+                          P(feature|class) = <span className="text-purple-400">(n<sub>c</sub> + m p) / (n + m)</span>
+                        </div>
+                        <div className="space-y-2 text-gray-300">
+                          <p>Where:</p>
+                          <ul className="list-disc list-inside ml-4">
+                            <li>n<sub>c</sub>: Number of times the feature appears in the class</li>
+                            <li>n: Total number of instances in the class</li>
+                            <li>m: Smoothing parameter (strength of prior, typically a positive integer)</li>
+                            <li>p: Prior estimate of the probability (e.g., 1/K if all values are equally likely)</li>
+                          </ul>
+                          <p className="mt-4">
+                            The m-estimate is a generalization of Laplace smoothing. It allows you to incorporate prior knowledge (p) and control the influence of the prior with m. This approach is more flexible than Laplace smoothing and can be tuned for better performance in some cases.
+                          </p>
+                        </div>
+                      </section>
 
                       {/* Naive Bayes Formula */}
                       <div className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl overflow-x-auto">
@@ -399,6 +442,41 @@ function predictNaiveBayes(instance, prior_probs, likelihood_probs):
     return max(predictions.items(), key=lambda x: x[1])[0]`}
                     language="python"
                   />
+                </div>
+              </section>
+
+              {/* PDF Download Section */}
+              <section id="pdf-download" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Examples</h2>
+                <div className="space-y-4">
+                  <p className="text-gray-300">
+                    Download our comprehensive guide that demonstrates how to solve complex problems using Naive Bayes with both Laplace Smoothing and m-Estimate methods.
+                  </p>
+                  <div className="bg-gray-900 rounded-lg p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0">
+                        <svg className="h-12 w-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-medium text-white">Naive Bayes Complex Examples</h3>
+                        <p className="text-gray-400 text-sm mt-1">
+                          A detailed guide with step-by-step solutions using Laplace Smoothing and m-Estimate
+                        </p>
+                      </div>
+                      <a
+                        href="/pdfs/naive-bayes-complex-examples.pdf"
+                        download
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      >
+                        <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download PDF
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </section>
 

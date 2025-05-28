@@ -86,13 +86,13 @@ const algorithms = [
   //   icon: '⚡',
   //   categories: ['supervised', 'classification']
   // },
-  // {
-  //   name: 'Random Forest',
-  //   description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
-  //   path: '/algorithms/random-forest',
-  //   icon: '🌲',
-  //   categories: ['supervised', 'classification', 'regression']
-  // },
+  {
+    name: 'Random Forest',
+    description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
+    path: '/algorithms/random-forest',
+    icon: '🌲',
+    categories: ['supervised', 'classification', 'regression']
+  },
   // {
   //   name: 'Gradient Boosting',
   //   description: 'A machine learning technique that produces a prediction model in the form of an ensemble of weak prediction models.',
