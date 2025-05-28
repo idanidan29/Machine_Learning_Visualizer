@@ -24,10 +24,10 @@ export default function NaiveBayesPage() {
     { id: 'laplace-smoothing', title: 'Laplace Smoothing', icon: '🧮' },
     { id: 'm-estimate', title: 'm-Estimate', icon: '📐' },
     { id: 'example', title: 'Example', icon: '📝' },
+    { id: 'pdf-download', title: 'Complex Example', icon: '📄' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
-    { id: 'pseudocode', title: 'Pseudocode', icon: '��' },
-    { id: 'pdf-download', title: 'PDF Download', icon: '📄' },
+    { id: 'pseudocode', title: 'Pseudocode', icon: '💻' },
     { id: 'quiz', title: 'Quiz', icon: '❓' }
   ];
 
@@ -330,6 +330,41 @@ export default function NaiveBayesPage() {
                 </div>
               </section>
 
+              {/* PDF Download Section */}
+              <section id="pdf-download" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Example</h2>
+                <div className="space-y-4">
+                  <p className="text-gray-300">
+                    Download our example that demonstrates how to solve a complex problem using Naive Bayes with both Laplace Smoothing and m-Estimate methods.
+                  </p>
+                  <div className="bg-gray-900 rounded-lg p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0">
+                        <svg className="h-12 w-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-medium text-white">Naive Bayes Complex Examples</h3>
+                        <p className="text-gray-400 text-sm mt-1">
+                          A detailed guide with step-by-step solutions using Laplace Smoothing and m-Estimate
+                        </p>
+                      </div>
+                      <a
+                        href="/pdfs/Baysian_Learning.pdf"
+                        download
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      >
+                        <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download PDF
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               {/* Characteristics Section */}
               <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Key Characteristics</h2>
@@ -442,41 +477,6 @@ function predictNaiveBayes(instance, prior_probs, likelihood_probs):
     return max(predictions.items(), key=lambda x: x[1])[0]`}
                     language="python"
                   />
-                </div>
-              </section>
-
-              {/* PDF Download Section */}
-              <section id="pdf-download" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Examples</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-300">
-                    Download our comprehensive guide that demonstrates how to solve complex problems using Naive Bayes with both Laplace Smoothing and m-Estimate methods.
-                  </p>
-                  <div className="bg-gray-900 rounded-lg p-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex-shrink-0">
-                        <svg className="h-12 w-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-medium text-white">Naive Bayes Complex Examples</h3>
-                        <p className="text-gray-400 text-sm mt-1">
-                          A detailed guide with step-by-step solutions using Laplace Smoothing and m-Estimate
-                        </p>
-                      </div>
-                      <a
-                        href="/pdfs/naive-bayes-complex-examples.pdf"
-                        download
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      >
-                        <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download PDF
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </section>
 
