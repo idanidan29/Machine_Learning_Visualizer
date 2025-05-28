@@ -341,7 +341,7 @@ export default function NaiveBayesPage() {
                   <PDFDownloadCard
                     title="Naive Bayes Complex Example"
                     description="A detailed guide with step-by-step example for how to implement Naive Bayes classification using Laplace smoothing and m-estimate techniques."
-                    pdfPath="/pdfs/Naive_bayes.pdf"
+                    pdfPath="/pdfs/Baysian_Learning.pdf"
                   />
                 </div>
               </section>

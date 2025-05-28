@@ -2,8 +2,9 @@ import { Question } from './decisionTree';
 import { decisionTreeQuestions } from './decisionTree';
 import { naiveBayesQuestions } from './naiveBayes';
 import { kMeansQuestions } from './kMeans';
+import { knnQuestions } from './knn';
 
-export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means';
+export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn';
 
 export const quizData: Record<AlgorithmType, {
   questions: Question[];
@@ -20,5 +21,9 @@ export const quizData: Record<AlgorithmType, {
   'k-means': {
     questions: kMeansQuestions,
     title: 'K-Means Clustering Quiz'
+  },
+  'knn': {
+    questions: knnQuestions,
+    title: 'K-Nearest Neighbors Quiz'
   }
 }; 
