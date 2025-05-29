@@ -59,7 +59,7 @@ export default function KNNPage() {
                     K-Nearest Neighbors (KNN) is a simple yet powerful supervised learning algorithm used for both
                     classification and regression tasks. It works by finding the K closest training examples to a new
                     data point and making predictions based on their labels or values. KNN is a non-parametric algorithm,
-                    meaning it doesn't make any assumptions about the underlying data distribution.
+                    meaning it doesn&apos;t make any assumptions about the underlying data distribution.
                   </p>
                 </div>
               </section>
@@ -106,8 +106,8 @@ export default function KNNPage() {
                     <li>Store all training examples in memory</li>
                     <li>For a new data point, calculate distances to all training examples</li>
                     <li>Select the K nearest neighbors based on the calculated distances</li>
-                    <li>For classification: Take the majority vote of the K neighbors' labels</li>
-                    <li>For regression: Take the average of the K neighbors' values</li>
+                    <li>For classification: Take the majority vote of the K neighbors&apos; labels</li>
+                    <li>For regression: Take the average of the K neighbors&apos; values</li>
                   </ol>
                 </div>
               </section>
