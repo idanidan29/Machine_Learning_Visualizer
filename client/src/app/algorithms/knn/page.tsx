@@ -6,6 +6,7 @@ import KNNVisualization from '../../components/visualizations/KNNVisualization';
 import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
+import PageHeader from '../../components/ui/PageHeader';
 
 export default function KNNPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -35,15 +36,17 @@ export default function KNNPage() {
 
           {/* Main Content */}
           <div className="lg:ml-72">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                K-Nearest Neighbors (KNN)
-              </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-6 text-sm sm:text-base">
-                Explore how KNN makes predictions by finding the K closest training examples.
-                Visualize how the algorithm classifies new points based on their nearest neighbors.
-              </p>
-            </div>
+            <PageHeader
+              title="K-Nearest Neighbors (KNN)"
+              description="Explore how KNN makes predictions by finding the K closest training examples. Visualize how the algorithm classifies new points based on their nearest neighbors."
+              onQuizClick={() => {
+                const section = document.getElementById('quiz');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' });
+                  setActiveSection('quiz');
+                }
+              }}
+            />
 
             <div className="space-y-6">
               {/* Overview Section */}

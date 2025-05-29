@@ -6,10 +6,10 @@ import Navbar from '../../components/Navbar';
 import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
+import PageHeader from '../../components/ui/PageHeader';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
-
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
@@ -34,46 +34,19 @@ export default function KMeansPage() {
             setActiveSection={setActiveSection}
           />
 
-
-
           {/* Main Content */}
           <div className="lg:ml-72">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                K-Means Clustering
-              </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-6 text-sm sm:text-base">
-                Watch how the K-means algorithm groups similar data points into clusters.
-                Experiment with different numbers of clusters and observe how the algorithm
-                iteratively assigns points and updates cluster centers.
-              </p>
-              <button
-                onClick={() => {
-                  const section = document.getElementById('quiz');
-                  if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                    setActiveSection('quiz');
-                  }
-                }}
-                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white text-sm sm:text-base font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
-              >
-                Test Your Knowledge
-                <svg
-                  className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                  />
-                </svg>
-              </button>
-            </div>
+            <PageHeader
+              title="K-Means Clustering"
+              description="Watch how the K-means algorithm groups similar data points into clusters. Experiment with different numbers of clusters and observe how the algorithm iteratively assigns points and updates cluster centers."
+              onQuizClick={() => {
+                const section = document.getElementById('quiz');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' });
+                  setActiveSection('quiz');
+                }
+              }}
+            />
 
             {/* Content Sections */}
             <div className="space-y-6">

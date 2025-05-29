@@ -1,21 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import NaiveBayesVisualization from '../../components/visualizations/NaiveBayesVisualization';
 import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
+import PageHeader from '../../components/ui/PageHeader';
 
 export default function NaiveBayesPage() {
-  const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
@@ -45,46 +41,17 @@ export default function NaiveBayesPage() {
 
           {/* Main Content */}
           <div className="lg:ml-72">
-            <div 
-              className={`text-center mb-8 transition-all duration-1000 ease-out transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
-              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Naive Bayes Classification
-              </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-6 px-4">
-                Explore how Naive Bayes uses probability to classify data points.
-                Watch how the algorithm calculates posterior probabilities and makes predictions
-                based on feature independence assumptions.
-              </p>
-              <button
-                onClick={() => {
-                  const section = document.getElementById('quiz');
-                  if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                    setActiveSection('quiz');
-                  }
-                }}
-                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors duration-200 shadow-lg shadow-purple-600/20 hover:shadow-purple-600/30"
-              >
-                Test Your Knowledge
-                <svg
-                  className="ml-2 w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                  />
-                </svg>
-              </button>
-            </div>
+            <PageHeader
+              title="Naive Bayes Classification"
+              description="Explore how Naive Bayes uses probability to classify data points. Watch how the algorithm calculates posterior probabilities and makes predictions based on feature independence assumptions."
+              onQuizClick={() => {
+                const section = document.getElementById('quiz');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' });
+                  setActiveSection('quiz');
+                }
+              }}
+            />
 
             <div className="space-y-6 sm:space-y-8">
               {/* Overview Section */}
