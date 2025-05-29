@@ -7,6 +7,7 @@ import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
+import Formula from '../../components/ui/Formula';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -121,58 +122,40 @@ export default function KMeansPage() {
                 <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                   <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Mathematical Formulas</h2>
                   <div className="space-y-8">
-                    <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Objective Function</h3>
-                      <div className="flex justify-center items-center">
-                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                          J = ∑<sub>i=1</sub><sup>k</sup> ∑<sub>x∈C<sub>i</sub></sub> ||x - μ<sub>i</sub>||²
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-sm sm:text-base mt-4">
-                        Where:
-                      </p>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                        <li>J is the objective function to minimize</li>
-                        <li>k is the number of clusters</li>
-                        <li>C<sub>i</sub> represents the i-th cluster</li>
-                        <li>μ<sub>i</sub> is the centroid of cluster i</li>
-                        <li>||x - μ<sub>i</sub>||² is the squared Euclidean distance</li>
-                      </ul>
-                    </div>
+                    <Formula
+                      title="Objective Function"
+                      formula="J = ∑ᵢ₌₁ᵏ ∑ₓ∈Cᵢ ||x - μᵢ||²"
+                      variables={[
+                        { name: "J", description: "the objective function to minimize" },
+                        { name: "k", description: "the number of clusters" },
+                        { name: "Cᵢ", description: "represents the i-th cluster" },
+                        { name: "μᵢ", description: "is the centroid of cluster i" },
+                        { name: "||x - μᵢ||²", description: "is the squared Euclidean distance" }
+                      ]}
+                      gradient="purple-blue"
+                    />
 
-                    <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl">
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Centroid Update</h3>
-                      <div className="flex justify-center items-center">
-                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                          μ<sub>i</sub> = (1/|C<sub>i</sub>|) ∑<sub>x∈C<sub>i</sub></sub> x
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-sm sm:text-base mt-4">
-                        Where:
-                      </p>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                        <li>μ<sub>i</sub> is the new centroid position</li>
-                        <li>|C<sub>i</sub>| is the number of points in cluster i</li>
-                        <li>x represents each data point in the cluster</li>
-                      </ul>
-                    </div>
+                    <Formula
+                      title="Centroid Update"
+                      formula="μᵢ = (1/|Cᵢ|) ∑ₓ∈Cᵢ x"
+                      variables={[
+                        { name: "μᵢ", description: "is the new centroid position" },
+                        { name: "|Cᵢ|", description: "is the number of points in cluster i" },
+                        { name: "x", description: "represents each data point in the cluster" }
+                      ]}
+                      gradient="blue-purple"
+                    />
 
-                    <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Distance Calculation</h3>
-                      <div className="flex justify-center items-center">
-                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                          d(x, μ) = √(∑<sub>j=1</sub><sup>d</sup> (x<sub>j</sub> - μ<sub>j</sub>)²)
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-sm sm:text-base mt-4">
-                        Where:
-                      </p>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                        <li>d is the number of dimensions</li>
-                        <li>x<sub>j</sub> is the j-th coordinate of point x</li>
-                        <li>μ<sub>j</sub> is the j-th coordinate of centroid μ</li>
-                      </ul>
-                    </div>
+                    <Formula
+                      title="Distance Calculation"
+                      formula="d(x, μ) = √(∑ⱼ₌₁ᵈ (xⱼ - μⱼ)²)"
+                      variables={[
+                        { name: "d", description: "is the number of dimensions" },
+                        { name: "xⱼ", description: "is the j-th coordinate of point x" },
+                        { name: "μⱼ", description: "is the j-th coordinate of centroid μ" }
+                      ]}
+                      gradient="purple-blue"
+                    />
 
                     <div className="bg-purple-900/30 p-4 rounded-lg">
                       <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>

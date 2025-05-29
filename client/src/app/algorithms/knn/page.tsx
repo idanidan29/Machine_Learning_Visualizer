@@ -7,6 +7,7 @@ import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
+import Formula from '../../components/ui/Formula';
 
 export default function KNNPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -114,47 +115,49 @@ export default function KNNPage() {
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-6 shadow-lg border border-purple-500/20">
-                    <h3 className="text-xl font-bold text-purple-400 mb-6 text-center">Distance Metrics</h3>
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
-                          <span className="mr-2">📏</span> Euclidean Distance
-                        </h4>
-                        <div className="bg-gray-900/50 p-4 rounded-lg mb-3">
-                          <div className="text-center text-white text-lg font-mono">
-                            d(x,y) = √(Σ(xᵢ - yᵢ)²)
-                          </div>
-                        </div>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          Most common distance metric, measures straight-line distance between points in n-dimensional space
-                        </p>
-                        <div className="mt-4 p-3 bg-purple-500/10 rounded-lg">
-                          <p className="text-purple-300 text-sm">
-                            Best for: Continuous data and when all features are equally important
-                          </p>
-                        </div>
-                      </div>
-                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
-                          <span className="mr-2">📐</span> Manhattan Distance
-                        </h4>
-                        <div className="bg-gray-900/50 p-4 rounded-lg mb-3">
-                          <div className="text-center text-white text-lg font-mono">
-                            d(x,y) = Σ|xᵢ - yᵢ|
-                          </div>
-                        </div>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          Measures distance along axes at right angles, useful for grid-like data and when movement is restricted to horizontal/vertical
-                        </p>
-                        <div className="mt-4 p-3 bg-purple-500/10 rounded-lg">
-                          <p className="text-purple-300 text-sm">
-                            Best for: Discrete data and when features have different scales
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                <div className="space-y-8">
+                  <Formula
+                    title="Euclidean Distance"
+                    formula="d(x,y) = √(Σ(xᵢ - yᵢ)²)"
+                    variables={[
+                      { name: "xᵢ", description: "the i-th coordinate of point x" },
+                      { name: "yᵢ", description: "the i-th coordinate of point y" },
+                      { name: "d", description: "the distance between points x and y" }
+                    ]}
+                    gradient="purple-blue"
+                  />
+
+                  <Formula
+                    title="Manhattan Distance"
+                    formula="d(x,y) = Σ|xᵢ - yᵢ|"
+                    variables={[
+                      { name: "xᵢ", description: "the i-th coordinate of point x" },
+                      { name: "yᵢ", description: "the i-th coordinate of point y" },
+                      { name: "d", description: "the distance between points x and y" }
+                    ]}
+                    gradient="blue-purple"
+                  />
+
+                  <Formula
+                    title="Minkowski Distance"
+                    formula="d(x,y) = (Σ|xᵢ - yᵢ|ᵖ)^(1/p)"
+                    variables={[
+                      { name: "xᵢ", description: "the i-th coordinate of point x" },
+                      { name: "yᵢ", description: "the i-th coordinate of point y" },
+                      { name: "p", description: "the order of the distance metric" },
+                      { name: "d", description: "the distance between points x and y" }
+                    ]}
+                    gradient="purple-blue"
+                  />
+
+                  <div className="bg-purple-900/30 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                      <li>Euclidean distance is most common and works well for continuous data</li>
+                      <li>Manhattan distance is better for categorical or discrete data</li>
+                      <li>Minkowski distance generalizes both Euclidean and Manhattan distances</li>
+                      <li>Choice of distance metric can significantly impact KNN performance</li>
+                    </ul>
                   </div>
                 </div>
               </section>

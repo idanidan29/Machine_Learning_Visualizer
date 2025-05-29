@@ -6,6 +6,7 @@ import Quiz from '../../components/Quiz';
 import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
+import Formula from '../../components/ui/Formula';
 import RandomForestVisualization from '../../components/visualizations/RandomForestVisualization';
 
 export default function RandomForestPage() {
@@ -14,8 +15,8 @@ export default function RandomForestPage() {
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🌲' },
-    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
@@ -68,6 +69,38 @@ export default function RandomForestPage() {
               <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Visualization</h2>
                 <RandomForestVisualization />
+              </section>
+
+              {/* How It Works Section */}
+              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-900/50 p-6 rounded-lg">
+                    <h3 className="text-lg font-medium text-purple-400 mb-4">The Process</h3>
+                    <ol className="space-y-4 text-gray-300">
+                      <li className="flex items-start">
+                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
+                        <span>Create multiple bootstrap samples from the training data</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
+                        <span>For each sample, grow a decision tree using a random subset of features</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
+                        <span>At each node, select the best split from the random feature subset</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">4</span>
+                        <span>Grow trees to maximum depth without pruning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">5</span>
+                        <span>Combine predictions using majority voting (classification) or averaging (regression)</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
               </section>
 
               {/* When to Use Section */}
@@ -129,178 +162,123 @@ export default function RandomForestPage() {
                 </div>
               </section>
 
-              {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-6">
-                  <div className="bg-gray-900/50 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">The Process</h3>
-                    <ol className="space-y-4 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
-                        <span>Create multiple bootstrap samples from the training data</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
-                        <span>For each sample, grow a decision tree using a random subset of features</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
-                        <span>At each node, select the best split from the random feature subset</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">4</span>
-                        <span>Grow trees to maximum depth without pruning</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">5</span>
-                        <span>Combine predictions using majority voting (classification) or averaging (regression)</span>
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </section>
-
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
                 <div className="space-y-8">
-                  <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">Classification Prediction</h3>
-                    <div className="flex justify-center items-center">
-                      <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                        ŷ = mode(&#123;f<sub>1</sub>(x), f<sub>2</sub>(x), ..., f<sub>n</sub>(x)&#125;)
-                      </div>
-                    </div>
-                    <p className="text-gray-300 text-sm sm:text-base mt-4">
-                      Where:
-                    </p>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                      <li>ŷ is the predicted class</li>
-                      <li>f<sub>i</sub>(x) is the prediction of the i-th tree</li>
-                      <li>mode() returns the most frequent prediction</li>
-                    </ul>
-                  </div>
+                  <Formula
+                    title="Classification Prediction"
+                    formula="ŷ = mode({f₁(x), f₂(x), ..., fₙ(x)})"
+                    variables={[
+                      { name: "ŷ", description: "the predicted class" },
+                      { name: "fᵢ(x)", description: "the prediction of the i-th tree" },
+                      { name: "mode()", description: "returns the most frequent prediction" }
+                    ]}
+                    gradient="purple-blue"
+                  />
 
-                  <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">Regression Prediction</h3>
-                    <div className="flex justify-center items-center">
-                      <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                        ŷ = (1/n) ∑<sub>i=1</sub><sup>n</sup> f<sub>i</sub>(x)
-                      </div>
-                    </div>
-                    <p className="text-gray-300 text-sm sm:text-base mt-4">
-                      Where:
-                    </p>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                      <li>ŷ is the predicted value</li>
-                      <li>n is the number of trees</li>
-                      <li>f<sub>i</sub>(x) is the prediction of the i-th tree</li>
-                    </ul>
-                  </div>
+                  <Formula
+                    title="Regression Prediction"
+                    formula="ŷ = (1/n) ∑ᵢ₌₁ⁿ fᵢ(x)"
+                    variables={[
+                      { name: "ŷ", description: "the predicted value" },
+                      { name: "n", description: "the number of trees" },
+                      { name: "fᵢ(x)", description: "the prediction of the i-th tree" }
+                    ]}
+                    gradient="blue-purple"
+                  />
 
-                  <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">Feature Importance</h3>
-                    <div className="flex justify-center items-center">
-                      <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
-                        Importance(f) = (1/n) ∑<sub>i=1</sub><sup>n</sup> ΔI(f, T<sub>i</sub>)
-                      </div>
-                    </div>
-                    <p className="text-gray-300 text-sm sm:text-base mt-4">
-                      Where:
-                    </p>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
-                      <li>f is the feature</li>
-                      <li>n is the number of trees</li>
-                      <li>T<sub>i</sub> is the i-th tree</li>
-                      <li>ΔI is the impurity decrease</li>
-                    </ul>
-                  </div>
+                  <Formula
+                    title="Feature Importance"
+                    formula="Importance(f) = (1/n) ∑ᵢ₌₁ⁿ ΔI(f, Tᵢ)"
+                    variables={[
+                      { name: "f", description: "the feature" },
+                      { name: "n", description: "the number of trees" },
+                      { name: "Tᵢ", description: "the i-th tree" },
+                      { name: "ΔI", description: "the impurity decrease" }
+                    ]}
+                    gradient="purple-blue"
+                  />
                 </div>
               </section>
 
               {/* Practical Example Section */}
               <section id="practical-example" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example: Credit Risk Assessment</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example: How Random Forest Makes Decisions</h2>
                 <div className="space-y-6">
                   <p className="text-gray-300 text-sm sm:text-base">
-                    Let&apos;s see how Random Forest can be used to assess credit risk by analyzing various customer features.
+                    Let&apos;s see how a Random Forest with 5 trees makes a prediction for a new student. Each tree votes based on different features.
                   </p>
 
+                  {/* Sample Data */}
                   <div className="bg-gray-900/50 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">Sample Data</h3>
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full bg-gray-900 rounded-lg">
-                        <thead>
-                          <tr className="text-gray-300">
-                            <th className="px-4 py-2">Customer ID</th>
-                            <th className="px-4 py-2">Income</th>
-                            <th className="px-4 py-2">Credit Score</th>
-                            <th className="px-4 py-2">Age</th>
-                            <th className="px-4 py-2">Risk Level</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="text-gray-300">
-                            <td className="px-4 py-2 border-t border-gray-700">1</td>
-                            <td className="px-4 py-2 border-t border-gray-700">$75,000</td>
-                            <td className="px-4 py-2 border-t border-gray-700">720</td>
-                            <td className="px-4 py-2 border-t border-gray-700">35</td>
-                            <td className="px-4 py-2 border-t border-gray-700">Low</td>
-                          </tr>
-                          <tr className="text-gray-300">
-                            <td className="px-4 py-2 border-t border-gray-700">2</td>
-                            <td className="px-4 py-2 border-t border-gray-700">$45,000</td>
-                            <td className="px-4 py-2 border-t border-gray-700">650</td>
-                            <td className="px-4 py-2 border-t border-gray-700">28</td>
-                            <td className="px-4 py-2 border-t border-gray-700">Medium</td>
-                          </tr>
-                          <tr className="text-gray-300">
-                            <td className="px-4 py-2 border-t border-gray-700">3</td>
-                            <td className="px-4 py-2 border-t border-gray-700">$120,000</td>
-                            <td className="px-4 py-2 border-t border-gray-700">780</td>
-                            <td className="px-4 py-2 border-t border-gray-700">42</td>
-                            <td className="px-4 py-2 border-t border-gray-700">Low</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <h3 className="text-lg font-medium text-purple-400 mb-4">New Student Data</h3>
+                    <div className="grid grid-cols-2 gap-4 text-gray-300">
+                      <div>Study Hours: 3.5</div>
+                      <div>Previous Score: 78</div>
+                      <div>Attendance: 85%</div>
+                      <div>Assignments: 9</div>
                     </div>
                   </div>
 
+                  {/* Tree Votes */}
                   <div className="bg-gray-900/50 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">Feature Importance</h3>
+                    <h3 className="text-lg font-medium text-purple-400 mb-4">How Each Tree Votes</h3>
                     <div className="space-y-4">
-                      <div className="flex items-center">
-                        <div className="w-32 text-gray-300">Credit Score</div>
-                        <div className="flex-grow h-4 bg-gray-700 rounded-full">
-                          <div className="h-4 bg-purple-500 rounded-full" style={{ width: '85%' }}></div>
-                        </div>
-                        <div className="w-16 text-right text-gray-300">85%</div>
+                      <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                        <div className="text-gray-300">Tree 1</div>
+                        <div className="text-gray-300">Based on: Study Hours (3.5) &gt; 3.0</div>
+                        <div className="text-green-400 font-medium">Votes: Pass</div>
                       </div>
-                      <div className="flex items-center">
-                        <div className="w-32 text-gray-300">Income</div>
-                        <div className="flex-grow h-4 bg-gray-700 rounded-full">
-                          <div className="h-4 bg-purple-500 rounded-full" style={{ width: '65%' }}></div>
-                        </div>
-                        <div className="w-16 text-right text-gray-300">65%</div>
+                      <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                        <div className="text-gray-300">Tree 2</div>
+                        <div className="text-gray-300">Based on: Previous Score (78) &gt; 75</div>
+                        <div className="text-green-400 font-medium">Votes: Pass</div>
                       </div>
-                      <div className="flex items-center">
-                        <div className="w-32 text-gray-300">Age</div>
-                        <div className="flex-grow h-4 bg-gray-700 rounded-full">
-                          <div className="h-4 bg-purple-500 rounded-full" style={{ width: '45%' }}></div>
-                        </div>
-                        <div className="w-16 text-right text-gray-300">45%</div>
+                      <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                        <div className="text-gray-300">Tree 3</div>
+                        <div className="text-gray-300">Based on: Attendance (85%) &lt; 90%</div>
+                        <div className="text-red-400 font-medium">Votes: Fail</div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                        <div className="text-gray-300">Tree 4</div>
+                        <div className="text-gray-300">Based on: Assignments (9) &gt; 8</div>
+                        <div className="text-green-400 font-medium">Votes: Pass</div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                        <div className="text-gray-300">Tree 5</div>
+                        <div className="text-gray-300">Based on: Study Hours (3.5) &gt; 3.0</div>
+                        <div className="text-green-400 font-medium">Votes: Pass</div>
                       </div>
                     </div>
                   </div>
 
+                  {/* Final Decision */}
+                  <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
+                    <h3 className="text-lg font-medium text-purple-400 mb-4">Final Decision</h3>
+                    <div className="bg-gray-900/50 p-4 rounded-lg">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-gray-300">Total Trees: 5</div>
+                        <div className="text-gray-300">Pass Votes: 4</div>
+                        <div className="text-gray-300">Fail Votes: 1</div>
+                      </div>
+                      <div className="p-3 bg-green-900/30 rounded-lg">
+                        <p className="text-green-400 font-medium">Final Prediction: Pass (80% confidence)</p>
+                        <p className="text-gray-300 text-sm mt-2">
+                          The Random Forest predicts the student will pass because 4 out of 5 trees voted for Pass.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Points */}
                   <div className="bg-purple-900/30 p-4 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Points</h3>
                     <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                      <li>Credit Score is the most important feature for risk assessment</li>
-                      <li>Income has a significant but secondary impact</li>
-                      <li>Age has a moderate influence on risk prediction</li>
-                      <li>The model can handle non-linear relationships between features</li>
+                      <li>Each tree looks at different features to make its decision</li>
+                      <li>The final prediction is based on majority voting</li>
+                      <li>More trees voting the same way means higher confidence</li>
+                      <li>Different trees can use the same feature but with different thresholds</li>
                     </ul>
                   </div>
                 </div>

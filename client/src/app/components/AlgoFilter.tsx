@@ -155,14 +155,15 @@ export default function AlgorithmFilter() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="text-center"
         >
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">
-            Explore ML Algorithms
-          </h2>
-          <p className="mt-4 text-lg text-gray-300">
-            Select an algorithm to visualize and understand its behavior
-          </p>
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              Explore ML Algorithms
+            </h2>
+            <p className="mt-4 text-lg text-gray-300">
+              Select an algorithm to visualize and understand its behavior
+            </p>
+          </div>
         </motion.div>
 
         {/* Search Bar */}
@@ -170,30 +171,31 @@ export default function AlgorithmFilter() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="mt-8 max-w-md mx-auto"
         >
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search algorithms..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
-            />
-            <svg
-              className="absolute right-3 top-2.5 h-5 w-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          <div className="mt-8 max-w-md mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search algorithms..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
               />
-            </svg>
+              <svg
+                className="absolute right-3 top-2.5 h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
           </div>
         </motion.div>
 
@@ -202,23 +204,28 @@ export default function AlgorithmFilter() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="mt-8 flex flex-wrap justify-center gap-4"
         >
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={(e) => handleCategoryClick(category.id, e)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-                ${selectedCategories.includes(category.id)
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-            >
-              {category.name}
-            </motion.button>
-          ))}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            {categories.map((category) => (
+              <motion.div
+                key={category.id}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <button
+                  onClick={(e) => handleCategoryClick(category.id, e)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                    ${selectedCategories.includes(category.id)
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    }`}
+                  type="button"
+                >
+                  {category.name}
+                </button>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Selected Category Description */}
@@ -226,11 +233,12 @@ export default function AlgorithmFilter() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-          className="mt-4 text-center"
         >
-          <p className="text-gray-400 text-sm">
-            {categories.find(cat => cat.id === selectedCategories[0])?.description}
-          </p>
+          <div className="mt-4 text-center">
+            <p className="text-gray-400 text-sm">
+              {categories.find(cat => cat.id === selectedCategories[0])?.description}
+            </p>
+          </div>
         </motion.div>
 
         {/* Algorithm Cards */}
@@ -245,36 +253,33 @@ export default function AlgorithmFilter() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ 
-                  layout: { duration: 0.2 },
-                  opacity: { duration: 0.2 },
-                  y: { duration: 0.2 },
+                  layout: { duration: 0.3, ease: "easeInOut" },
+                  opacity: { duration: 0.3 },
+                  y: { duration: 0.3 },
                   delay: index * 0.05,
                   ease: "easeOut"
                 }}
                 style={{ 
                   position: 'relative',
                   width: '100%',
-                  height: 'auto'
-                }}
-                whileHover={{ 
-                  scale: 1.01,
-                  transition: { duration: 0.1 }
+                  height: '250px'
                 }}
               >
                 <Link
                   href={algorithm.path}
-                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200 block h-[250px] flex flex-col"
+                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-colors duration-300 flex flex-col h-full w-full overflow-hidden"
                 >
                   <div className="flex items-start space-x-4">
-                    <motion.span 
-                      className="text-4xl flex-shrink-0"
-                      whileHover={{ scale: 1.05, rotate: 2 }}
-                      transition={{ duration: 0.1 }}
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
                     >
-                      {algorithm.icon}
-                    </motion.span>
+                      <span className="text-4xl block flex-shrink-0">
+                        {algorithm.icon}
+                      </span>
+                    </motion.div>
                     <div className="flex-grow min-w-0">
-                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 truncate">
+                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors duration-300 truncate">
                         {algorithm.name}
                       </h3>
                       <div className="flex flex-wrap gap-1 mt-1">
@@ -286,29 +291,32 @@ export default function AlgorithmFilter() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex-grow flex flex-col">
-                    <p className="mt-4 text-gray-300 line-clamp-3">
+                  <div className="flex-grow flex flex-col justify-between">
+                    <p className="mt-4 text-gray-300 line-clamp-3 leading-relaxed">
                       {algorithm.description}
                     </p>
-                    <div className="mt-auto pt-4">
+                    <div className="mt-4 pt-2">
                       <motion.div 
-                        className="flex items-center text-purple-400 group-hover:text-purple-300"
-                        whileHover={{ x: 3 }}
-                        transition={{ duration: 0.1 }}
+                        whileHover={{ x: 4 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                       >
-                        <span className="text-sm font-medium">Learn more</span>
-                        <svg
-                          className="ml-2 h-5 w-5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors duration-300 inline-flex">
+                          <span className="text-sm font-medium">Learn more</span>
+                          <motion.svg
+                            className="ml-2 h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            whileHover={{ x: 2 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </motion.svg>
+                        </div>
                       </motion.div>
                     </div>
                   </div>
@@ -326,11 +334,12 @@ export default function AlgorithmFilter() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="text-center mt-12"
             >
-              <p className="text-gray-400 text-lg">
-                No algorithms found in this category.
-              </p>
+              <div className="text-center mt-12">
+                <p className="text-gray-400 text-lg">
+                  No algorithms found in this category.
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 // Types
@@ -54,22 +54,8 @@ const RandomForestVisualization: React.FC = () => {
   const [winner, setWinner] = useState<number | null>(null);
   const [numTrees, setNumTrees] = useState(3);
 
-  // Initialize trees
-  useEffect(() => {
-    generateForest();
-  }, [numTrees]);
-
-  // Generate a random forest
-  const generateForest = () => {
-    const newTrees: Tree[] = [];
-    for (let i = 0; i < numTrees; i++) {
-      newTrees.push(makeTree());
-    }
-    setTrees(newTrees);
-  };
-
   // Make a simple random tree
-  function makeTree(): Tree {
+  const makeTree = useCallback((): Tree => {
     const feature: Feature = Math.random() > 0.5 ? 'x' : 'y';
     const threshold = (Math.random() - 0.5) * 10;
     
@@ -99,7 +85,21 @@ const RandomForestVisualization: React.FC = () => {
         },
       },
     };
-  }
+  }, []);
+
+  // Generate a random forest
+  const generateForest = useCallback(() => {
+    const newTrees: Tree[] = [];
+    for (let i = 0; i < numTrees; i++) {
+      newTrees.push(makeTree());
+    }
+    setTrees(newTrees);
+  }, [numTrees, makeTree]);
+
+  // Initialize trees
+  useEffect(() => {
+    generateForest();
+  }, [generateForest]);
 
   // Handle test point input
   const handleTestPoint = () => {
@@ -258,11 +258,6 @@ const RandomForestVisualization: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-        <h2 className="text-2xl font-bold text-white">Random Forest Voting Demo</h2>
-      </div>
-
       {/* Controls */}
       <div className="bg-gray-800 rounded-lg p-4 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

@@ -9,6 +9,7 @@ import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
 import PageHeader from '../../components/ui/PageHeader';
+import Formula from '../../components/ui/Formula';
 
 export default function NaiveBayesPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -111,93 +112,56 @@ export default function NaiveBayesPage() {
                     <li>Select the class with the highest posterior probability</li>
                   </ol>
 
-                  {/* Formula Section */}
-                  <div className="mt-8 bg-gray-900 rounded-lg p-4 sm:p-8">
-                    <h3 className="text-xl font-semibold text-white mb-6 text-center">Bayes' Theorem</h3>
-                    
-                    <div className="flex flex-col items-center space-y-6 sm:space-y-8">
-                      {/* Main Formula */}
-                      <div  className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
-                        <div className="text-center text-2xl text-white font-mono">
-                          P(class|features) = <span className="text-purple-400">P(features|class) × P(class)</span> / P(features)
-                        </div>
-                      </div>
+                  {/* Formulas Section */}
+                  <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                    <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
+                    <div className="space-y-8">
+                      <Formula
+                        title="Bayes' Theorem"
+                        formula="P(A|B) = P(B|A) * P(A) / P(B)"
+                        variables={[
+                          { name: "P(A|B)", description: "posterior probability of A given B" },
+                          { name: "P(B|A)", description: "likelihood of B given A" },
+                          { name: "P(A)", description: "prior probability of A" },
+                          { name: "P(B)", description: "marginal probability of B" }
+                        ]}
+                        gradient="purple-blue"
+                      />
 
-                      {/* Formula Components */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-2xl">
-                        <div className="bg-gray-800 p-4 rounded-lg">
-                          <h4 className="text-purple-400 font-semibold mb-2">Posterior Probability</h4>
-                          <p className="text-gray-300 text-sm">P(class|features)</p>
-                          <p className="text-gray-400 text-xs mt-1">Probability of class given the features</p>
-                        </div>
-                        <div className="bg-gray-800 p-4 rounded-lg">
-                          <h4 className="text-purple-400 font-semibold mb-2">Prior Probability</h4>
-                          <p className="text-gray-300 text-sm">P(class)</p>
-                          <p className="text-gray-400 text-xs mt-1">Initial probability of the class</p>
-                        </div>
-                        <div className="bg-gray-800 p-4 rounded-lg">
-                          <h4 className="text-purple-400 font-semibold mb-2">Likelihood</h4>
-                          <p className="text-gray-300 text-sm">P(features|class)</p>
-                          <p className="text-gray-400 text-xs mt-1">Probability of features given the class</p>
-                        </div>
-                        <div className="bg-gray-800 p-4 rounded-lg">
-                          <h4 className="text-purple-400 font-semibold mb-2">Evidence</h4>
-                          <p className="text-gray-300 text-sm">P(features)</p>
-                          <p className="text-gray-400 text-xs mt-1">Probability of the features</p>
-                        </div>
-                      </div>
+                      <Formula
+                        title="Naive Bayes Classifier"
+                        formula="P(y|x) ∝ P(y) * Π P(xᵢ|y)"
+                        variables={[
+                          { name: "P(y|x)", description: "probability of class y given features x" },
+                          { name: "P(y)", description: "prior probability of class y" },
+                          { name: "P(xᵢ|y)", description: "probability of feature xᵢ given class y" }
+                        ]}
+                        gradient="blue-purple"
+                      />
 
-                      {/* Laplace Smoothing Section */}
-                      <section id="laplace-smoothing" className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl mt-8">
-                        <h4 className="text-purple-400 font-semibold mb-4 text-center">Laplace Smoothing</h4>
-                        <div className="text-center text-base sm:text-lg text-white font-mono mb-4">
-                          P(feature|class) = <span className="text-purple-400">(n<sub>c</sub> + 1) / (n + K)</span>
-                        </div>
-                        <div className="space-y-2 text-gray-300">
-                          <p>Where:</p>
-                          <ul className="list-disc list-inside ml-4">
-                            <li>n<sub>c</sub>: Number of times the feature appears in the class</li>
-                            <li>n: Total number of instances in the class</li>
-                            <li>K: Number of possible feature values</li>
-                          </ul>
-                          <p className="mt-4">
-                            Laplace smoothing (add-one smoothing) is used to avoid zero probabilities in Naive Bayes. If a feature value never appears in the training data for a class, its probability would be zero, which would make the entire prediction zero. Laplace smoothing adds 1 to each count, ensuring all probabilities are non-zero and the model remains robust.
-                          </p>
-                        </div>
-                      </section>
+                      <Formula
+                        title="Gaussian Naive Bayes"
+                        formula="P(xᵢ|y) = (1/√(2πσ²)) * e^(-(x-μ)²/(2σ²))"
+                        variables={[
+                          { name: "xᵢ", description: "feature value" },
+                          { name: "y", description: "class" },
+                          { name: "μ", description: "mean of feature for class y" },
+                          { name: "σ", description: "standard deviation of feature for class y" }
+                        ]}
+                        gradient="purple-blue"
+                      />
 
-                      {/* m-Estimate Section */}
-                      <section id="m-estimate" className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl mt-8">
-                        <h4 className="text-purple-400 font-semibold mb-4 text-center">m-Estimate</h4>
-                        <div className="text-center text-base sm:text-lg text-white font-mono mb-4">
-                          P(feature|class) = <span className="text-purple-400">(n<sub>c</sub> + m p) / (n + m)</span>
-                        </div>
-                        <div className="space-y-2 text-gray-300">
-                          <p>Where:</p>
-                          <ul className="list-disc list-inside ml-4">
-                            <li>n<sub>c</sub>: Number of times the feature appears in the class</li>
-                            <li>n: Total number of instances in the class</li>
-                            <li>m: Smoothing parameter (strength of prior, typically a positive integer)</li>
-                            <li>p: Prior estimate of the probability (e.g., 1/K if all values are equally likely)</li>
-                          </ul>
-                          <p className="mt-4">
-                            The m-estimate is a generalization of Laplace smoothing. It allows you to incorporate prior knowledge (p) and control the influence of the prior with m. This approach is more flexible than Laplace smoothing and can be tuned for better performance in some cases.
-                          </p>
-                        </div>
-                      </section>
-
-                      {/* Naive Bayes Formula */}
-                      <div className="bg-gray-800 p-4 sm:p-6 rounded-lg w-full max-w-2xl overflow-x-auto">
-                        <h4 className="text-purple-400 font-semibold mb-4 text-center">Naive Bayes Formula</h4>
-                        <div className="text-center text-base sm:text-lg text-white font-mono whitespace-nowrap">
-                          P(class|features) ∝ P(class) × <span className="text-purple-400">∏</span> P(feature<sub>i</sub>|class)
-                        </div>
-                        <p className="text-gray-400 text-sm mt-4 text-center">
-                          Where ∏ represents the product of all feature probabilities
-                        </p>
+                      <div className="bg-purple-900/30 p-4 rounded-lg">
+                        <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                        <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                          <li>Naive Bayes assumes feature independence</li>
+                          <li>Gaussian Naive Bayes is used for continuous features</li>
+                          <li>Multinomial Naive Bayes is used for discrete features</li>
+                          <li>Bernoulli Naive Bayes is used for binary features</li>
+                        </ul>
                       </div>
                     </div>
-                  </div>
+                  </section>
 
                   <p className="text-gray-300 mt-4">
                     The algorithm uses Bayes' theorem to calculate the probability of a class given a set of features.

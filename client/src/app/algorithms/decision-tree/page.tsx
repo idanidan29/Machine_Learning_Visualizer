@@ -8,6 +8,7 @@ import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
 import PageHeader from '../../components/ui/PageHeader';
+import Formula from '../../components/ui/Formula';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -121,29 +122,7 @@ export default function DecisionTreePage() {
               <section id="decisions" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Key Decisions in Decision Trees</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-5 border-l-4 border-purple-500">
-                    <h3 className="text-lg font-bold text-purple-400 mb-3 text-center">Main Formula</h3>
-                    <div className="space-y-3">
-                      <div className="bg-gray-800/50 rounded-lg p-3 text-center relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative">
-                          <div className="text-base font-mono text-purple-300 mb-1">Information Gain</div>
-                          <div className="text-lg font-mono text-white">
-                            = Entropy(parent) - Σ(Weight × Entropy(child))
-                          </div>
-                        </div>
-                      </div>
-                      <div className="bg-gray-800/50 rounded-lg p-3 text-center relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative">
-                          <div className="text-base font-mono text-purple-300 mb-1">Entropy</div>
-                          <div className="text-lg font-mono text-white">
-                            = -Σ(p × log₂(p))
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                   
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium text-purple-400">Types of Decisions</h3>
@@ -181,18 +160,28 @@ export default function DecisionTreePage() {
               <section id="information-gain" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Information Gain</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="space-y-4">
-                      <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
-                        <div className="text-lg font-mono text-purple-300 mb-1">Information Gain</div>
-                        <div className="text-xl font-mono text-white">= Entropy(parent) - Σ(Weight × Entropy(child))</div>
-                      </div>
-                      <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
-                        <div className="text-lg font-mono text-purple-300 mb-1">Entropy</div>
-                        <div className="text-xl font-mono text-white">= -Σ(p × log₂(p))</div>
-                      </div>
-                    </div>
+                  <div className="space-y-8">
+                    <Formula
+                      title="Information Gain"
+                      formula="IG(D,S) = H(D) - Σ(|Dᵥ|/|D|) * H(Dᵥ)"
+                      variables={[
+                        { name: "IG(D,S)", description: "information gain of split S on dataset D" },
+                        { name: "H(D)", description: "entropy of dataset D" },
+                        { name: "Dᵥ", description: "subset of D for value v of feature S" },
+                        { name: "|D|", description: "size of dataset D" }
+                      ]}
+                      gradient="purple-blue"
+                    />
+
+                    <Formula
+                      title="Entropy"
+                      formula="H(D) = -Σ pᵢ * log₂(pᵢ)"
+                      variables={[
+                        { name: "H(D)", description: "entropy of dataset D" },
+                        { name: "pᵢ", description: "proportion of class i in dataset D" }
+                      ]}
+                      gradient="blue-purple"
+                    />
                   </div>
 
                   <div className="space-y-6">
@@ -348,18 +337,22 @@ export default function DecisionTreePage() {
               <section id="gini-impurity" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Gini Impurity</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
-                      <div className="text-lg font-mono text-purple-300 mb-1">Gini Impurity</div>
-                      <div className="text-xl font-mono text-white">= 1 - Σ(p²)</div>
-                    </div>
+                  <div className="space-y-8">
+                    <Formula
+                      title="Gini Impurity"
+                      formula="G(D) = 1 - Σ(pᵢ²)"
+                      variables={[
+                        { name: "G(D)", description: "Gini impurity of dataset D" },
+                        { name: "pᵢ", description: "proportion of class i in dataset D" }
+                      ]}
+                      gradient="purple-blue"
+                    />
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <p className="text-gray-300 text-sm sm:text-base">
-                      Gini Impurity measures how often a randomly chosen element would be incorrectly labeled. It ranges from 0 (pure node)
-                      to 1 (maximum impurity). Lower values indicate better splits.
+                      Gini Impurity is another measure of impurity used in decision trees. It measures the probability of incorrectly
+                      classifying a randomly chosen element if it were randomly labeled according to the class distribution in the dataset.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -422,20 +415,25 @@ export default function DecisionTreePage() {
 
               {/* Chi-Square Section */}
               <section id="chi-square" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Chi-Square Test</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Chi-Square</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
-                      <div className="text-lg font-mono text-purple-300 mb-1">Chi-Square (χ²)</div>
-                      <div className="text-xl font-mono text-white">= Σ((Observed - Expected)² / Expected)</div>
-                    </div>
+                  <div className="space-y-8">
+                    <Formula
+                      title="Chi-Square Statistic"
+                      formula="χ² = Σ((O - E)²/E)"
+                      variables={[
+                        { name: "χ²", description: "chi-square statistic" },
+                        { name: "O", description: "observed frequency" },
+                        { name: "E", description: "expected frequency" }
+                      ]}
+                      gradient="purple-blue"
+                    />
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <p className="text-gray-300 text-sm sm:text-base">
-                      The Chi-Square test is used to determine if there&apos;s a significant relationship between categorical variables.
-                      It helps in feature selection by measuring the independence between features and the target variable.
+                      The Chi-Square test measures the statistical significance of the relationship between a feature and the target variable.
+                      It compares observed frequencies with expected frequencies under the assumption of independence.
                     </p>
 
                     <div className="bg-gray-700 rounded-lg p-6">
@@ -801,6 +799,54 @@ function calculateInformationGain(data, feature, target):
                         <li>Hyperparameter tuning</li>
                     </ul>
                     </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Formulas Section */}
+              <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
+                <div className="space-y-8">
+                  <Formula
+                    title="Information Gain"
+                    formula="IG(D,S) = H(D) - Σ(|Dᵥ|/|D|) * H(Dᵥ)"
+                    variables={[
+                      { name: "IG(D,S)", description: "information gain of split S on dataset D" },
+                      { name: "H(D)", description: "entropy of dataset D" },
+                      { name: "Dᵥ", description: "subset of D for value v of feature S" },
+                      { name: "|D|", description: "size of dataset D" }
+                    ]}
+                    gradient="purple-blue"
+                  />
+
+                  <Formula
+                    title="Entropy"
+                    formula="H(D) = -Σ pᵢ * log₂(pᵢ)"
+                    variables={[
+                      { name: "H(D)", description: "entropy of dataset D" },
+                      { name: "pᵢ", description: "proportion of class i in dataset D" }
+                    ]}
+                    gradient="blue-purple"
+                  />
+
+                  <Formula
+                    title="Gini Impurity"
+                    formula="G(D) = 1 - Σ(pᵢ²)"
+                    variables={[
+                      { name: "G(D)", description: "Gini impurity of dataset D" },
+                      { name: "pᵢ", description: "proportion of class i in dataset D" }
+                    ]}
+                    gradient="purple-blue"
+                  />
+
+                  <div className="bg-purple-900/30 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                      <li>Information Gain measures reduction in entropy after a split</li>
+                      <li>Entropy measures impurity or disorder in a dataset</li>
+                      <li>Gini Impurity is an alternative to Entropy for measuring impurity</li>
+                      <li>Both metrics help determine the best feature to split on</li>
+                    </ul>
                   </div>
                 </div>
               </section>
