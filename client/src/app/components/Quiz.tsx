@@ -12,6 +12,13 @@ interface QuizProps {
   algorithm?: AlgorithmType;
 }
 
+// Create properly typed motion components
+const MotionDiv = motion('div');
+const MotionH2 = motion('h2');
+const MotionH3 = motion('h3');
+const MotionButton = motion('button');
+const MotionSpan = motion('span');
+
 const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTitle, algorithm }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -73,29 +80,29 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
 
   if (quizCompleted) {
     return (
-      <motion.div 
+      <MotionDiv 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="text-center"
       >
         <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 shadow-xl border border-purple-500/20">
-          <motion.div
+          <MotionDiv
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.2, type: "spring" }}
             className="text-6xl mb-4"
           >
             {score === questions.length ? '🏆' : score > questions.length / 2 ? '🎯' : '📚'}
-          </motion.div>
-          <motion.h2 
+          </MotionDiv>
+          <MotionH2 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="text-3xl font-bold text-white mb-4"
           >
             Quiz Completed!
-          </motion.h2>
-          <motion.div
+          </MotionH2>
+          <MotionDiv
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.4 }}
@@ -109,35 +116,35 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
                   ? "Great job! Keep learning! 💪" 
                   : "Keep practicing, you'll get better! 📚"}
             </div>
-          </motion.div>
-          <motion.button
+          </MotionDiv>
+          <MotionButton
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(147, 51, 234, 0.5)" }}
             whileTap={{ scale: 0.95 }}
             onClick={handleRestartQuiz}
             className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-3 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-lg font-medium shadow-lg shadow-purple-600/20"
           >
             Try Again
-          </motion.button>
+          </MotionButton>
         </div>
-      </motion.div>
+      </MotionDiv>
     );
   }
 
   return (
-    <motion.div 
+    <MotionDiv 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
       <div className="flex justify-between items-center mb-6">
-        <motion.h2 
+        <MotionH2 
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="text-2xl font-bold text-white"
         >
           {title}
-        </motion.h2>
-        <motion.div 
+        </MotionH2>
+        <MotionDiv 
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="flex items-center gap-4"
@@ -150,17 +157,17 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
           <div className="text-purple-400 font-medium">
             Score: {score}/{currentQuestion + 1}
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
 
       {/* Enhanced Progress bar */}
       <div className="w-full bg-gray-700 rounded-full h-3 mb-6 overflow-hidden">
-        <motion.div
+        <MotionDiv
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           className="bg-gradient-to-r from-purple-600 to-purple-400 h-3 rounded-full transition-all duration-300 relative"
         >
-          <motion.div
+          <MotionDiv
             animate={{
               x: ["0%", "100%"],
             }}
@@ -171,10 +178,10 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
             }}
             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
           />
-        </motion.div>
+        </MotionDiv>
       </div>
 
-      <motion.div 
+      <MotionDiv 
         key={currentQuestion}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -190,17 +197,17 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
           </span>
         </div>
 
-        <motion.h3 
+        <MotionH3 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className="text-xl text-white mb-6"
         >
           {questions[currentQuestion].question}
-        </motion.h3>
+        </MotionH3>
 
         <div className="space-y-4">
           {questions[currentQuestion].options.map((option, index) => (
-            <motion.button
+            <MotionButton
               key={index}
               whileHover={{ scale: 1.02, boxShadow: "0 0 15px rgba(147, 51, 234, 0.3)" }}
               whileTap={{ scale: 0.98 }}
@@ -218,13 +225,13 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
                 <span className="mr-3 text-lg font-medium">{['A', 'B', 'C', 'D'][index]}.</span>
                 {option}
               </div>
-            </motion.button>
+            </MotionButton>
           ))}
         </div>
 
         <AnimatePresence>
           {showExplanation && (
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -236,32 +243,32 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
                   : 'bg-gradient-to-r from-red-900/30 to-red-800/30 border border-red-500/30'
               }`}>
                 <div className="flex items-center mb-3">
-                  <motion.span 
+                  <MotionSpan 
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     className="text-2xl mr-2"
                   >
                     {isCorrect ? '✅' : '❌'}
-                  </motion.span>
+                  </MotionSpan>
                   <h4 className="text-lg font-medium text-white">
                     {isCorrect ? 'Correct!' : 'Not quite right'}
                   </h4>
                 </div>
                 <p className="text-gray-300">{questions[currentQuestion].explanation}</p>
-                <motion.button
+                <MotionButton
                   whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(147, 51, 234, 0.5)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleNextQuestion}
                   className="mt-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg shadow-purple-600/20"
                 >
                   {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
-                </motion.button>
+                </MotionButton>
               </div>
-            </motion.div>
+            </MotionDiv>
           )}
         </AnimatePresence>
-      </motion.div>
-    </motion.div>
+      </MotionDiv>
+    </MotionDiv>
   );
 };
 
