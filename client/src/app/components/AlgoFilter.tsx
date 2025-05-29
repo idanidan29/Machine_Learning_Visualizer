@@ -33,6 +33,11 @@ const categories = [
     id: 'clustering',
     name: 'Clustering',
     description: 'Algorithms for grouping similar data points'
+  },
+  {
+    id: 'ensemble',
+    name: 'Ensemble Methods',
+    description: 'Algorithms that combine multiple models for better performance'
   }
 ]
 
@@ -70,8 +75,36 @@ const algorithms = [
     description: 'An ensemble learning method that constructs multiple decision trees and outputs the class that is the mode of the classes.',
     path: '/algorithms/random-forest',
     icon: '🌲',
-    categories: ['supervised', 'classification']
+    categories: ['supervised', 'classification', 'ensemble']
   },
+  {
+    name: 'Gradient Boosting',
+    description: 'A powerful ensemble technique that builds models sequentially, each new model focusing on the errors of the previous ones.',
+    path: '/algorithms/gradient-boosting',
+    icon: '📈',
+    categories: ['supervised', 'classification', 'regression', 'ensemble']
+  },
+  {
+    name: 'AdaBoost',
+    description: 'An adaptive boosting algorithm that combines multiple weak classifiers to create a strong classifier.',
+    path: '/algorithms/adaboost',
+    icon: '⚡',
+    categories: ['supervised', 'classification', 'ensemble']
+  },
+  {
+    name: 'XGBoost',
+    description: 'An optimized implementation of gradient boosting that is highly efficient and scalable.',
+    path: '/algorithms/xgboost',
+    icon: '🚀',
+    categories: ['supervised', 'classification', 'regression', 'ensemble']
+  },
+  {
+    name: 'Stacking',
+    description: 'A meta-learning technique that combines multiple models using another model to learn how to best combine their predictions.',
+    path: '/algorithms/stacking',
+    icon: '🏗️',
+    categories: ['supervised', 'classification', 'regression', 'ensemble']
+  }
 ]
 
 export default function AlgorithmFilter() {
@@ -232,16 +265,16 @@ export default function AlgorithmFilter() {
                   href={algorithm.path}
                   className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-all duration-200 block h-[250px] flex flex-col"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-start space-x-4">
                     <motion.span 
-                      className="text-4xl"
+                      className="text-4xl flex-shrink-0"
                       whileHover={{ scale: 1.05, rotate: 2 }}
                       transition={{ duration: 0.1 }}
                     >
                       {algorithm.icon}
                     </motion.span>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400">
+                    <div className="flex-grow min-w-0">
+                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 truncate">
                         {algorithm.name}
                       </h3>
                       <div className="flex flex-wrap gap-1 mt-1">
@@ -253,28 +286,32 @@ export default function AlgorithmFilter() {
                       </div>
                     </div>
                   </div>
-                  <p className="mt-4 text-gray-300 flex-grow">
-                    {algorithm.description}
-                  </p>
-                  <motion.div 
-                    className="mt-6 flex items-center text-purple-400 group-hover:text-purple-300"
-                    whileHover={{ x: 3 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <span className="text-sm font-medium">Learn more</span>
-                    <svg
-                      className="ml-2 h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </motion.div>
+                  <div className="flex-grow flex flex-col">
+                    <p className="mt-4 text-gray-300 line-clamp-3">
+                      {algorithm.description}
+                    </p>
+                    <div className="mt-auto pt-4">
+                      <motion.div 
+                        className="flex items-center text-purple-400 group-hover:text-purple-300"
+                        whileHover={{ x: 3 }}
+                        transition={{ duration: 0.1 }}
+                      >
+                        <span className="text-sm font-medium">Learn more</span>
+                        <svg
+                          className="ml-2 h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </motion.div>
+                    </div>
+                  </div>
                 </Link>
               </motion.div>
             ))}

@@ -16,6 +16,7 @@ export default function KMeansPage() {
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
@@ -113,6 +114,75 @@ export default function KMeansPage() {
                       The algorithm minimizes the within-cluster sum of squares, effectively creating
                       compact, well-separated clusters.
                     </p>
+                  </div>
+                </section>
+
+                {/* Mathematical Formulas Section */}
+                <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Mathematical Formulas</h2>
+                  <div className="space-y-8">
+                    <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Objective Function</h3>
+                      <div className="flex justify-center items-center">
+                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
+                          J = ∑<sub>i=1</sub><sup>k</sup> ∑<sub>x∈C<sub>i</sub></sub> ||x - μ<sub>i</sub>||²
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm sm:text-base mt-4">
+                        Where:
+                      </p>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
+                        <li>J is the objective function to minimize</li>
+                        <li>k is the number of clusters</li>
+                        <li>C<sub>i</sub> represents the i-th cluster</li>
+                        <li>μ<sub>i</sub> is the centroid of cluster i</li>
+                        <li>||x - μ<sub>i</sub>||² is the squared Euclidean distance</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Centroid Update</h3>
+                      <div className="flex justify-center items-center">
+                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
+                          μ<sub>i</sub> = (1/|C<sub>i</sub>|) ∑<sub>x∈C<sub>i</sub></sub> x
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm sm:text-base mt-4">
+                        Where:
+                      </p>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
+                        <li>μ<sub>i</sub> is the new centroid position</li>
+                        <li>|C<sub>i</sub>| is the number of points in cluster i</li>
+                        <li>x represents each data point in the cluster</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 p-6 rounded-xl">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Distance Calculation</h3>
+                      <div className="flex justify-center items-center">
+                        <div className="text-white text-lg sm:text-xl font-mono bg-gray-900/50 p-4 rounded-lg">
+                          d(x, μ) = √(∑<sub>j=1</sub><sup>d</sup> (x<sub>j</sub> - μ<sub>j</sub>)²)
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm sm:text-base mt-4">
+                        Where:
+                      </p>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base ml-4">
+                        <li>d is the number of dimensions</li>
+                        <li>x<sub>j</sub> is the j-th coordinate of point x</li>
+                        <li>μ<sub>j</sub> is the j-th coordinate of centroid μ</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-purple-900/30 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                        <li>The objective function measures the total squared distance between points and their cluster centroids</li>
+                        <li>The centroid update formula ensures each centroid is the mean of all points in its cluster</li>
+                        <li>The distance calculation uses Euclidean distance, which assumes spherical clusters</li>
+                        <li>The algorithm converges when the objective function reaches a local minimum</li>
+                      </ul>
+                    </div>
                   </div>
                 </section>
 

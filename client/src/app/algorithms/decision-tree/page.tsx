@@ -121,13 +121,27 @@ export default function DecisionTreePage() {
               <section id="decisions" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Key Decisions in Decision Trees</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Main Formula</h3>
-                    <div className="text-center text-white text-lg mb-4">
-                      Information Gain = Entropy(parent) - Σ(Weight × Entropy(child))
-                    </div>
-                    <div className="text-center text-white text-lg">
-                      Entropy = -Σ(p × log₂(p))
+                  <div className="bg-gray-700 rounded-lg p-5 border-l-4 border-purple-500">
+                    <h3 className="text-lg font-bold text-purple-400 mb-3 text-center">Main Formula</h3>
+                    <div className="space-y-3">
+                      <div className="bg-gray-800/50 rounded-lg p-3 text-center relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative">
+                          <div className="text-base font-mono text-purple-300 mb-1">Information Gain</div>
+                          <div className="text-lg font-mono text-white">
+                            = Entropy(parent) - Σ(Weight × Entropy(child))
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-gray-800/50 rounded-lg p-3 text-center relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative">
+                          <div className="text-base font-mono text-purple-300 mb-1">Entropy</div>
+                          <div className="text-lg font-mono text-white">
+                            = -Σ(p × log₂(p))
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
@@ -167,14 +181,16 @@ export default function DecisionTreePage() {
               <section id="information-gain" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Information Gain</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
+                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
                     <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="text-center space-y-4">
-                      <div className="text-white text-lg">
-                        Information Gain = Entropy(parent) - Σ(Weight × Entropy(child))
+                    <div className="space-y-4">
+                      <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
+                        <div className="text-lg font-mono text-purple-300 mb-1">Information Gain</div>
+                        <div className="text-xl font-mono text-white">= Entropy(parent) - Σ(Weight × Entropy(child))</div>
                       </div>
-                      <div className="text-white text-lg">
-                        Entropy = -Σ(p × log₂(p))
+                      <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
+                        <div className="text-lg font-mono text-purple-300 mb-1">Entropy</div>
+                        <div className="text-xl font-mono text-white">= -Σ(p × log₂(p))</div>
                       </div>
                     </div>
                   </div>
@@ -332,10 +348,11 @@ export default function DecisionTreePage() {
               <section id="gini-impurity" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Gini Impurity</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
+                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
                     <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="text-center text-white text-lg">
-                      Gini Impurity = 1 - Σ(p²)
+                    <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
+                      <div className="text-lg font-mono text-purple-300 mb-1">Gini Impurity</div>
+                      <div className="text-xl font-mono text-white">= 1 - Σ(p²)</div>
                     </div>
                   </div>
 
@@ -407,10 +424,11 @@ export default function DecisionTreePage() {
               <section id="chi-square" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Chi-Square Test</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
+                  <div className="bg-gray-700 rounded-lg p-6 border-l-4 border-purple-500">
                     <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
-                    <div className="text-center text-white text-lg">
-                      χ² = Σ((Observed - Expected)² / Expected)
+                    <div className="bg-gray-800/50 rounded-lg p-4 text-center hover:bg-gray-800/70 transition-colors">
+                      <div className="text-lg font-mono text-purple-300 mb-1">Chi-Square (χ²)</div>
+                      <div className="text-xl font-mono text-white">= Σ((Observed - Expected)² / Expected)</div>
                     </div>
                   </div>
 
