@@ -18,6 +18,9 @@ export default function DecisionTreePage() {
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'decisions', title: 'Decisions', icon: '🎯' },
+    { id: 'information-gain', title: 'Information Gain', icon: '📈' },
+    { id: 'gini-impurity', title: 'Gini Impurity', icon: '🎲' },
+    { id: 'chi-square', title: 'Chi-Square', icon: '📊' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pdf-download', title: 'Complex Example', icon: '📄' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
@@ -156,6 +159,357 @@ export default function DecisionTreePage() {
                       <li>Minimum information gain threshold</li>
                       <li>All samples in a node belong to the same class</li>
                     </ul>
+                  </div>
+                </div>
+              </section>
+
+              {/* Information Gain Section */}
+              <section id="information-gain" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Information Gain</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-700 rounded-lg p-6">
+                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
+                    <div className="text-center space-y-4">
+                      <div className="text-white text-lg">
+                        Information Gain = Entropy(parent) - Σ(Weight × Entropy(child))
+                      </div>
+                      <div className="text-white text-lg">
+                        Entropy = -Σ(p × log₂(p))
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <p className="text-gray-300 text-sm sm:text-base">
+                      Information Gain measures how much a feature reduces uncertainty in the dataset. It&apos;s calculated by comparing the entropy
+                      of the parent node with the weighted average entropy of the child nodes after splitting.
+                    </p>
+
+                    <div className="bg-gray-700 rounded-lg p-6">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Example: Loan Approval Decision</h3>
+                      
+                      {/* Parent Node */}
+                      <div className="mb-8">
+                        <h4 className="text-purple-300 font-medium mb-3">Parent Node (Before Split)</h4>
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                              <span className="text-gray-300">Approved</span>
+                            </div>
+                            <span className="text-white font-medium">4 loans</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                              <span className="text-gray-300">Not Approved</span>
+                            </div>
+                            <span className="text-white font-medium">6 loans</span>
+                          </div>
+                          <div className="mt-4 pt-4 border-t border-gray-500">
+                            <div className="flex justify-between items-center">
+                              <span className="text-purple-300">Parent Entropy</span>
+                              <span className="text-white font-medium">0.971</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Split Visualization */}
+                      <div className="flex justify-center mb-12">
+                        <div className="relative w-full max-w-2xl">
+                          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-500"></div>
+                          <div className="absolute left-1/2 top-0 w-0.5 h-8 bg-gray-500"></div>
+                          <div className="absolute left-1/2 -translate-x-1/2 top-8 px-4 py-2 bg-gray-600 border border-purple-500 rounded-lg text-white shadow-lg transform -translate-y-1/2">
+                            <div className="flex flex-col items-center space-y-1">
+                              <div className="text-purple-300 font-medium flex items-center gap-2">
+                                <span className="text-lg">📊</span>
+                                <span>Decision Point: Credit Score</span>
+                              </div>
+                              <span className="text-gray-400 text-sm">(Highest Information Gain)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Split Explanation */}
+                      <div className="mb-8 bg-gray-600 rounded-lg p-4">
+                        <h4 className="text-purple-300 font-medium mb-3">Why Split by Credit Score?</h4>
+                        <div className="space-y-3 text-gray-300 text-sm">
+                          <p>We compared different features to find the best split:</p>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="bg-gray-500/50 rounded-lg p-3">
+                              <p className="text-purple-300 font-medium mb-1">Credit Score</p>
+                              <p className="text-white">Information Gain: 0.246</p>
+                            </div>
+                            <div className="bg-gray-500/50 rounded-lg p-3">
+                              <p className="text-purple-300 font-medium mb-1">Income</p>
+                              <p className="text-white">Information Gain: 0.180</p>
+                            </div>
+                            <div className="bg-gray-500/50 rounded-lg p-3">
+                              <p className="text-purple-300 font-medium mb-1">Employment</p>
+                              <p className="text-white">Information Gain: 0.150</p>
+                            </div>
+                          </div>
+                          <p className="mt-3">Credit Score provided the highest information gain, making it the best feature to split on.</p>
+                        </div>
+                      </div>
+
+                      {/* Child Nodes */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Left Child */}
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <h4 className="text-purple-300 font-medium mb-3">Left Child (Credit Score ≤ 700)</h4>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span className="text-gray-300">Approved</span>
+                              </div>
+                              <span className="text-white font-medium">3 loans</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                <span className="text-gray-300">Not Approved</span>
+                              </div>
+                              <span className="text-white font-medium">1 loan</span>
+                            </div>
+                            <div className="pt-3 border-t border-gray-500">
+                              <div className="flex justify-between items-center">
+                                <span className="text-purple-300">Child Entropy</span>
+                                <span className="text-white font-medium">0.811</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Child */}
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <h4 className="text-purple-300 font-medium mb-3">Right Child (Credit Score &gt; 700)</h4>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span className="text-gray-300">Approved</span>
+                              </div>
+                              <span className="text-white font-medium">1 loan</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                <span className="text-gray-300">Not Approved</span>
+                              </div>
+                              <span className="text-white font-medium">5 loans</span>
+                            </div>
+                            <div className="pt-3 border-t border-gray-500">
+                              <div className="flex justify-between items-center">
+                                <span className="text-purple-300">Child Entropy</span>
+                                <span className="text-white font-medium">0.650</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Information Gain Calculation */}
+                      <div className="mt-8 bg-gray-600 rounded-lg p-4">
+                        <h4 className="text-purple-300 font-medium mb-3">Information Gain Calculation</h4>
+                        <div className="space-y-2 text-gray-300 text-sm">
+                          <p>1. Parent Entropy = 0.971</p>
+                          <p>2. Weighted Child Entropy = (0.4 × 0.811) + (0.6 × 0.650) = 0.725</p>
+                          <div className="mt-4 pt-4 border-t border-gray-500">
+                            <p className="text-purple-300 font-medium">Information Gain = 0.971 - 0.725 = 0.246</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Gini Impurity Section */}
+              <section id="gini-impurity" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Gini Impurity</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-700 rounded-lg p-6">
+                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
+                    <div className="text-center text-white text-lg">
+                      Gini Impurity = 1 - Σ(p²)
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-gray-300 text-sm sm:text-base">
+                      Gini Impurity measures how often a randomly chosen element would be incorrectly labeled. It ranges from 0 (pure node)
+                      to 1 (maximum impurity). Lower values indicate better splits.
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-gray-700 rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-purple-400 mb-4">Pure Node Example</h3>
+                        <div className="space-y-4">
+                          <div className="bg-green-900/30 rounded-lg p-4">
+                            <p className="text-gray-300 text-sm mb-2">Distribution: [Class A: 5, Class B: 0, Class C: 0]</p>
+                            <p className="text-gray-300 text-sm">Probabilities: [1.0, 0.0, 0.0]</p>
+                            <p className="text-gray-300 text-sm mt-2">Gini = 1 - (1² + 0² + 0²) = 0</p>
+                          </div>
+                          <div className="flex justify-center">
+                            <div className="w-32 h-32 rounded-full bg-green-500/20 flex items-center justify-center">
+                              <span className="text-green-400 text-2xl">0</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-700 rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-purple-400 mb-4">Maximum Impurity Example</h3>
+                        <div className="space-y-4">
+                          <div className="bg-red-900/30 rounded-lg p-4">
+                            <p className="text-gray-300 text-sm mb-2">Distribution: [Class A: 2, Class B: 2, Class C: 2]</p>
+                            <p className="text-gray-300 text-sm">Probabilities: [0.33, 0.33, 0.33]</p>
+                            <p className="text-gray-300 text-sm mt-2">Gini = 1 - (0.33² + 0.33² + 0.33²) = 0.67</p>
+                          </div>
+                          <div className="flex justify-center">
+                            <div className="w-32 h-32 rounded-full bg-red-500/20 flex items-center justify-center">
+                              <span className="text-red-400 text-2xl">0.67</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-700 rounded-lg p-6 mt-6">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Interactive Example</h3>
+                      <div className="space-y-4">
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <p className="text-gray-300 text-sm mb-2">Node Distribution: [Class A: 3, Class B: 2, Class C: 1]</p>
+                          <div className="flex space-x-2 mb-4">
+                            <div className="flex-1 bg-purple-500 h-4 rounded-full">
+                              <div className="bg-purple-400 h-4 rounded-full" style={{ width: '50%' }}></div>
+                            </div>
+                            <div className="flex-1 bg-blue-500 h-4 rounded-full">
+                              <div className="bg-blue-400 h-4 rounded-full" style={{ width: '33%' }}></div>
+                            </div>
+                            <div className="flex-1 bg-green-500 h-4 rounded-full">
+                              <div className="bg-green-400 h-4 rounded-full" style={{ width: '17%' }}></div>
+                            </div>
+                          </div>
+                          <p className="text-gray-300 text-sm">Gini Impurity = 1 - (0.5² + 0.33² + 0.17²) = 0.61</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Chi-Square Section */}
+              <section id="chi-square" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Chi-Square Test</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-700 rounded-lg p-6">
+                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Formula</h3>
+                    <div className="text-center text-white text-lg">
+                      χ² = Σ((Observed - Expected)² / Expected)
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-gray-300 text-sm sm:text-base">
+                      The Chi-Square test is used to determine if there&apos;s a significant relationship between categorical variables.
+                      It helps in feature selection by measuring the independence between features and the target variable.
+                    </p>
+
+                    <div className="bg-gray-700 rounded-lg p-6">
+                      <h3 className="text-lg font-medium text-purple-400 mb-4">Example Calculation</h3>
+                      <div className="space-y-6">
+                        <div>
+                          <h4 className="text-purple-300 font-medium mb-3">Observed Values</h4>
+                          <div className="overflow-x-auto">
+                            <table className="min-w-full bg-gray-600 rounded-lg overflow-hidden">
+                              <thead>
+                                <tr className="bg-gray-500">
+                                  <th className="px-6 py-3 text-left text-white font-semibold">Feature</th>
+                                  <th className="px-6 py-3 text-center text-white font-semibold">Class A</th>
+                                  <th className="px-6 py-3 text-center text-white font-semibold">Class B</th>
+                                  <th className="px-6 py-3 text-center text-white font-semibold">Total</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr className="border-t border-gray-500">
+                                  <td className="px-6 py-4 text-white font-medium">Value 1</td>
+                                  <td className="px-6 py-4 text-center text-white">15</td>
+                                  <td className="px-6 py-4 text-center text-white">5</td>
+                                  <td className="px-6 py-4 text-center text-white font-medium">20</td>
+                                </tr>
+                                <tr className="border-t border-gray-500">
+                                  <td className="px-6 py-4 text-white font-medium">Value 2</td>
+                                  <td className="px-6 py-4 text-center text-white">5</td>
+                                  <td className="px-6 py-4 text-center text-white">15</td>
+                                  <td className="px-6 py-4 text-center text-white font-medium">20</td>
+                                </tr>
+                                <tr className="border-t border-gray-500 bg-gray-500/50">
+                                  <td className="px-6 py-4 text-white font-medium">Total</td>
+                                  <td className="px-6 py-4 text-center text-white font-medium">20</td>
+                                  <td className="px-6 py-4 text-center text-white font-medium">20</td>
+                                  <td className="px-6 py-4 text-center text-white font-medium">40</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-purple-300 font-medium mb-3">Expected Values</h4>
+                          <div className="overflow-x-auto">
+                            <table className="min-w-full bg-gray-600 rounded-lg overflow-hidden">
+                              <thead>
+                                <tr className="bg-gray-500">
+                                  <th className="px-6 py-3 text-left text-white font-semibold">Feature</th>
+                                  <th className="px-6 py-3 text-center text-white font-semibold">Class A</th>
+                                  <th className="px-6 py-3 text-center text-white font-semibold">Class B</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr className="border-t border-gray-500">
+                                  <td className="px-6 py-4 text-white font-medium">Value 1</td>
+                                  <td className="px-6 py-4 text-center text-white">10</td>
+                                  <td className="px-6 py-4 text-center text-white">10</td>
+                                </tr>
+                                <tr className="border-t border-gray-500">
+                                  <td className="px-6 py-4 text-white font-medium">Value 2</td>
+                                  <td className="px-6 py-4 text-center text-white">10</td>
+                                  <td className="px-6 py-4 text-center text-white">10</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <h4 className="text-purple-300 font-medium mb-3">Chi-Square Calculation</h4>
+                          <div className="space-y-2 text-gray-300 text-sm">
+                            <p>χ² = ((15-10)²/10 + (5-10)²/10 + (5-10)²/10 + (15-10)²/10)</p>
+                            <p>χ² = (25/10 + 25/10 + 25/10 + 25/10)</p>
+                            <p>χ² = 10</p>
+                          </div>
+                        </div>
+
+                        <div className="bg-gray-600 rounded-lg p-4">
+                          <h4 className="text-purple-300 font-medium mb-3">Interpretation</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-gray-500/50 rounded-lg p-3">
+                              <p className="text-gray-300 text-sm font-medium">Degrees of Freedom</p>
+                              <p className="text-white">(rows-1) × (columns-1) = 1</p>
+                            </div>
+                            <div className="bg-gray-500/50 rounded-lg p-3">
+                              <p className="text-gray-300 text-sm font-medium">Significance Level</p>
+                              <p className="text-white">p-value &lt; 0.05</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>

@@ -16,10 +16,11 @@ export default function KNNPage() {
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
-    { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
+    { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'quiz', title: 'Quiz', icon: '❓' }
   ];
 
@@ -110,53 +111,207 @@ export default function KNNPage() {
                 </div>
               </section>
 
-              {/* Practical Example Section */}
-              <section id="practical-example" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example</h2>
+              {/* Formulas Section */}
+              <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
                 <div className="space-y-6">
-                  <div className="bg-gray-700 rounded-lg p-6">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4 text-center">Distance Calculation</h3>
-                    <div className="text-center text-white text-lg mb-4">
-                      Euclidean Distance = √(Σ(x₁ - x₂)²)
+                  <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-6 shadow-lg border border-purple-500/20">
+                    <h3 className="text-xl font-bold text-purple-400 mb-6 text-center">Distance Metrics</h3>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">📏</span> Euclidean Distance
+                        </h4>
+                        <div className="bg-gray-900/50 p-4 rounded-lg mb-3">
+                          <div className="text-center text-white text-lg font-mono">
+                            d(x,y) = √(Σ(xᵢ - yᵢ)²)
+                          </div>
+                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Most common distance metric, measures straight-line distance between points in n-dimensional space
+                        </p>
+                        <div className="mt-4 p-3 bg-purple-500/10 rounded-lg">
+                          <p className="text-purple-300 text-sm">
+                            Best for: Continuous data and when all features are equally important
+                          </p>
+                        </div>
+                      </div>
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">📐</span> Manhattan Distance
+                        </h4>
+                        <div className="bg-gray-900/50 p-4 rounded-lg mb-3">
+                          <div className="text-center text-white text-lg font-mono">
+                            d(x,y) = Σ|xᵢ - yᵢ|
+                          </div>
+                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Measures distance along axes at right angles, useful for grid-like data and when movement is restricted to horizontal/vertical
+                        </p>
+                        <div className="mt-4 p-3 bg-purple-500/10 rounded-lg">
+                          <p className="text-purple-300 text-sm">
+                            Best for: Discrete data and when features have different scales
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-gray-300 text-sm sm:text-base">
-                      For example, with K=3, we find the 3 closest points to our new data point
-                      and use their labels to make a prediction.
-                    </p>
                   </div>
                 </div>
               </section>
 
-              {/* Pseudocode Section */}
-              <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudocode</h2>
-                <Code
-                  code={`function KNN(train_data, test_point, k):
-    # Calculate distances to all training points
-    distances = []
-    for train_point in train_data:
-        distance = calculate_distance(test_point, train_point)
-        distances.append((distance, train_point.label))
-    
-    # Sort distances and get k nearest neighbors
-    distances.sort()
-    k_nearest = distances[:k]
-    
-    # For classification: majority vote
-    if is_classification:
-        labels = [label for _, label in k_nearest]
-        return most_common(labels)
-    
-    # For regression: average
-    else:
-        values = [label for _, label in k_nearest]
-        return sum(values) / len(values)
+              {/* Practical Example Section */}
+              <section id="practical-example" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example</h2>
+                <div className="space-y-6">
+                  <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-6 shadow-lg border border-purple-500/20">
+                    <h3 className="text-xl font-bold text-purple-400 mb-6 text-center">Classifying a New Point</h3>
+                    <div className="space-y-6">
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">📊</span> Training Data
+                        </h4>
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full bg-gray-900/50 text-white rounded-lg overflow-hidden">
+                            <thead>
+                              <tr className="bg-purple-500/20">
+                                <th className="px-4 py-3 text-left">Point</th>
+                                <th className="px-4 py-3 text-left">X</th>
+                                <th className="px-4 py-3 text-left">Y</th>
+                                <th className="px-4 py-3 text-left">Class</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P1</td>
+                                <td className="px-4 py-3">2</td>
+                                <td className="px-4 py-3">3</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded">A</span></td>
+                              </tr>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P2</td>
+                                <td className="px-4 py-3">4</td>
+                                <td className="px-4 py-3">5</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded">A</span></td>
+                              </tr>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P3</td>
+                                <td className="px-4 py-3">6</td>
+                                <td className="px-4 py-3">2</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span></td>
+                              </tr>
+                              <tr className="hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P4</td>
+                                <td className="px-4 py-3">8</td>
+                                <td className="px-4 py-3">4</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
 
-function calculate_distance(point1, point2):
-    # Euclidean distance
-    return sqrt(sum((x1 - x2) ** 2 for x1, x2 in zip(point1, point2)))`}
-                  language="python"
-                />
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">🎯</span> New Point to Classify
+                        </h4>
+                        <div className="bg-gray-900/50 p-4 rounded-lg text-center">
+                          <p className="text-white text-lg font-mono">
+                            (5, 4)
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">📏</span> Step 1: Calculate Distances
+                        </h4>
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full bg-gray-900/50 text-white rounded-lg overflow-hidden">
+                            <thead>
+                              <tr className="bg-purple-500/20">
+                                <th className="px-4 py-3 text-left">Point</th>
+                                <th className="px-4 py-3 text-left">Distance</th>
+                                <th className="px-4 py-3 text-left">Class</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P1</td>
+                                <td className="px-4 py-3 font-mono">√((5-2)² + (4-3)²) = 3.16</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded">A</span></td>
+                              </tr>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P2</td>
+                                <td className="px-4 py-3 font-mono">√((5-4)² + (4-5)²) = 1.41</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded">A</span></td>
+                              </tr>
+                              <tr className="border-b border-gray-700 hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P3</td>
+                                <td className="px-4 py-3 font-mono">√((5-6)² + (4-2)²) = 2.24</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span></td>
+                              </tr>
+                              <tr className="hover:bg-gray-800/50">
+                                <td className="px-4 py-3">P4</td>
+                                <td className="px-4 py-3 font-mono">√((5-8)² + (4-4)²) = 3.00</td>
+                                <td className="px-4 py-3"><span className="px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">🔍</span> Step 2: Find K Nearest Neighbors
+                        </h4>
+                        <div className="bg-gray-900/50 p-4 rounded-lg">
+                          <p className="text-gray-300 text-sm sm:text-base mb-3">
+                            With K=3, the nearest neighbors are:
+                          </p>
+                          <ol className="list-decimal list-inside text-gray-300 space-y-2">
+                            <li className="flex items-center">
+                              <span className="mr-2">P2</span>
+                              <span className="text-purple-300">(distance: 1.41)</span>
+                              <span className="ml-2 px-2 py-1 bg-blue-500/20 text-blue-300 rounded">A</span>
+                            </li>
+                            <li className="flex items-center">
+                              <span className="mr-2">P3</span>
+                              <span className="text-purple-300">(distance: 2.24)</span>
+                              <span className="ml-2 px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span>
+                            </li>
+                            <li className="flex items-center">
+                              <span className="mr-2">P4</span>
+                              <span className="text-purple-300">(distance: 3.00)</span>
+                              <span className="ml-2 px-2 py-1 bg-green-500/20 text-green-300 rounded">B</span>
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-800/50 p-6 rounded-lg border border-purple-500/20">
+                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center">
+                          <span className="mr-2">🎲</span> Step 3: Make Prediction
+                        </h4>
+                        <div className="bg-gray-900/50 p-4 rounded-lg">
+                          <div className="flex items-center justify-center space-x-4 mb-4">
+                            <div className="text-center">
+                              <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-lg">Class A: 1 vote</span>
+                            </div>
+                            <div className="text-center">
+                              <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-lg">Class B: 2 votes</span>
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-white text-lg font-medium">
+                              Final prediction: The new point (5, 4) is classified as 
+                              <span className="ml-2 px-3 py-1 bg-green-500/20 text-green-300 rounded-lg">Class B</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               {/* Characteristics Section */}
@@ -236,6 +391,38 @@ function calculate_distance(point1, point2):
                     </div>
                   </div>
                 </div>
+              </section>
+
+              {/* Pseudocode Section */}
+              <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudocode</h2>
+                <Code
+                  code={`function KNN(train_data, test_point, k):
+    # Calculate distances to all training points
+    distances = []
+    for train_point in train_data:
+        distance = calculate_distance(test_point, train_point)
+        distances.append((distance, train_point.label))
+    
+    # Sort distances and get k nearest neighbors
+    distances.sort()
+    k_nearest = distances[:k]
+    
+    # For classification: majority vote
+    if is_classification:
+        labels = [label for _, label in k_nearest]
+        return most_common(labels)
+    
+    # For regression: average
+    else:
+        values = [label for _, label in k_nearest]
+        return sum(values) / len(values)
+
+function calculate_distance(point1, point2):
+    # Euclidean distance
+    return sqrt(sum((x1 - x2) ** 2 for x1, x2 in zip(point1, point2)))`}
+                  language="python"
+                />
               </section>
 
               {/* Quiz Section */}
