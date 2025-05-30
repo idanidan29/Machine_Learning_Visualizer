@@ -803,54 +803,6 @@ function calculateInformationGain(data, feature, target):
                 </div>
               </section>
 
-              {/* Formulas Section */}
-              <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
-                <div className="space-y-8">
-                  <Formula
-                    title="Information Gain"
-                    formula="IG(D,S) = H(D) - Σ(|Dᵥ|/|D|) * H(Dᵥ)"
-                    variables={[
-                      { name: "IG(D,S)", description: "information gain of split S on dataset D" },
-                      { name: "H(D)", description: "entropy of dataset D" },
-                      { name: "Dᵥ", description: "subset of D for value v of feature S" },
-                      { name: "|D|", description: "size of dataset D" }
-                    ]}
-                    gradient="purple-blue"
-                  />
-
-                  <Formula
-                    title="Entropy"
-                    formula="H(D) = -Σ pᵢ * log₂(pᵢ)"
-                    variables={[
-                      { name: "H(D)", description: "entropy of dataset D" },
-                      { name: "pᵢ", description: "proportion of class i in dataset D" }
-                    ]}
-                    gradient="blue-purple"
-                  />
-
-                  <Formula
-                    title="Gini Impurity"
-                    formula="G(D) = 1 - Σ(pᵢ²)"
-                    variables={[
-                      { name: "G(D)", description: "Gini impurity of dataset D" },
-                      { name: "pᵢ", description: "proportion of class i in dataset D" }
-                    ]}
-                    gradient="purple-blue"
-                  />
-
-                  <div className="bg-purple-900/30 p-4 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                      <li>Information Gain measures reduction in entropy after a split</li>
-                      <li>Entropy measures impurity or disorder in a dataset</li>
-                      <li>Gini Impurity is an alternative to Entropy for measuring impurity</li>
-                      <li>Both metrics help determine the best feature to split on</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
               {/* Quiz Section */}
               <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <Quiz algorithm="decision-tree" />
