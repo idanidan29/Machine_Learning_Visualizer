@@ -1,9 +1,13 @@
 "use client"
-import Link from 'next/link'
+
+import { useState } from 'react'
 import Navbar from './Navbar'
 import AlgorithmFilter from './AlgoFilter'
+import DragCloseDrawer from './ui/DragCloseDrawer'
 
 export default function HeroSection() {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Navbar />
@@ -37,14 +41,12 @@ export default function HeroSection() {
                 Interactively visualize KNN, decision trees, clustering, and more. Change parameters on the fly and see how algorithms make decisions in real time.
               </p>
               <div className="flex justify-center pb-8">
-                <Link href="/#algorithms" className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-purple-700 text-white hover:bg-opacity-80">
-                  Get Started
-                  <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                      <path fillRule="evenodd" d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </Link>
+                <button
+                  className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-purple-700 text-white hover:bg-opacity-80 transition-all duration-200 hover:scale-105"
+                  onClick={() => setOpen(true)}
+                >
+                  Instructions
+                </button>
               </div>
             </div>
           </div>
@@ -63,7 +65,152 @@ export default function HeroSection() {
           </div>
         </div>
       </section>
-      
+
+      <DragCloseDrawer open={open} setOpen={setOpen}>
+        <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6 text-gray-200">
+          <div className="text-center mb-6">
+            <h2 className="text-4xl font-bold text-white mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Welcome to ML Visualizer
+            </h2>
+            <div className="h-1 w-20 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4 bg-gray-800/50 p-5 rounded-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+                <span className="text-2xl">✨</span> About This App
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                ML Visualizer is an interactive platform designed to help you understand machine learning algorithms through visual demonstrations. 
+                Whether you're a student, researcher, or ML enthusiast, this tool provides an intuitive way to explore and experiment with various algorithms.
+              </p>
+            </div>
+
+            <div className="space-y-4 bg-gray-800/50 p-5 rounded-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+                <span className="text-2xl">💡</span> Learning Tips
+              </h3>
+              <ul className="list-none space-y-2 text-gray-300">
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">Start with simpler algorithms like KNN to understand basic concepts.</p>
+                </li>
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">Experiment with different parameter values to see their effects.</p>
+                </li>
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">Test your knowledge with interactive quizzes at the end of each algorithm page.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-4 bg-gray-800/50 p-5 rounded-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+            <h3 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="text-2xl">🚀</span> Key Features
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <ul className="list-none space-y-3 text-gray-300">
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Interactive Visualizations:</span>
+                    <p className="text-gray-400">See algorithms in action with real-time updates as you modify parameters.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Multiple Algorithms:</span>
+                    <p className="text-gray-400">Explore KNN, Decision Trees, K-Means, and more with detailed explanations.</p>
+                  </div>
+                </li>
+              </ul>
+              <ul className="list-none space-y-3 text-gray-300">
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Parameter Tuning:</span>
+                    <p className="text-gray-400">Adjust algorithm parameters and instantly see their impact on the results.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">•</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Custom Data Points:</span>
+                    <p className="text-gray-400">Add your own data points to test algorithm behavior in different scenarios.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4 bg-gray-800/50 p-5 rounded-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+                <span className="text-2xl">🎯</span> Getting Started
+              </h3>
+              <ol className="list-none space-y-3 text-gray-300">
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">1.</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Choose an Algorithm:</span>
+                    <p className="text-gray-400">Select from the available algorithms in the navigation panel.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3 group">
+                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors">2.</span>
+                  <div>
+                    <span className="font-medium text-white group-hover:text-purple-300 transition-colors">Explore Parameters:</span>
+                    <p className="text-gray-400">Use the interactive controls to modify algorithm settings.</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <div className="space-y-4 bg-gray-800/50 p-5 rounded-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+                <span className="text-2xl">❓</span> Need Help?
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                If you have any questions or need assistance, feel free to explore the documentation or reach out to our support team. 
+                We're here to help you make the most of your machine learning journey!
+              </p>
+            </div>
+          </div>
+
+          <div className="flex justify-center pt-4">
+            <button
+              onClick={() => {
+                setOpen(false);
+                document.getElementById('algorithms')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group relative px-8 py-3 text-lg font-medium text-white transition-all duration-300 ease-out hover:scale-105"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                I'm Ready to Start
+                <svg 
+                  className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M13 7l5 5m0 0l-5 5m5-5H6" 
+                  />
+                </svg>
+              </span>
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 blur-lg opacity-50 transition-opacity duration-300 group-hover:opacity-70"></span>
+            </button>
+          </div>
+        </div>
+      </DragCloseDrawer>
     </>
   )
 }
