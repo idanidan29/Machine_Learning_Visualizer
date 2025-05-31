@@ -16,7 +16,6 @@ export default function KNNPage() {
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
-    { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
@@ -92,23 +91,6 @@ export default function KNNPage() {
                       <li>Data should be representative of the problem domain</li>
                     </ul>
                   </div>
-                </div>
-              </section>
-
-              {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-300 text-sm sm:text-base">
-                    The KNN algorithm works through these steps:
-                  </p>
-                  <ol className="list-decimal list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                    <li>Store all training examples in memory</li>
-                    <li>For a new data point, calculate distances to all training examples</li>
-                    <li>Select the K nearest neighbors based on the calculated distances</li>
-                    <li>For classification: Take the majority vote of the K neighbors&apos; labels</li>
-                    <li>For regression: Take the average of the K neighbors&apos; values</li>
-                  </ol>
                 </div>
               </section>
 
