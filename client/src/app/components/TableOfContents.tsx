@@ -26,6 +26,16 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
   // Get unique categories from all algorithms
   const allCategories = Array.from(new Set(algorithms.flatMap(alg => alg.categories)));
 
+  // Category to emoji mapping
+  const categoryEmojis: { [key: string]: string } = {
+    'supervised': '📚',
+    'unsupervised': '🔍',
+    'classification': '🏷️',
+    'regression': '📈',
+    'clustering': '🎯',
+    'ensemble': '🌳'
+  };
+
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -170,7 +180,7 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
                       whileHover={{ x: 4 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <span className="text-lg">📑</span>
+                      <span className="text-lg">{categoryEmojis[category] || '📑'}</span>
                       <span>{category}</span>
                     </motion.button>
                   ))}
