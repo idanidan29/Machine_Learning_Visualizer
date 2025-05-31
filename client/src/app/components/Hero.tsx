@@ -82,7 +82,7 @@ export default function HeroSection() {
               </h3>
               <p className="text-gray-300 leading-relaxed">
                 ML Visualizer is an interactive platform designed to help you understand machine learning algorithms through visual demonstrations. 
-                Whether you're a student, researcher, or ML enthusiast, this tool provides an intuitive way to explore and experiment with various algorithms.
+                Whether you&apos;re a student, researcher, or ML enthusiast, this tool provides an intuitive way to explore and experiment with various algorithms.
               </p>
             </div>
 
@@ -176,7 +176,7 @@ export default function HeroSection() {
               </h3>
               <p className="text-gray-300 leading-relaxed">
                 If you have any questions or need assistance, feel free to explore the documentation or reach out to our support team. 
-                We're here to help you make the most of your machine learning journey!
+                We&apos;re here to help you make the most of your machine learning journey!
               </p>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function HeroSection() {
               className="group relative px-8 py-3 text-lg font-medium text-white transition-all duration-300 ease-out hover:scale-105"
             >
               <span className="relative z-10 flex items-center gap-2">
-                I'm Ready to Start
+                I&apos;m Ready to Start
                 <svg 
                   className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" 
                   fill="none" 
