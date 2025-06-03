@@ -8,6 +8,8 @@ import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
 import AdaBoostVisualization from '../../components/visualizations/AdaBoostVisualization';
+import HowItWorks from '../../components/ui/HowItWorks';
+import WhenToUse from '../../components/ui/WhenToUse';
 
 export default function AdaBoostPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -73,99 +75,41 @@ export default function AdaBoostPage() {
               </section>
 
               {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-6">
-                  <div className="bg-gray-900/50 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">The Process</h3>
-                    <ol className="space-y-4 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
-                        <span>Initialize equal weights for all training examples</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
-                        <span>Train a weak learner on the weighted data</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
-                        <span>Calculate the weighted error of the weak learner</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">4</span>
-                        <span>Update the weights of training examples (increase weights of misclassified examples)</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">5</span>
-                        <span>Repeat steps 2-4 for a specified number of iterations</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">6</span>
-                        <span>Combine weak learners using weighted voting</span>
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </section>
+              <HowItWorks
+                title="How It Works"
+                steps={[
+                  { number: 1, description: "Initialize equal weights for all training examples" },
+                  { number: 2, description: "Train a weak learner on the weighted data" },
+                  { number: 3, description: "Calculate the weighted error of the weak learner" },
+                  { number: 4, description: "Update the weights of training examples (increase weights of misclassified examples)" },
+                  { number: 5, description: "Repeat steps 2-4 for a specified number of iterations" },
+                  { number: 6, description: "Combine weak learners using weighted voting" }
+                ]}
+              />
 
               {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use</h2>
-                <div className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Ideal Use Cases</h3>
-                      <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Binary classification problems</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>When you have weak learners available</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>When interpretability is important</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>When you need fast training and prediction</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>When you have limited computational resources</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Key Advantages</h3>
-                      <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Simple to implement</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>No need to tune many parameters</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Resistant to overfitting</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Can use any weak learner</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Provides feature importance</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </section>
+              <WhenToUse
+                idealUseCases={{
+                  title: "Ideal Use Cases",
+                  items: [
+                    "Binary classification problems",
+                    "When you have weak learners available",
+                    "When interpretability is important",
+                    "When you need fast training and prediction",
+                    "When you have limited computational resources"
+                  ]
+                }}
+                keyAdvantages={{
+                  title: "Key Advantages",
+                  items: [
+                    "Simple to implement",
+                    "No need to tune many parameters",
+                    "Resistant to overfitting",
+                    "Can use any weak learner",
+                    "Provides feature importance"
+                  ]
+                }}
+              />
 
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
