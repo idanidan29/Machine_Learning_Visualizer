@@ -10,6 +10,8 @@ import Code from '../../components/ui/Code';
 import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
 import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
+import HowItWorks from '../../components/ui/HowItWorks';
+import WhenToUse from '../../components/ui/WhenToUse';
 
 export default function NaiveBayesPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -17,8 +19,9 @@ export default function NaiveBayesPage() {
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
-    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
+    { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'laplace-smoothing', title: 'Laplace Smoothing', icon: '🧮' },
     { id: 'm-estimate', title: 'm-Estimate', icon: '📐' },
     { id: 'example', title: 'Example', icon: '📝' },
@@ -73,194 +76,288 @@ export default function NaiveBayesPage() {
                 <NaiveBayesVisualization />
               </section>
 
-              {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use It</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Ideal Use Cases</h3>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2">
-                      <li>Text classification and spam filtering</li>
-                      <li>Sentiment analysis</li>
-                      <li>Document categorization</li>
-                      <li>Medical diagnosis</li>
-                      <li>Weather prediction</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Assumptions</h3>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2">
-                      <li>Features are conditionally independent</li>
-                      <li>All features contribute equally to the outcome</li>
-                      <li>No missing values in the training data</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
               {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-300">
-                    The Naive Bayes algorithm works through these steps:
-                  </p>
-                  <ol className="list-decimal list-inside text-gray-300 space-y-2">
-                    <li>Calculate prior probabilities for each class</li>
-                    <li>Calculate likelihood probabilities for each feature given each class</li>
-                    <li>Apply Bayes' theorem to compute posterior probabilities</li>
-                    <li>Select the class with the highest posterior probability</li>
-                  </ol>
+              <HowItWorks
+                title="How It Works"
+                steps={[
+                  { number: 1, description: "Calculate prior probabilities for each class" },
+                  { number: 2, description: "Calculate likelihood probabilities for each feature given each class" },
+                  { number: 3, description: "Apply Bayes' theorem to compute posterior probabilities" },
+                  { number: 4, description: "Select the class with the highest posterior probability" }
+                ]}
+              />
 
-                  {/* Formulas Section */}
-                  <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                    <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
-                    <div className="space-y-8">
-                      <Formula
-                        title="Bayes' Theorem"
-                        formula="P(A|B) = P(B|A) * P(A) / P(B)"
-                        variables={[
-                          { name: "P(A|B)", description: "posterior probability of A given B" },
-                          { name: "P(B|A)", description: "likelihood of B given A" },
-                          { name: "P(A)", description: "prior probability of A" },
-                          { name: "P(B)", description: "marginal probability of B" }
-                        ]}
-                        gradient="purple-blue"
-                      />
+              {/* When to Use Section */}
+              <WhenToUse
+                idealUseCases={{
+                  title: "Ideal Use Cases",
+                  items: [
+                    "Text classification and spam filtering",
+                    "Sentiment analysis",
+                    "Document categorization",
+                    "Medical diagnosis",
+                    "Weather prediction"
+                  ]
+                }}
+                keyAdvantages={{
+                  title: "Key Advantages",
+                  items: [
+                    "Fast training and prediction",
+                    "Works well with high-dimensional data",
+                    "Requires little training data",
+                    "Handles both continuous and discrete features",
+                    "Simple to implement and understand"
+                  ]
+                }}
+              />
 
-                      <Formula
-                        title="Naive Bayes Classifier"
-                        formula="P(y|x) ∝ P(y) * Π P(xᵢ|y)"
-                        variables={[
-                          { name: "P(y|x)", description: "probability of class y given features x" },
-                          { name: "P(y)", description: "prior probability of class y" },
-                          { name: "P(xᵢ|y)", description: "probability of feature xᵢ given class y" }
-                        ]}
-                        gradient="blue-purple"
-                      />
+              {/* Formulas Section */}
+              <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
+                <div className="space-y-8">
+                  <Formula
+                    title="Bayes' Theorem"
+                    formula="P(A|B) = P(B|A) * P(A) / P(B)"
+                    variables={[
+                      { name: "P(A|B)", description: "posterior probability of A given B" },
+                      { name: "P(B|A)", description: "likelihood of B given A" },
+                      { name: "P(A)", description: "prior probability of A" },
+                      { name: "P(B)", description: "marginal probability of B" }
+                    ]}
+                    gradient="purple-blue"
+                  />
 
-                      <Formula
-                        title="Gaussian Naive Bayes"
-                        formula="P(xᵢ|y) = (1/√(2πσ²)) * e^(-(x-μ)²/(2σ²))"
-                        variables={[
-                          { name: "xᵢ", description: "feature value" },
-                          { name: "y", description: "class" },
-                          { name: "μ", description: "mean of feature for class y" },
-                          { name: "σ", description: "standard deviation of feature for class y" }
-                        ]}
-                        gradient="purple-blue"
-                      />
+                  <Formula
+                    title="Naive Bayes Classifier"
+                    formula="P(y|x) ∝ P(y) * Π P(xᵢ|y)"
+                    variables={[
+                      { name: "P(y|x)", description: "probability of class y given features x" },
+                      { name: "P(y)", description: "prior probability of class y" },
+                      { name: "P(xᵢ|y)", description: "probability of feature xᵢ given class y" }
+                    ]}
+                    gradient="blue-purple"
+                  />
 
-                      <div className="bg-purple-900/30 p-4 rounded-lg">
-                        <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
-                        <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                          <li>Naive Bayes assumes feature independence</li>
-                          <li>Gaussian Naive Bayes is used for continuous features</li>
-                          <li>Multinomial Naive Bayes is used for discrete features</li>
-                          <li>Bernoulli Naive Bayes is used for binary features</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </section>
+                  <Formula
+                    title="Gaussian Naive Bayes"
+                    formula="P(xᵢ|y) = (1/√(2πσ²)) * e^(-(x-μ)²/(2σ²))"
+                    variables={[
+                      { name: "xᵢ", description: "feature value" },
+                      { name: "y", description: "class" },
+                      { name: "μ", description: "mean of feature for class y" },
+                      { name: "σ", description: "standard deviation of feature for class y" }
+                    ]}
+                    gradient="purple-blue"
+                  />
 
-                  <p className="text-gray-300 mt-4">
-                    The algorithm uses Bayes' theorem to calculate the probability of a class given a set of features.
-                    The "naive" assumption is that all features are conditionally independent given the class.
-                  </p>
+                  <div className="bg-purple-900/30 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium text-purple-400 mb-2">Key Insights</h3>
+                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
+                      <li>Naive Bayes assumes feature independence</li>
+                      <li>Gaussian Naive Bayes is used for continuous features</li>
+                      <li>Multinomial Naive Bayes is used for discrete features</li>
+                      <li>Bernoulli Naive Bayes is used for binary features</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
 
-                  {/* Detailed Example Section */}
-                  <div id="example" className="mt-8 bg-gray-900 rounded-lg p-4 sm:p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">Detailed Example</h3>
+              {/* Laplace Smoothing Section */}
+              <section id="laplace-smoothing" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Laplace Smoothing</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-900/50 p-6 rounded-lg">
                     <p className="text-gray-300 mb-4">
-                      Let's solve a simple spam detection problem using Naive Bayes:
+                      Laplace smoothing (also known as add-one smoothing) is a technique used to handle the zero probability problem in Naive Bayes. 
+                      It adds a small constant to all probability estimates, ensuring that no feature has a zero probability.
                     </p>
+                    
+                    <Formula
+                      title="Laplace Smoothing Formula"
+                      formula="P(xᵢ|y) = (count(xᵢ,y) + α) / (count(y) + α * |V|)"
+                      variables={[
+                        { name: "count(xᵢ,y)", description: "number of times feature xᵢ appears in class y" },
+                        { name: "count(y)", description: "total count of features in class y" },
+                        { name: "α", description: "smoothing parameter (typically 1)" },
+                        { name: "|V|", description: "size of vocabulary (number of unique features)" }
+                      ]}
+                      gradient="purple-blue"
+                    />
 
-                    <div className="space-y-6">
-                      {/* Training Data */}
-                      <div>
-                        <h4 className="text-lg font-medium text-purple-400 mb-2">Training Data</h4>
-                        <div className="overflow-x-auto">
-                          <table className="min-w-full bg-gray-800 rounded-lg">
-                            <thead>
-                              <tr>
-                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Email</th>
-                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "money"</th>
-                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "urgent"</th>
-                                <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Class</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 1</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
-                              </tr>
-                              <tr>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 2</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
-                              </tr>
-                              <tr>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 3</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
-                              </tr>
-                              <tr>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Email 4</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
-                                <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                    <div className="mt-6 space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Why Use Laplace Smoothing?</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Prevents zero probabilities for unseen features</li>
+                        <li>Improves model robustness</li>
+                        <li>Handles sparse data better</li>
+                        <li>Provides more reliable probability estimates</li>
+                      </ul>
+                    </div>
 
-                      {/* Step 1: Prior Probabilities */}
-                      <div>
-                        <h4 className="text-lg font-medium text-purple-400 mb-2">Step 1: Calculate Prior Probabilities</h4>
-                        <div className="bg-gray-800 rounded-lg p-4">
-                          <p className="text-gray-300 mb-2">P(Spam) = 2/4 = 0.5</p>
-                          <p className="text-gray-300">P(Not Spam) = 2/4 = 0.5</p>
-                        </div>
-                      </div>
-
-                      {/* Step 2: Likelihood Probabilities */}
-                      <div>
-                        <h4 className="text-lg font-medium text-purple-400 mb-2">Step 2: Calculate Likelihood Probabilities</h4>
-                        <div className="bg-gray-800 rounded-lg p-4">
-                          <p className="text-gray-300 mb-2">For Spam class:</p>
-                          <p className="text-gray-300 mb-2">P("money"|Spam) = 2/2 = 1.0</p>
-                          <p className="text-gray-300 mb-2">P("urgent"|Spam) = 1/2 = 0.5</p>
-                          <p className="text-gray-300 mb-2">For Not Spam class:</p>
-                          <p className="text-gray-300 mb-2">P("money"|Not Spam) = 0/2 = 0.0</p>
-                          <p className="text-gray-300">P("urgent"|Not Spam) = 1/2 = 0.5</p>
-                        </div>
-                      </div>
-
-                      {/* Step 3: Classify New Email */}
-                      <div>
-                        <h4 className="text-lg font-medium text-purple-400 mb-2">Step 3: Classify New Email</h4>
-                        <p className="text-gray-300 mb-4">New email contains "money" but not "urgent"</p>
-                        <div className="bg-gray-800 rounded-lg p-4">
-                          <p className="text-gray-300 mb-2">P(Spam|features) = P(features|Spam) * P(Spam)</p>
-                          <p className="text-gray-300 mb-2">= P("money"|Spam) * P("not urgent"|Spam) * P(Spam)</p>
-                          <p className="text-gray-300 mb-2">= 1.0 * 0.5 * 0.5 = 0.25</p>
-                          <p className="text-gray-300 mb-2">P(Not Spam|features) = P(features|Not Spam) * P(Not Spam)</p>
-                          <p className="text-gray-300 mb-2">= P("money"|Not Spam) * P("not urgent"|Not Spam) * P(Not Spam)</p>
-                          <p className="text-gray-300">= 0.0 * 0.5 * 0.5 = 0.0</p>
-                        </div>
-                        <p className="text-gray-300 mt-4">
-                          Since P(Spam|features) &gt; P(Not Spam|features), the email is classified as Spam.
-                        </p>
+                    <div className="mt-6">
+                      <h3 className="text-lg font-medium text-purple-400 mb-3">Example</h3>
+                      <div className="bg-gray-800 rounded-lg p-4">
+                        <p className="text-gray-300 mb-2">Without smoothing:</p>
+                        <p className="text-gray-300 mb-2">P("money"|Spam) = 2/2 = 1.0</p>
+                        <p className="text-gray-300 mb-2">P("money"|Not Spam) = 0/2 = 0.0 (problem!)</p>
+                        <p className="text-gray-300 mt-4 mb-2">With Laplace smoothing (α=1):</p>
+                        <p className="text-gray-300 mb-2">P("money"|Spam) = (2+1)/(2+1*2) = 0.75</p>
+                        <p className="text-gray-300">P("money"|Not Spam) = (0+1)/(2+1*2) = 0.25</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
+
+              {/* m-Estimate Section */}
+              <section id="m-estimate" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">m-Estimate</h2>
+                <div className="space-y-6">
+                  <div className="bg-gray-900/50 p-6 rounded-lg">
+                    <p className="text-gray-300 mb-4">
+                      The m-estimate is a more sophisticated smoothing technique that uses prior knowledge about the expected 
+                      probability distribution of features. It's particularly useful when you have domain knowledge about 
+                      the expected probabilities.
+                    </p>
+                    
+                    <Formula
+                      title="m-Estimate Formula"
+                      formula="P(xᵢ|y) = (count(xᵢ,y) + m * p) / (count(y) + m)"
+                      variables={[
+                        { name: "count(xᵢ,y)", description: "number of times feature xᵢ appears in class y" },
+                        { name: "count(y)", description: "total count of features in class y" },
+                        { name: "m", description: "equivalent sample size (smoothing parameter)" },
+                        { name: "p", description: "prior probability estimate" }
+                      ]}
+                      gradient="blue-purple"
+                    />
+
+                    <div className="mt-6 space-y-4">
+                      <h3 className="text-lg font-medium text-purple-400">Advantages of m-Estimate</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2">
+                        <li>More flexible than Laplace smoothing</li>
+                        <li>Incorporates prior knowledge</li>
+                        <li>Better handles imbalanced classes</li>
+                        <li>Can be tuned based on domain expertise</li>
+                      </ul>
+                    </div>
+
+                    <div className="mt-6">
+                      <h3 className="text-lg font-medium text-purple-400 mb-3">Example</h3>
+                      <div className="bg-gray-800 rounded-lg p-4">
+                        <p className="text-gray-300 mb-2">Parameters:</p>
+                        <p className="text-gray-300 mb-2">m = 2 (equivalent sample size)</p>
+                        <p className="text-gray-300 mb-2">p = 0.3 (prior probability)</p>
+                        <p className="text-gray-300 mt-4 mb-2">Calculations:</p>
+                        <p className="text-gray-300 mb-2">P("money"|Spam) = (2 + 2*0.3)/(2 + 2) = 0.65</p>
+                        <p className="text-gray-300">P("money"|Not Spam) = (0 + 2*0.3)/(2 + 2) = 0.15</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 bg-purple-900/30 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">When to Choose m-Estimate</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2">
+                        <li>When you have reliable prior knowledge about feature probabilities</li>
+                        <li>When dealing with imbalanced datasets</li>
+                        <li>When you need more control over the smoothing process</li>
+                        <li>When Laplace smoothing is too aggressive</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Detailed Example Section */}
+              <div id="example" className="mt-8 bg-gray-900 rounded-lg p-4 sm:p-6">
+                <h3 className="text-xl font-semibold text-white mb-4">Detailed Example</h3>
+                <p className="text-gray-300 mb-4">
+                  Let's solve a simple spam detection problem using Naive Bayes:
+                </p>
+
+                <div className="space-y-6">
+                  {/* Training Data */}
+                  <div>
+                    <h4 className="text-lg font-medium text-purple-400 mb-2">Training Data</h4>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full bg-gray-800 rounded-lg">
+                        <thead>
+                          <tr>
+                            <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Email</th>
+                            <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "money"</th>
+                            <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Contains "urgent"</th>
+                            <th className="px-2 sm:px-4 py-2 text-left text-gray-300">Class</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Email 1</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
+                          </tr>
+                          <tr>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Email 2</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Spam</td>
+                          </tr>
+                          <tr>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Email 3</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
+                          </tr>
+                          <tr>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Email 4</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">No</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Yes</td>
+                            <td className="px-2 sm:px-4 py-2 text-gray-300">Not Spam</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* Step 1: Prior Probabilities */}
+                  <div>
+                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 1: Calculate Prior Probabilities</h4>
+                    <div className="bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-300 mb-2">P(Spam) = 2/4 = 0.5</p>
+                      <p className="text-gray-300">P(Not Spam) = 2/4 = 0.5</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Likelihood Probabilities */}
+                  <div>
+                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 2: Calculate Likelihood Probabilities</h4>
+                    <div className="bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-300 mb-2">For Spam class:</p>
+                      <p className="text-gray-300 mb-2">P("money"|Spam) = 2/2 = 1.0</p>
+                      <p className="text-gray-300 mb-2">P("urgent"|Spam) = 1/2 = 0.5</p>
+                      <p className="text-gray-300 mb-2">For Not Spam class:</p>
+                      <p className="text-gray-300 mb-2">P("money"|Not Spam) = 0/2 = 0.0</p>
+                      <p className="text-gray-300">P("urgent"|Not Spam) = 1/2 = 0.5</p>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Classify New Email */}
+                  <div>
+                    <h4 className="text-lg font-medium text-purple-400 mb-2">Step 3: Classify New Email</h4>
+                    <p className="text-gray-300 mb-4">New email contains "money" but not "urgent"</p>
+                    <div className="bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-300 mb-2">P(Spam|features) = P(features|Spam) * P(Spam)</p>
+                      <p className="text-gray-300 mb-2">= P("money"|Spam) * P("not urgent"|Spam) * P(Spam)</p>
+                      <p className="text-gray-300 mb-2">= 1.0 * 0.5 * 0.5 = 0.25</p>
+                      <p className="text-gray-300 mb-2">P(Not Spam|features) = P(features|Not Spam) * P(Not Spam)</p>
+                      <p className="text-gray-300 mb-2">= P("money"|Not Spam) * P("not urgent"|Not Spam) * P(Not Spam)</p>
+                      <p className="text-gray-300">= 0.0 * 0.5 * 0.5 = 0.0</p>
+                    </div>
+                    <p className="text-gray-300 mt-4">
+                      Since P(Spam|features) &gt; P(Not Spam|features), the email is classified as Spam.
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               {/* PDF Download Section */}
               <section id="pdf-download" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">

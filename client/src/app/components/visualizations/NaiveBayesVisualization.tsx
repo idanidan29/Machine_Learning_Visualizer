@@ -266,14 +266,6 @@ export default function NaiveBayesVisualization() {
       </div>
 
       <div className="text-gray-300 text-sm space-y-2">
-        <p className="font-semibold">How Naive Bayes Works:</p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li> Each point represents a data sample with two features (X and Y coordinates)</li>
-          <li> The algorithm calculates the probability of a point belonging to each class</li>
-          <li> The decision boundary (white line) shows where the probabilities are equal</li>
-          <li> Probability contours show how the probability changes across the space</li>
-          <li> Points closer to their class cluster have higher probability</li>
-        </ul>
         <p className="mt-2">Try these steps to understand better:</p>
         <ol className="list-decimal pl-5 space-y-1">
           <li>Click "Reset" to start with random points</li>
