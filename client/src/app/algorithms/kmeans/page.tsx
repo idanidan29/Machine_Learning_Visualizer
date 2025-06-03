@@ -8,6 +8,8 @@ import TableOfContents from '../../components/TableOfContents';
 import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
+import HowItWorks from '../../components/ui/HowItWorks';
+import WhenToUse from '../../components/ui/WhenToUse';
 
 export default function KMeansPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -15,8 +17,8 @@ export default function KMeansPage() {
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🎯' },
-    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
@@ -72,51 +74,43 @@ export default function KMeansPage() {
 
               {/* Documentation Sections */}
               <div className="space-y-6">
-                {/* When to Use It Section */}
-                <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use It</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-2">Ideal Use Cases</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                        <li>Customer segmentation in marketing</li>
-                        <li>Image compression and color quantization</li>
-                        <li>Document clustering and topic modeling</li>
-                        <li>Anomaly detection</li>
-                        <li>Data preprocessing and dimensionality reduction</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-2">Assumptions</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                        <li>Clusters are spherical and of similar size</li>
-                        <li>Data points are independent of each other</li>
-                        <li>Features are equally important</li>
-                        <li>The number of clusters (K) is known in advance</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
 
                 {/* How It Works Section */}
-                <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                  <div className="space-y-4">
-                    <p className="text-gray-300 text-sm sm:text-base">
-                      The K-means algorithm works through an iterative process:
-                    </p>
-                    <ol className="list-decimal list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                      <li>Randomly initialize K centroids in the feature space</li>
-                      <li>Assign each data point to the nearest centroid</li>
-                      <li>Recalculate centroids by computing the mean of all points in each cluster</li>
-                      <li>Repeat steps 2-3 until convergence (centroids no longer move significantly)</li>
-                    </ol>
-                    <p className="text-gray-300 text-sm sm:text-base mt-4">
-                      The algorithm minimizes the within-cluster sum of squares, effectively creating
-                      compact, well-separated clusters.
-                    </p>
-                  </div>
-                </section>
+                <HowItWorks
+                  title="How It Works"
+                  steps={[
+                    { number: 1, description: "Randomly initialize K centroids in the feature space" },
+                    { number: 2, description: "Assign each data point to the nearest centroid" },
+                    { number: 3, description: "Recalculate centroids by computing the mean of all points in each cluster" },
+                    { number: 4, description: "Repeat steps 2-3 until convergence (centroids no longer move significantly)" }
+                  ]}
+                />
+
+                {/* When to Use Section */}
+                <WhenToUse
+                  idealUseCases={{
+                    title: "Ideal Use Cases",
+                    items: [
+                      "Customer segmentation in marketing",
+                      "Image compression and color quantization",
+                      "Document clustering and topic modeling",
+                      "Anomaly detection",
+                      "Data preprocessing and dimensionality reduction"
+                    ]
+                  }}
+                  keyAdvantages={{
+                    title: "Key Advantages",
+                    items: [
+                      "Simple and easy to implement",
+                      "Scales well to large datasets",
+                      "Guarantees convergence",
+                      "Works well with spherical clusters",
+                      "Fast and efficient for large datasets"
+                    ]
+                  }}
+                />
+
+                
 
                 {/* Mathematical Formulas Section */}
                 <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
