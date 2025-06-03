@@ -9,6 +9,8 @@ import Code from '../../components/ui/Code';
 import PDFDownloadCard from '../../components/ui/PDFDownloadCard';
 import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
+import HowItWorks from '../../components/ui/HowItWorks';
+import WhenToUse from '../../components/ui/WhenToUse';
 
 export default function DecisionTreePage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -75,48 +77,41 @@ export default function DecisionTreePage() {
                 <DecisionTreeVisualization />
               </section>
 
-              {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use It</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Ideal Use Cases</h3>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                      <li>Classification problems with clear decision boundaries</li>
-                      <li>Regression problems with non-linear relationships</li>
-                      <li>Feature importance analysis</li>
-                      <li>When interpretability is crucial</li>
-                      <li>When dealing with both numerical and categorical features</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium text-purple-400 mb-2">Assumptions</h3>
-                    <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                      <li>Features are independent of each other</li>
-                      <li>Data can be split into distinct groups</li>
-                      <li>Features are equally important (unless using feature importance)</li>
-                      <li>Decision boundaries are axis-parallel</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
+{/* How It Works Section */}
+              <HowItWorks
+                title="How It Works"
+                steps={[
+                  { number: 1, description: "Select the best feature to split the data based on information gain or Gini impurity" },
+                  { number: 2, description: "Create a decision node that splits the data into subsets" },
+                  { number: 3, description: "Recursively repeat the process for each subset" },
+                  { number: 4, description: "Stop when a stopping criterion is met (e.g., maximum depth, minimum samples)" },
+                  { number: 5, description: "Assign the most common class (classification) or mean value (regression) to leaf nodes" }
+                ]}
+              />
 
-              {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-300 text-sm sm:text-base">
-                    The Decision Tree algorithm works through the following process:
-                  </p>
-                  <ol className="list-decimal list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                    <li>Select the best feature to split the data based on information gain or Gini impurity</li>
-                    <li>Create a decision node that splits the data into subsets</li>
-                    <li>Recursively repeat the process for each subset</li>
-                    <li>Stop when a stopping criterion is met (e.g., maximum depth, minimum samples)</li>
-                    <li>Assign the most common class (classification) or mean value (regression) to leaf nodes</li>
-                  </ol>
-                </div>
-              </section>
+              {/* When to Use Section */}
+              <WhenToUse
+                idealUseCases={{
+                  title: "Ideal Use Cases",
+                  items: [
+                    "Classification problems with clear decision boundaries",
+                    "Regression problems with non-linear relationships",
+                    "Feature importance analysis",
+                    "When interpretability is crucial",
+                    "When dealing with both numerical and categorical features"
+                  ]
+                }}
+                keyAdvantages={{
+                  title: "Key Advantages",
+                  items: [
+                    "Easy to understand and interpret",
+                    "Can handle both numerical and categorical data",
+                    "Requires little data preprocessing",
+                    "Can capture non-linear relationships",
+                    "Feature importance is inherent"
+                  ]
+                }}
+              />
 
               {/* Decisions Section */}
               <section id="decisions" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
