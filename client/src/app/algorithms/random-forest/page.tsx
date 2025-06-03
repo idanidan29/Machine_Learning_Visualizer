@@ -8,6 +8,8 @@ import Code from '../../components/ui/Code';
 import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
 import RandomForestVisualization from '../../components/visualizations/RandomForestVisualization';
+import WhenToUse from '../../components/ui/WhenToUse';
+import HowItWorks from '../../components/ui/HowItWorks';
 
 export default function RandomForestPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -72,95 +74,39 @@ export default function RandomForestPage() {
               </section>
 
               {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How It Works</h2>
-                <div className="space-y-6">
-                  <div className="bg-gray-900/50 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium text-purple-400 mb-4">The Process</h3>
-                    <ol className="space-y-4 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
-                        <span>Create multiple bootstrap samples from the training data</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
-                        <span>For each sample, grow a decision tree using a random subset of features</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
-                        <span>At each node, select the best split from the random feature subset</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">4</span>
-                        <span>Grow trees to maximum depth without pruning</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">5</span>
-                        <span>Combine predictions using majority voting (classification) or averaging (regression)</span>
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </section>
+                <HowItWorks
+                  steps={[
+                    { number: 1, description: "Create multiple bootstrap samples from the training data" },
+                    { number: 2, description: "For each sample, grow a decision tree using a random subset of features" },
+                    { number: 3, description: "At each node, select the best split from the random feature subset" },
+                    { number: 4, description: "Grow trees to maximum depth without pruning" },
+                    { number: 5, description: "Combine predictions using majority voting (classification) or averaging (regression)" }
+                  ]}
+                />
 
               {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">When to Use</h2>
-                <div className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-gray-900/50 p-6 rounded-lg">
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Ideal Use Cases</h3>
-                      <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Classification and regression problems</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>High-dimensional data</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Feature importance analysis</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Handling missing values</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Outlier detection</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="bg-gray-900/50 p-6 rounded-lg">
-                      <h3 className="text-lg font-medium text-purple-400 mb-4">Key Advantages</h3>
-                      <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Reduced overfitting</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Handles non-linear relationships</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Robust to outliers</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Parallelizable training</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-purple-400 mr-2">✓</span>
-                          <span>Feature importance ranking</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </section>
+                <WhenToUse
+                  idealUseCases={{
+                    title: "Ideal Use Cases",
+                    items: [
+                      "Classification and regression problems",
+                      "High-dimensional data",
+                      "Feature importance analysis",
+                      "Handling missing values",
+                      "Outlier detection"
+                    ]
+                  }}
+                  keyAdvantages={{
+                    title: "Key Advantages",
+                    items: [
+                      "Reduced overfitting",
+                      "Handles non-linear relationships",
+                      "Robust to outliers",
+                      "Parallelizable training",
+                      "Feature importance ranking"
+                    ]
+                  }}
+                />
 
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
