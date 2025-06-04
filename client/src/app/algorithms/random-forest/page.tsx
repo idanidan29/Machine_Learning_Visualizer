@@ -10,6 +10,7 @@ import Formula from '../../components/ui/Formula';
 import RandomForestVisualization from '../../components/visualizations/RandomForestVisualization';
 import WhenToUse from '../../components/ui/WhenToUse';
 import HowItWorks from '../../components/ui/HowItWorks';
+import { randomForestImplementation } from '../../data/psudo-code/random-forest';
 
 export default function RandomForestPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -21,9 +22,9 @@ export default function RandomForestPage() {
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
-    { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
+    { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
     { id: 'quiz', title: 'Quiz', icon: '❓' }
   ];
 
@@ -230,57 +231,7 @@ export default function RandomForestPage() {
                 </div>
               </section>
 
-              {/* Pseudo-code Section */}
-              <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudo-code</h2>
-                <Code
-                  code={`function RandomForest(data, n_trees, max_features):
-    forest = []
-    
-    for i in range(n_trees):
-        # Create bootstrap sample
-        sample = bootstrap_sample(data)
-        
-        # Grow tree with random feature subset
-        tree = grow_tree(sample, max_features)
-        forest.append(tree)
-    
-    return forest
 
-function predict(forest, x):
-    predictions = []
-    for tree in forest:
-        pred = tree.predict(x)
-        predictions.append(pred)
-    
-    # For classification
-    if is_classification:
-        return mode(predictions)
-    # For regression
-    else:
-        return mean(predictions)
-
-function grow_tree(data, max_features):
-    if stopping_criterion_met:
-        return create_leaf(data)
-    
-    # Select random feature subset
-    features = random_subset(all_features, max_features)
-    
-    # Find best split
-    best_split = find_best_split(data, features)
-    
-    # Create child nodes
-    left_data = data[best_split.left_mask]
-    right_data = data[best_split.right_mask]
-    
-    left_child = grow_tree(left_data, max_features)
-    right_child = grow_tree(right_data, max_features)
-    
-    return create_node(best_split, left_child, right_child)`}
-                  language="python"
-                />
-              </section>
 
               {/* Characteristics Section */}
               <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
@@ -350,6 +301,15 @@ function grow_tree(data, max_features):
                     or single decision trees.
                   </p>
                 </div>
+              </section>
+
+              {/* Pseudo-code Section */}
+              <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudo-code</h2>
+                <Code
+                  code={randomForestImplementation}
+                  language="python"
+                />
               </section>
 
               {/* Quiz Section */}

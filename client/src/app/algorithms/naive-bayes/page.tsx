@@ -12,6 +12,7 @@ import PageHeader from '../../components/ui/PageHeader';
 import Formula from '../../components/ui/Formula';
 import HowItWorks from '../../components/ui/HowItWorks';
 import WhenToUse from '../../components/ui/WhenToUse';
+import { naiveBayesImplementation } from '../../data/psudo-code/naive-bayes';
 
 export default function NaiveBayesPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -441,52 +442,13 @@ export default function NaiveBayesPage() {
                 </div>
               </section>
 
-              {/* Pseudocode Section */}
+              {/* Pseudo-code Section */}
               <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudocode</h2>
-                <div className="space-y-6">
-                  <Code
-                    code={`function trainNaiveBayes(training_data):
-    # Calculate prior probabilities
-    class_counts = count_occurrences(training_data.target)
-    prior_probs = {}
-    for class, count in class_counts.items():
-        prior_probs[class] = count / len(training_data)
-    
-    # Calculate likelihood probabilities
-    likelihood_probs = {}
-    for feature in training_data.features:
-        likelihood_probs[feature] = {}
-        for class in class_counts.keys():
-            class_data = training_data[training_data.target == class]
-            feature_counts = count_occurrences(class_data[feature])
-            for value, count in feature_counts.items():
-                likelihood_probs[feature][(value, class)] = count / len(class_data)
-    
-    return prior_probs, likelihood_probs
-
-function predictNaiveBayes(instance, prior_probs, likelihood_probs):
-    predictions = {}
-    for class in prior_probs.keys():
-        # Start with prior probability
-        prob = prior_probs[class]
-        
-        # Multiply by likelihood of each feature
-        for feature in instance.features:
-            value = instance[feature]
-            if (value, class) in likelihood_probs[feature]:
-                prob *= likelihood_probs[feature][(value, class)]
-            else:
-                # Handle unseen feature values with Laplace smoothing
-                prob *= 1 / (len(likelihood_probs[feature]) + 1)
-        
-        predictions[class] = prob
-    
-    # Return class with highest probability
-    return max(predictions.items(), key=lambda x: x[1])[0]`}
-                    language="python"
-                  />
-                </div>
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudo-code</h2>
+                <Code
+                  code={naiveBayesImplementation}
+                  language="python"
+                />
               </section>
 
               {/* Quiz Section */}
