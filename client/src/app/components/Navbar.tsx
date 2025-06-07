@@ -1,10 +1,12 @@
 "use client"
 import Link from 'next/link'
 import { useState } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isAuthenticated, user, logout, openLoginModal } = useAuth()
 
 
   const scrollToTop = () => {
@@ -32,6 +34,27 @@ export default function Navbar() {
               <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                 Home
               </Link>
+              
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-gray-300 text-sm">
+                    Welcome, {user?.name}
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={openLoginModal}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                >
+                  Login
+                </button>
+              )}
             </div>
           </div>
 
@@ -75,6 +98,27 @@ export default function Navbar() {
             <Link href="/" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
               Home
             </Link>
+            
+            {isAuthenticated ? (
+              <div className="border-t border-gray-700 pt-2 mt-2">
+                <div className="px-3 py-2">
+                  <span className="text-gray-300 text-sm">Welcome, {user?.name}</span>
+                </div>
+                <button
+                  onClick={logout}
+                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full text-left"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={openLoginModal}
+                className="bg-purple-600 hover:bg-purple-700 text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full text-left mt-2"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       )}

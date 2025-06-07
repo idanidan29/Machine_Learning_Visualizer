@@ -57,13 +57,6 @@ export const algorithms: Algorithm[] = [
     categories: ['supervised', 'classification', 'ensemble']
   },
   {
-    name: 'XGBoost',
-    description: 'An optimized implementation of gradient boosting.',
-    path: '/algorithms/xgboost',
-    icon: '🚀',
-    categories: ['supervised', 'classification', 'regression', 'ensemble']
-  },
-  {
     name: 'Stacking',
     description: 'A meta-learning technique that combines multiple models.',
     path: '/algorithms/stacking',

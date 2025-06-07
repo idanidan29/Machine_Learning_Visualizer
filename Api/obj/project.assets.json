@@ -1982,11 +1982,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\job_application_tracking\\Api\\JobTracker.Api.csproj",
+      "projectUniqueName": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\Machine_Learning_Visualizer\\Api\\JobTracker.Api.csproj",
       "projectName": "JobTracker.Api",
-      "projectPath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\job_application_tracking\\Api\\JobTracker.Api.csproj",
+      "projectPath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\Machine_Learning_Visualizer\\Api\\JobTracker.Api.csproj",
       "packagesPath": "C:\\Users\\29ida\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\job_application_tracking\\Api\\obj\\",
+      "outputPath": "C:\\Users\\29ida\\OneDrive\\Documents\\GitHub\\Machine_Learning_Visualizer\\Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

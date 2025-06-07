@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { algorithms, categories } from '../data/algorithms'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function AlgorithmFilter() {
+  const { isAuthenticated, openLoginModal } = useAuth()
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all'])
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -22,6 +24,18 @@ export default function AlgorithmFilter() {
         }
       })
     }
+  }
+
+  const handleAlgorithmClick = (algorithmPath: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (!isAuthenticated) {
+      openLoginModal();
+      return;
+    }
+    
+    // If authenticated, navigate to the algorithm page
+    window.location.href = algorithmPath;
   }
 
   const filteredAlgorithms = algorithms
@@ -162,9 +176,9 @@ export default function AlgorithmFilter() {
                   height: '250px'
                 }}
               >
-                <Link
-                  href={algorithm.path}
-                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-colors duration-300 flex flex-col h-full w-full overflow-hidden"
+                <div
+                  onClick={(e) => handleAlgorithmClick(algorithm.path, e)}
+                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-colors duration-300 flex flex-col h-full w-full overflow-hidden cursor-pointer"
                 >
                   <div className="flex items-start space-x-4">
                     <motion.div
@@ -217,7 +231,7 @@ export default function AlgorithmFilter() {
                       </motion.div>
                     </div>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
