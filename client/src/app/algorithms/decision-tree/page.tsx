@@ -19,8 +19,8 @@ export default function DecisionTreePage() {
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🌳' },
+        { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
-    { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'decisions', title: 'Decisions', icon: '🎯' },
     { id: 'information-gain', title: 'Information Gain', icon: '📈' },
     { id: 'gini-impurity', title: 'Gini Impurity', icon: '🎲' },
@@ -192,7 +192,7 @@ export default function DecisionTreePage() {
                       {/* Parent Node */}
                       <div className="mb-8">
                         <h4 className="text-purple-300 font-medium mb-3">Parent Node (Before Split)</h4>
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-2">
                               <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -234,7 +234,7 @@ export default function DecisionTreePage() {
                       </div>
 
                       {/* Split Explanation */}
-                      <div className="mb-8 bg-gray-600 rounded-lg p-4">
+                      <div className="mb-8 bg-gray-800 rounded-lg p-4">
                         <h4 className="text-purple-300 font-medium mb-3">Why Split by Credit Score?</h4>
                         <div className="space-y-3 text-gray-300 text-sm">
                           <p>We compared different features to find the best split:</p>
@@ -259,7 +259,7 @@ export default function DecisionTreePage() {
                       {/* Child Nodes */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Left Child */}
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <h4 className="text-purple-300 font-medium mb-3">Left Child (Credit Score ≤ 700)</h4>
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
@@ -286,7 +286,7 @@ export default function DecisionTreePage() {
                         </div>
 
                         {/* Right Child */}
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <h4 className="text-purple-300 font-medium mb-3">Right Child (Credit Score &gt; 700)</h4>
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
@@ -314,7 +314,7 @@ export default function DecisionTreePage() {
                       </div>
 
                       {/* Information Gain Calculation */}
-                      <div className="mt-8 bg-gray-600 rounded-lg p-4">
+                      <div className="mt-8 bg-gray-800 rounded-lg p-4">
                         <h4 className="text-purple-300 font-medium mb-3">Information Gain Calculation</h4>
                         <div className="space-y-2 text-gray-300 text-sm">
                           <p>1. Parent Entropy = 0.971</p>
@@ -355,7 +355,7 @@ export default function DecisionTreePage() {
                       <div className="bg-gray-700 rounded-lg p-6">
                         <h3 className="text-lg font-medium text-purple-400 mb-4">Pure Node Example</h3>
                         <div className="space-y-4">
-                          <div className="bg-green-900/30 rounded-lg p-4">
+                          <div className="bg-gray-800/30 rounded-lg p-4">
                             <p className="text-gray-300 text-sm mb-2">Distribution: [Class A: 5, Class B: 0, Class C: 0]</p>
                             <p className="text-gray-300 text-sm">Probabilities: [1.0, 0.0, 0.0]</p>
                             <p className="text-gray-300 text-sm mt-2">Gini = 1 - (1² + 0² + 0²) = 0</p>
@@ -371,7 +371,7 @@ export default function DecisionTreePage() {
                       <div className="bg-gray-700 rounded-lg p-6">
                         <h3 className="text-lg font-medium text-purple-400 mb-4">Maximum Impurity Example</h3>
                         <div className="space-y-4">
-                          <div className="bg-red-900/30 rounded-lg p-4">
+                          <div className="bg-gray-800/30 rounded-lg p-4">
                             <p className="text-gray-300 text-sm mb-2">Distribution: [Class A: 2, Class B: 2, Class C: 2]</p>
                             <p className="text-gray-300 text-sm">Probabilities: [0.33, 0.33, 0.33]</p>
                             <p className="text-gray-300 text-sm mt-2">Gini = 1 - (0.33² + 0.33² + 0.33²) = 0.67</p>
@@ -388,7 +388,7 @@ export default function DecisionTreePage() {
                     <div className="bg-gray-700 rounded-lg p-6 mt-6">
                       <h3 className="text-lg font-medium text-purple-400 mb-4">Interactive Example</h3>
                       <div className="space-y-4">
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <p className="text-gray-300 text-sm mb-2">Node Distribution: [Class A: 3, Class B: 2, Class C: 1]</p>
                           <div className="flex space-x-2 mb-4">
                             <div className="flex-1 bg-purple-500 h-4 rounded-full">
@@ -438,7 +438,7 @@ export default function DecisionTreePage() {
                         <div>
                           <h4 className="text-purple-300 font-medium mb-3">Observed Values</h4>
                           <div className="overflow-x-auto">
-                            <table className="min-w-full bg-gray-600 rounded-lg overflow-hidden">
+                            <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
                               <thead>
                                 <tr className="bg-gray-500">
                                   <th className="px-6 py-3 text-left text-white font-semibold">Feature</th>
@@ -474,7 +474,7 @@ export default function DecisionTreePage() {
                         <div>
                           <h4 className="text-purple-300 font-medium mb-3">Expected Values</h4>
                           <div className="overflow-x-auto">
-                            <table className="min-w-full bg-gray-600 rounded-lg overflow-hidden">
+                            <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
                               <thead>
                                 <tr className="bg-gray-500">
                                   <th className="px-6 py-3 text-left text-white font-semibold">Feature</th>
@@ -498,7 +498,7 @@ export default function DecisionTreePage() {
                           </div>
                         </div>
 
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <h4 className="text-purple-300 font-medium mb-3">Chi-Square Calculation</h4>
                           <div className="space-y-2 text-gray-300 text-sm">
                             <p>χ² = ((15-10)²/10 + (5-10)²/10 + (5-10)²/10 + (15-10)²/10)</p>
@@ -507,14 +507,14 @@ export default function DecisionTreePage() {
                           </div>
                         </div>
 
-                        <div className="bg-gray-600 rounded-lg p-4">
+                        <div className="bg-gray-800 rounded-lg p-4">
                           <h4 className="text-purple-300 font-medium mb-3">Interpretation</h4>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-gray-500/50 rounded-lg p-3">
+                            <div className="bg-gray-700/50 rounded-lg p-3">
                               <p className="text-gray-300 text-sm font-medium">Degrees of Freedom</p>
                               <p className="text-white">(rows-1) × (columns-1) = 1</p>
                             </div>
-                            <div className="bg-gray-500/50 rounded-lg p-3">
+                            <div className="bg-gray-700/50 rounded-lg p-3">
                               <p className="text-gray-300 text-sm font-medium">Significance Level</p>
                               <p className="text-white">p-value &lt; 0.05</p>
                             </div>
