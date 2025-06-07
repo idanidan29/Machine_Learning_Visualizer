@@ -28,7 +28,7 @@ export interface InputProps
           background: useMotionTemplate`
         radial-gradient(
           ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
-          #3b82f6,
+          #9810fa,
           transparent 80%
         )
       `,
