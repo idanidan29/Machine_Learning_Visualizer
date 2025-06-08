@@ -19,13 +19,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Create directory for Google Cloud credentials
-RUN mkdir -p /app/credentials
-
 # Set environment variables
 ENV ASPNETCORE_URLS=http://+:8080
-ENV ASPNETCORE_ENVIRONMENT=Development
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/google-credentials.json
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 EXPOSE 8080
 
