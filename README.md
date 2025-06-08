@@ -17,7 +17,6 @@ An interactive web application that lets users visually explore how different ma
 * **Frontend**: Next.js (React + TypeScript + Tailwind CSS + Framer Motion)
 * **Backend**: .NET Core Web API
 * **Database**: Firebase Realtime Database
-* **Authentication**: Firebase Authentication
 * **Containerization**: Docker
 * **Deployment**:
   * Frontend: Vercel
@@ -82,16 +81,6 @@ An interactive web application that lets users visually explore how different ma
    cd client
    vercel
    ```
-
-3. **Environment Variables**
-   * Set up the following environment variables in Vercel:
-     * `NEXT_PUBLIC_API_URL`
-     * `NEXT_PUBLIC_FIREBASE_API_KEY`
-     * `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-     * `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-     * `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
-     * `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
-     * `NEXT_PUBLIC_FIREBASE_APP_ID`
 
 ### Backend Deployment (Render)
 
@@ -207,18 +196,6 @@ Create an `appsettings.json` file in the `server` directory:
 
 ---
 
-## ▶️ Running Locally
-
-### Using Docker (Recommended)
-
-1. **Start all services**
-
-   ```bash
-   docker-compose up
-   ```
-
-2. Open [http://localhost:3000](http://localhost:3000) in your browser
-
 ### Manual Development
 
 1. **Start the frontend**
@@ -239,22 +216,11 @@ Create an `appsettings.json` file in the `server` directory:
 
 ---
 
-## 🔧 Docker Services
-
-The application uses the following Docker services:
-
-* **client**: Next.js frontend application
-* **server**: .NET Core Web API backend
-* **firebase-emulator**: Firebase emulator for local development
-
----
-
 ## 🔐 Firebase Setup
 
 1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com)
 2. Enable Authentication and Realtime Database
 3. Add your web application to get the configuration
-4. Update the environment variables in `.env.local`
 
 ---
 
