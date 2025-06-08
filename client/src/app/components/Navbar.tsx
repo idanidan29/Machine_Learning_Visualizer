@@ -30,31 +30,41 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Home
-              </Link>
-              
-              {isAuthenticated ? (
-                <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-between w-full">
+              {/* Left side - Home link */}
+              <div className="flex items-center">
+                <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                  Home
+                </Link>
+              </div>
+
+              {/* Center - Welcome message */}
+              {isAuthenticated && (
+                <div className="absolute left-1/2 transform -translate-x-1/2">
                   <span className="text-gray-300 text-sm">
-                    Welcome, {user?.name}
+                    Welcome, {user?.firstName}
                   </span>
+                </div>
+              )}
+
+              {/* Right side - Login/Logout */}
+              <div className="flex items-center">
+                {isAuthenticated ? (
                   <button
                     onClick={logout}
                     className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
                   >
                     Logout
                   </button>
-                </div>
-              ) : (
-                <button
-                  onClick={openLoginModal}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                >
-                  Login
-                </button>
-              )}
+                ) : (
+                  <button
+                    onClick={openLoginModal}
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -102,7 +112,7 @@ export default function Navbar() {
             {isAuthenticated ? (
               <div className="border-t border-gray-700 pt-2 mt-2">
                 <div className="px-3 py-2">
-                  <span className="text-gray-300 text-sm">Welcome, {user?.name}</span>
+                  <span className="text-gray-300 text-sm">Welcome, {user?.firstName}</span>
                 </div>
                 <button
                   onClick={logout}
