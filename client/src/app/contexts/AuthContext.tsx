@@ -91,23 +91,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string, firstName: string, lastName: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/Auth/register`, {
+      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/Auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password, firstName, lastName }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => ({ message: 'Registration failed' }));
         throw new Error(errorData.message || 'Registration failed');
       }
 
+      const data = await response.json();
+      console.log('Registration successful:', data);
       return await login(email, password);
     } catch (error) {
       console.error('Sign up error:', error);
-      return false;
+      throw error;
     }
   };
 

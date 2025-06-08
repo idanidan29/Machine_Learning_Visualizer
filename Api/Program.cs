@@ -4,6 +4,7 @@ using Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,14 +73,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowNextJsApp", builder =>
     {
-        builder.WithOrigins(
-            "http://localhost:3000",
-            "https://machine-learning-visualizer.vercel.app",  // Add your Vercel deployment URL
-            "https://machine-learning-visualizer.onrender.com" // Add your Render deployment URL
-        )
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials();
+        builder.SetIsOriginAllowed(origin => true) // Allow all origins in development
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
     });
 });
 
@@ -89,17 +86,35 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// Use CORS before Authentication
+app.UseCors("AllowNextJsApp");
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
 
-// Use CORS before Authentication
-app.UseCors("AllowNextJsApp");
-
 // Add Authentication middleware before Authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Add global exception handling
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        var error = context.Features.Get<IExceptionHandlerFeature>();
+        if (error != null)
+        {
+            await context.Response.WriteAsJsonAsync(new { 
+                message = "An error occurred while processing your request.",
+                error = error.Error.Message
+            });
+        }
+    });
+});
 
 app.MapControllers();
 
