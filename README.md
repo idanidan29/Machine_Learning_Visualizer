@@ -15,7 +15,13 @@ An interactive web application that lets users visually explore how different ma
 ## 🛠️ Tech Stack
 
 * **Frontend**: Next.js (React + TypeScript + Tailwind CSS + Framer Motion)
-* **Backend**: TBD (Planned Python/Flask or Node.js for algorithm processing if needed)
+* **Backend**: .NET Core Web API
+* **Database**: Firebase Realtime Database
+* **Authentication**: Firebase Authentication
+* **Containerization**: Docker
+* **Deployment**:
+  * Frontend: Vercel
+  * Backend: Render
 * **Visualization**: D3.js or React Canvas / Chart libraries
 * **Authentication**: JWT-based (placeholder login/register supported)
 
@@ -25,8 +31,10 @@ An interactive web application that lets users visually explore how different ma
 
 1. **User Authentication** 🔐
 
-   * Registration & login
    * JWT issuance & protected user sessions
+   * Firebase Authentication integration
+   * Email/Password and OAuth providers (Google, GitHub)
+   * Protected user sessions
 
 2. **Algorithm Visualizer** 🤖
 
@@ -54,11 +62,87 @@ An interactive web application that lets users visually explore how different ma
 
 ---
 
+## 🚀 Deployment
+
+### Frontend Deployment (Vercel)
+
+1. **Prerequisites**
+   * Vercel account
+   * GitHub repository connected to Vercel
+
+2. **Deployment Steps**
+   ```bash
+   # Install Vercel CLI
+   npm i -g vercel
+
+   # Login to Vercel
+   vercel login
+
+   # Deploy
+   cd client
+   vercel
+   ```
+
+3. **Environment Variables**
+   * Set up the following environment variables in Vercel:
+     * `NEXT_PUBLIC_API_URL`
+     * `NEXT_PUBLIC_FIREBASE_API_KEY`
+     * `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+     * `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+     * `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+     * `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+     * `NEXT_PUBLIC_FIREBASE_APP_ID`
+
+### Backend Deployment (Render)
+
+1. **Prerequisites**
+   * Render account
+   * Docker installed locally
+
+2. **Deployment Steps**
+   * Create a new Web Service on Render
+   * Connect your GitHub repository
+   * Configure the following:
+     * Build Command: `docker build -t ml-visualizer-backend .`
+     * Start Command: `docker run -p 5000:5000 ml-visualizer-backend`
+     * Environment Variables:
+       ```env
+       ASPNETCORE_ENVIRONMENT=Production
+       Firebase__ProjectId=your_project_id
+       Firebase__PrivateKey=your_private_key
+       Firebase__ClientEmail=your_client_email
+       ```
+
+3. **Automatic Deployments**
+   * Render automatically deploys when changes are pushed to the main branch
+   * Preview deployments are created for pull requests
+
+### Continuous Deployment
+
+The project uses the following deployment workflow:
+
+1. **Development**
+   * Local development using Docker Compose
+   * Firebase Emulator for local testing
+
+2. **Staging**
+   * Automatic deployment to Vercel Preview
+   * Backend deployment to Render Preview
+
+3. **Production**
+   * Manual deployment to Vercel Production
+   * Automatic deployment to Render Production
+
+---
+
 ## ⚙️ Getting Started
 
 ### Prerequisites
 
 * **Node.js** (v16+) & **npm** or **yarn**
+* **.NET SDK** (v7.0 or later)
+* **Docker** and **Docker Compose**
+* **Firebase CLI** (optional, for local development)
 
 ### Installation
 
@@ -72,29 +156,105 @@ An interactive web application that lets users visually explore how different ma
 2. **Frontend setup**
 
    ```bash
+   cd client
    npm install
    # or yarn install
    ```
 
+3. **Backend setup**
+
+   ```bash
+   cd server
+   dotnet restore
+   ```
+
+4. **Docker setup**
+
+   ```bash
+   # Build and start all services
+   docker-compose up --build
+   ```
+
 ### Configuration
 
-Create a `.env.local` file in the root of your frontend with:
+1. **Frontend Configuration**
+
+Create a `.env.local` file in the `client` directory:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+
+2. **Backend Configuration**
+
+Create an `appsettings.json` file in the `server` directory:
+
+```json
+{
+  "Firebase": {
+    "ProjectId": "your_project_id",
+    "PrivateKey": "your_private_key",
+    "ClientEmail": "your_client_email"
+  }
+}
 ```
 
 ---
 
 ## ▶️ Running Locally
 
+### Using Docker (Recommended)
+
+1. **Start all services**
+
+   ```bash
+   docker-compose up
+   ```
+
+2. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Manual Development
+
 1. **Start the frontend**
 
    ```bash
+   cd client
    npm run dev
    ```
 
-2. Open [http://localhost:3000](http://localhost:3000) in your browser to explore.
+2. **Start the backend**
+
+   ```bash
+   cd server
+   dotnet run
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+---
+
+## 🔧 Docker Services
+
+The application uses the following Docker services:
+
+* **client**: Next.js frontend application
+* **server**: .NET Core Web API backend
+* **firebase-emulator**: Firebase emulator for local development
+
+---
+
+## 🔐 Firebase Setup
+
+1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com)
+2. Enable Authentication and Realtime Database
+3. Add your web application to get the configuration
+4. Update the environment variables in `.env.local`
 
 ---
 
@@ -105,3 +265,9 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 3. Commit your changes: `git commit -m "Add new feature"`
 4. Push to the branch: `git push origin feature/YourFeature`
 5. Open a Pull Request describing your changes and referencing any related issues
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
