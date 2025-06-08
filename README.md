@@ -232,8 +232,4 @@ Create an `appsettings.json` file in the `server` directory:
 4. Push to the branch: `git push origin feature/YourFeature`
 5. Open a Pull Request describing your changes and referencing any related issues
 
----
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
