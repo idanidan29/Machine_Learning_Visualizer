@@ -72,9 +72,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowNextJsApp", builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        builder.WithOrigins(
+            "http://localhost:3000",
+            "https://machine-learning-visualizer.vercel.app",  // Add your Vercel deployment URL
+            "https://machine-learning-visualizer.onrender.com" // Add your Render deployment URL
+        )
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
     });
 });
 

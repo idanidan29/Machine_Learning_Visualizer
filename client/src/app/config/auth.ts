@@ -8,7 +8,7 @@ export const AUTH_CONFIG = {
   GITHUB_REDIRECT_URI: process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI || 'http://localhost:3000/auth/callback/github',
   
   // API endpoints
-  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5097/api',
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://machine-learning-visualizer.onrender.com/api',
   
   // OAuth endpoints
   GOOGLE_AUTH_URL: 'https://accounts.google.com/o/oauth2/v2/auth',
