@@ -14,26 +14,16 @@ namespace Api.Services
             _logger = logger;
             try
             {
-                // Set the environment variable for credentials
-                string credentialsPath = configuration["FirestoreSettings:CredentialsPath"];
                 string projectId = configuration["FirestoreSettings:ProjectId"];
                 
-                _logger.LogInformation($"Attempting to initialize Firestore with credentials at: {credentialsPath}");
+                _logger.LogInformation($"Attempting to initialize Firestore with project ID: {projectId}");
                 
-                if (string.IsNullOrEmpty(credentialsPath))
-                {
-                    throw new InvalidOperationException("Firestore credentials path is not configured");
-                }
-
                 if (string.IsNullOrEmpty(projectId))
                 {
                     throw new InvalidOperationException("Firestore project ID is not configured");
                 }
 
-                // Set the environment variable
-                Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath);
-                
-                // Create Firestore client
+                // Create Firestore client using default credentials from environment
                 _firestoreDb = FirestoreDb.Create(projectId);
                 _logger.LogInformation("Firestore client initialized successfully");
             }
