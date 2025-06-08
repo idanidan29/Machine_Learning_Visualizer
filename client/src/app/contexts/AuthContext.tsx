@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/Auth/login`, {
+      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/Auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
