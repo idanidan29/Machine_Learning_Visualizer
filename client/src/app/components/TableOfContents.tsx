@@ -42,7 +42,7 @@ const ContentsView = ({ sections, activeSection, scrollToSection }: {
 );
 
 // Algorithms View Component
-const AlgorithmsView = ({ isMobileMenuOpen, setIsMobileMenuOpen }: {
+const AlgorithmsView = ({ setIsMobileMenuOpen }: {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (isOpen: boolean) => void;
 }) => {

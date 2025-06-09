@@ -1,12 +1,15 @@
 "use client"
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar'
 import AlgorithmFilter from './AlgoFilter'
 import DragCloseDrawer from './ui/DragCloseDrawer'
+import { useAuth } from '../contexts/AuthContext'
+import FeatureCard from './FeatureCard'
 
 export default function HeroSection() {
   const [open, setOpen] = useState(false);
+  const { openLoginModal } = useAuth();
 
   return (
     <>
@@ -40,13 +43,73 @@ export default function HeroSection() {
               <p className="text-base text-gray-300 text-center max-w-xl">
                 Interactively visualize KNN, decision trees, clustering, and more. Change parameters on the fly and see how algorithms make decisions in real time.
               </p>
-              <div className="flex justify-center pb-8">
+              <div className="flex justify-center gap-4 pb-8">
                 <button
-                  className="px-8 h-12 rounded-full flex items-center gap-x-3 bg-purple-700 text-white hover:bg-opacity-80 transition-all duration-200 hover:scale-105"
                   onClick={() => setOpen(true)}
+                  className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
                 >
-                  Instructions
+                  <span className="relative z-10 flex items-center gap-2">
+                    Instructions
+                    <svg 
+                      className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M13 7l5 5m0 0l-5 5m5-5H6" 
+                      />
+                    </svg>
+                  </span>
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/90 to-purple-500/90 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/50 to-purple-500/50 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
                 </button>
+
+                <button
+                  onClick={openLoginModal}
+                  className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Log In
+                    <svg 
+                      className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" 
+                      />
+                    </svg>
+                  </span>
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
+                </button>
+              </div>
+
+              {/* Feature Highlights */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
+                <FeatureCard
+                  emoji="🎯"
+                  title="Interactive Learning"
+                  description="Experiment with parameters and see real-time updates in the visualizations."
+                />
+                <FeatureCard
+                  emoji="📊"
+                  title="Multiple Algorithms"
+                  description="Explore various ML algorithms with detailed explanations and examples."
+                />
+                <FeatureCard
+                  emoji="🎓"
+                  title="Learn by Doing"
+                  description="Test your knowledge with interactive quizzes and practical examples."
+                />
               </div>
             </div>
           </div>
@@ -54,14 +117,6 @@ export default function HeroSection() {
           {/* Algorithm Filter Section */}
           <div id="algorithms" className="mt-8">
             <AlgorithmFilter />
-          </div>
-
-          {/* Auth form section toggler */}
-          <div className="flex justify-center items-center mt-4 mb-10">
-            {/* <div className="w-full max-w-md bg-gray-800 p-3 rounded-xl shadow-l">
-              <SliderToggle selected={selected} setSelected={setSelected} />
-              {selected === "Log In" ? <LogInForm /> : <RegisterForm />}
-            </div> */}
           </div>
         </div>
       </section>
