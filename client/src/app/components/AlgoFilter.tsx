@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { algorithms, categories } from '../data/algorithms'
 import { useAuth } from '../contexts/AuthContext'
@@ -8,6 +8,22 @@ export default function AlgorithmFilter() {
   const { isAuthenticated, openLoginModal } = useAuth()
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all'])
   const [searchQuery, setSearchQuery] = useState('')
+
+  // Add effect to check for empty results
+  useEffect(() => {
+    const hasResults = algorithms.some(algorithm => {
+      const matchesCategory = selectedCategories.includes('all') || 
+        algorithm.categories.some(category => selectedCategories.includes(category))
+      const matchesSearch = searchQuery === '' || 
+        algorithm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        algorithm.description.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+
+    if (!hasResults && !selectedCategories.includes('all')) {
+      setSelectedCategories(['all'])
+    }
+  }, [selectedCategories, searchQuery])
 
   const handleCategoryClick = (categoryId: string, e: React.MouseEvent) => {
     e.preventDefault();
