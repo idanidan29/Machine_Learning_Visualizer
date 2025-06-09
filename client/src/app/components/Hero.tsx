@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-900 py-6 overflow-hidden min-h-screen w-screen flex flex-col relative">
+      <section className="bg-gray-900 py-6 overflow-hidden min-h-screen flex flex-col relative">
         {/* Background elements */}
         <div className="absolute top-0 left-0 -translate-x-[54%] -translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
         <div className="absolute bottom-0 right-0 translate-x-[54%] translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
