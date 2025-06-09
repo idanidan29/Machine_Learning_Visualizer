@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { algorithms } from '../data/algorithms';
@@ -23,6 +23,43 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
 
+  // Add Intersection Observer to track visible sections
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Only update active section if we're on the contents tab
+        if (activeTab === 'contents') {
+          const visibleEntry = entries.find(entry => entry.isIntersecting);
+          if (visibleEntry) {
+            setActiveSection(visibleEntry.target.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-20% 0px -80% 0px',
+        threshold: 0
+      }
+    );
+
+    // Observe all sections
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      // Cleanup observer on unmount
+      sections.forEach((section) => {
+        const element = document.getElementById(section.id);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
+  }, [sections, setActiveSection, activeTab]);
+
   // Get unique categories from all algorithms
   const allCategories = Array.from(new Set(algorithms.flatMap(alg => alg.categories)));
 
@@ -40,7 +77,6 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
       setIsMobileMenuOpen(false);
     }
   };
@@ -70,31 +106,22 @@ export default function TableOfContents({ sections, activeSection, setActiveSect
   );
 
   const ContentsView = () => (
-    <motion.div
-      key="contents"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="space-y-1"
-    >
+    <div className="space-y-1">
       {sections.map((section) => (
-        <motion.button
+        <button
           key={section.id}
           onClick={() => scrollToSection(section.id)}
-          className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
+          className={`w-full text-left px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 ${
             activeSection === section.id
               ? 'bg-purple-600 text-white'
               : 'text-gray-300 hover:bg-gray-700'
           }`}
-          whileHover={{ scale: 1.02, x: 2 }}
-          whileTap={{ scale: 0.98 }}
         >
           <span className="text-lg">{section.icon}</span>
           <span className="font-medium">{section.title}</span>
-        </motion.button>
+        </button>
       ))}
-    </motion.div>
+    </div>
   );
 
   const AlgorithmsView = () => {
