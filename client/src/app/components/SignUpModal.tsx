@@ -12,6 +12,7 @@ import {
   IconBrandGoogle,
   IconX,
 } from "@tabler/icons-react";
+import Loader from './Loader';
 
 export function SignUpModal() {
   const { showSignUpModal, closeSignUpModal, signUp, openLoginModal, initiateOAuth } = useAuth();
@@ -80,7 +81,6 @@ export function SignUpModal() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto"
-            onClick={handleClose}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -88,7 +88,7 @@ export function SignUpModal() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
               className="relative w-full max-w-md my-8"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="shadow-input mx-auto w-full bg-gray-900 border border-gray-700 p-4 rounded-2xl md:p-6">
                 {/* Close button */}
@@ -172,7 +172,7 @@ export function SignUpModal() {
                     type="submit"
                     disabled={isLoading}
                   >
-                    {isLoading ? 'Creating Account...' : 'Sign Up & Continue'}
+                    {isLoading ? <Loader /> : 'Sign Up & Continue'}
                     <BottomGradient />
                   </button>
 
