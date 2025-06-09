@@ -9,7 +9,7 @@ import FeatureCard from './FeatureCard'
 
 export default function HeroSection() {
   const [open, setOpen] = useState(false);
-  const { openLoginModal } = useAuth();
+  const { openLoginModal, isAuthenticated } = useAuth();
 
   return (
     <>
@@ -68,29 +68,31 @@ export default function HeroSection() {
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/50 to-purple-500/50 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
                 </button>
 
-                <button
-                  onClick={openLoginModal}
-                  className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Log In
-                    <svg 
-                      className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" 
-                      />
-                    </svg>
-                  </span>
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
-                </button>
+                {!isAuthenticated && (
+                  <button
+                    onClick={openLoginModal}
+                    className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      Log In
+                      <svg 
+                        className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" 
+                        />
+                      </svg>
+                    </span>
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
+                  </button>
+                )}
               </div>
 
               {/* Feature Highlights */}
