@@ -1,6 +1,6 @@
-export const dynamic = 'force-dynamic';
-
 'use client';
+
+export const dynamic = 'force-dynamic';
 
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
