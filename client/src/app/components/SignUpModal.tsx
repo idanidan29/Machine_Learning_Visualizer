@@ -39,7 +39,7 @@ export function SignUpModal() {
       } else {
         setError('Registration failed. Please try again.');
       }
-    } catch (_) {
+    } catch {
       setError('An error occurred during registration');
     } finally {
       setIsLoading(false);
