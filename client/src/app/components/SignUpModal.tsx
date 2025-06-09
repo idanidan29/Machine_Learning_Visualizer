@@ -88,7 +88,7 @@ export function SignUpModal() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
               className="relative w-full max-w-md my-8"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <div className="shadow-input mx-auto w-full bg-gray-900 border border-gray-700 p-4 rounded-2xl md:p-6">
                 {/* Close button */}
