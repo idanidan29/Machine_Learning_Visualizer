@@ -29,7 +29,7 @@ export function LoginModal() {
       if (!success) {
         setError('Invalid email or password');
       }
-    } catch (err) {
+    } catch (_) {
       setError('An error occurred during login');
     } finally {
       setIsLoading(false);
