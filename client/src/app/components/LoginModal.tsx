@@ -29,7 +29,7 @@ export function LoginModal() {
       if (!success) {
         setError('Invalid email or password');
       }
-    } catch {
+    } catch (err) {
       setError('An error occurred during login');
     } finally {
       setIsLoading(false);
@@ -75,7 +75,7 @@ export function LoginModal() {
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
             className="relative w-full max-w-md"
-            onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="shadow-input mx-auto w-full bg-gray-900 border border-gray-700 p-6 rounded-2xl md:p-8">
               {/* Close button */}
