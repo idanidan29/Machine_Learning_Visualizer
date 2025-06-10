@@ -15,39 +15,39 @@ export default function HeroSection() {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-900 pt-6 overflow-hidden min-h-screen flex flex-col relative">
+      <section className="bg-gray-900 pt-4 sm:pt-6 overflow-hidden min-h-screen flex flex-col relative">
         {/* Background elements */}
         <div className="absolute top-0 left-0 -translate-x-[54%] -translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
         <div className="absolute bottom-0 right-0 translate-x-[54%] translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
-        <div className="absolute min-w-[300px] w-[48%] md:w-2/5 aspect-square rounded-full bg-gradient-to-r from-purple-400/5 right-0 -translate-y-[40%] translate-x-[40%] top-0">
+        <div className="absolute min-w-[200px] sm:min-w-[300px] w-[48%] md:w-2/5 aspect-square rounded-full bg-gradient-to-r from-purple-400/5 right-0 -translate-y-[40%] translate-x-[40%] top-0">
           <div className="inset-[10%] rounded-full bg-gradient-to-l from-purple-400/20">
             <div className="absolute inset-[20%] rounded-full bg-gradient-to-l from-purple-400/30" />
           </div>
         </div>
-        <div className="absolute min-w-[300px] w-[48%] md:w-2/5 aspect-square rounded-full bg-gradient-to-l from-purple-400/5 left-0 translate-y-[40%] -translate-x-[40%] bottom-0">
+        <div className="absolute min-w-[200px] sm:min-w-[300px] w-[48%] md:w-2/5 aspect-square rounded-full bg-gradient-to-l from-purple-400/5 left-0 translate-y-[40%] -translate-x-[40%] bottom-0">
           <div className="inset-[10%] rounded-full bg-gradient-to-r from-purple-400/40">
             <div className="absolute inset-[20%] rounded-full bg-gradient-to-r from-purple-400/50" />
           </div>
         </div>
 
         {/* Content container */}
-        <div className="mx-auto w-full max-w-7xl px-5 flex flex-col h-full">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 flex flex-col h-full">
           {/* Hero content */}
-          <div className="flex flex-col items-center justify-center p-6 mb-8 mt-16">
-            <div className="text-center flex flex-col items-center space-y-6 md:space-y-7 max-w-4xl">
-              <span className="border border-gray-500 px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-300">
+          <div className="flex flex-col items-center justify-center p-4 sm:p-6 mb-4 sm:mb-8 mt-12 sm:mt-16">
+            <div className="text-center flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-7 max-w-4xl">
+              <span className="border border-gray-500 px-4 sm:px-6 py-0.5 rounded-full bg-gray-950 bg-opacity-50 text-gray-300 text-sm sm:text-base">
                 ML Visualizer
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/tight xl:text-6xl/tight text-white font-bold capitalize text-center">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl/tight text-white font-bold capitalize text-center">
                 Explore and Understand ML Algorithms Visually
               </h1>
-              <p className="text-base text-gray-300 text-center max-w-xl">
+              <p className="text-sm sm:text-base text-gray-300 text-center max-w-xl">
                 Interactively visualize KNN, decision trees, clustering, and more. Change parameters on the fly and see how algorithms make decisions in real time.
               </p>
-              <div className="flex justify-center gap-4 pb-8">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pb-4 sm:pb-8">
                 <button
                   onClick={() => setOpen(true)}
-                  className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
+                  className="group relative px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Instructions
@@ -72,7 +72,7 @@ export default function HeroSection() {
                 {!isAuthenticated && (
                   <button
                     onClick={openLoginModal}
-                    className="group relative px-8 py-3 text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
+                    className="group relative px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
                   >
                     <span className="relative z-10 flex items-center gap-2">
                       Log In
@@ -97,7 +97,7 @@ export default function HeroSection() {
               </div>
 
               {/* Feature Highlights */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 w-full max-w-3xl">
                 <FeatureCard
                   emoji="🎯"
                   title="Interactive Learning"

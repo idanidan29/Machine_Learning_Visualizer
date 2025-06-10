@@ -75,7 +75,7 @@ export default function AlgorithmFilter() {
     });
 
   return (
-    <div id="algorithms-section" className="py-12 px-4 sm:px-6 lg:px-8 min-h-[800px]">
+    <div id="algorithms-section" className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 min-h-[800px]">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
@@ -83,10 +83,10 @@ export default function AlgorithmFilter() {
           transition={{ duration: 0.3 }}
         >
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Explore ML Algorithms
             </h2>
-            <p className="mt-4 text-lg text-gray-300">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-gray-300">
               Select an algorithm to visualize and understand its behavior
             </p>
           </div>
@@ -98,17 +98,17 @@ export default function AlgorithmFilter() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <div className="mt-8 max-w-md mx-auto">
+          <div className="mt-6 sm:mt-8 max-w-md mx-auto">
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search algorithms..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
+                className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200 text-sm sm:text-base"
               />
               <svg
-                className="absolute right-3 top-2.5 h-5 w-5 text-gray-400"
+                className="absolute right-3 top-2.5 h-4 w-4 sm:h-5 sm:w-5 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -131,7 +131,7 @@ export default function AlgorithmFilter() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
         >
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-4">
             {categories.map((category) => (
               <motion.div
                 key={category.id}
@@ -140,7 +140,7 @@ export default function AlgorithmFilter() {
               >
                 <button
                   onClick={(e) => handleCategoryClick(category.id, e)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200
                     ${selectedCategories.includes(category.id)
                       ? 'bg-purple-600 text-white'
                       : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
@@ -160,15 +160,15 @@ export default function AlgorithmFilter() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="mt-4 text-center">
-            <p className="text-gray-400 text-sm">
+          <div className="mt-3 sm:mt-4 text-center">
+            <p className="text-gray-400 text-xs sm:text-sm">
               {categories.find(cat => cat.id === selectedCategories[0])?.description}
             </p>
           </div>
         </motion.div>
 
         {/* Algorithm Cards */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 min-h-[500px] relative">
+        <div className="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 min-h-[500px] relative">
           <AnimatePresence mode="popLayout">
             {filteredAlgorithms.map((algorithm, index) => (
               <motion.div
@@ -188,29 +188,29 @@ export default function AlgorithmFilter() {
                 style={{ 
                   position: 'relative',
                   width: '100%',
-                  height: '250px'
+                  height: '220px'
                 }}
               >
                 <div
                   onClick={(e) => handleAlgorithmClick(algorithm.path, e)}
-                  className="group relative bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-colors duration-300 flex flex-col h-full w-full overflow-hidden cursor-pointer"
+                  className="group relative bg-gray-800 rounded-xl p-4 sm:p-6 hover:bg-gray-700 transition-colors duration-300 flex flex-col h-full w-full overflow-hidden cursor-pointer"
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-3 sm:space-x-4">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                     >
-                      <span className="text-4xl block flex-shrink-0">
+                      <span className="text-3xl sm:text-4xl block flex-shrink-0">
                         {algorithm.icon}
                       </span>
                     </motion.div>
                     <div className="flex-grow min-w-0">
-                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors duration-300 truncate">
+                      <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-purple-400 transition-colors duration-300 truncate">
                         {algorithm.name}
                       </h3>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {algorithm.categories.map(category => (
-                          <span key={category} className="text-xs text-purple-400 bg-purple-900/30 px-2 py-0.5 rounded-full">
+                          <span key={category} className="text-[10px] sm:text-xs text-purple-400 bg-purple-900/30 px-1.5 sm:px-2 py-0.5 rounded-full">
                             {categories.find(cat => cat.id === category)?.name}
                           </span>
                         ))}
@@ -218,18 +218,18 @@ export default function AlgorithmFilter() {
                     </div>
                   </div>
                   <div className="flex-grow flex flex-col justify-between">
-                    <p className="mt-4 text-gray-300 line-clamp-3 leading-relaxed">
+                    <p className="mt-3 sm:mt-4 text-sm text-gray-300 line-clamp-3 leading-relaxed">
                       {algorithm.description}
                     </p>
-                    <div className="mt-4 pt-2">
+                    <div className="mt-3 sm:mt-4 pt-2">
                       <motion.div 
                         whileHover={{ x: 4 }}
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                       >
                         <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors duration-300 inline-flex">
-                          <span className="text-sm font-medium">Learn more</span>
+                          <span className="text-xs sm:text-sm font-medium">Learn more</span>
                           <motion.svg
-                            className="ml-2 h-5 w-5"
+                            className="ml-1.5 sm:ml-2 h-4 w-4 sm:h-5 sm:w-5"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
@@ -261,8 +261,8 @@ export default function AlgorithmFilter() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="text-center mt-12">
-                <p className="text-gray-400 text-lg">
+              <div className="text-center mt-8 sm:mt-12">
+                <p className="text-gray-400 text-sm sm:text-lg">
                   No algorithms found in this category.
                 </p>
               </div>
