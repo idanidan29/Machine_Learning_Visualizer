@@ -91,7 +91,7 @@ const DBSCANVisualization: React.FC = () => {
   const [clusterCount, setClusterCount] = useState<number>(0);
   const [noiseCount, setNoiseCount] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [steps, setSteps] = useState<Point[][]>([]);
+  const [, setSteps] = useState<Point[][]>([]);
   const [currentPointIndex, setCurrentPointIndex] = useState<number>(0);
   const [currentSeedSet, setCurrentSeedSet] = useState<Set<number>>(new Set());
   const [currentClusterId, setCurrentClusterId] = useState<number>(0);
