@@ -4,6 +4,10 @@ Welcome to the **Machine Learning Visualizer App**, an interactive full-stack pl
 
 > ⚠️ **Note**: This project is still in active development—expect frequent updates and features!
 
+🔗 Live App: https://machine-learning-visualizer.vercel.app/
+
+🔗 Backend API: https://machine-learning-visualizer.onrender.com/
+
 ---
 
 ## 🔍 Overview
