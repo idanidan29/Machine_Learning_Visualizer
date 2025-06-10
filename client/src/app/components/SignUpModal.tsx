@@ -172,7 +172,14 @@ export function SignUpModal() {
                     type="submit"
                     disabled={isLoading}
                   >
-                    {isLoading ? <Loader /> : 'Sign Up & Continue'}
+                    {isLoading ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <span>Creating account...</span>
+                        <Loader />
+                      </div>
+                    ) : (
+                      'Sign Up & Continue'
+                    )}
                     <BottomGradient />
                   </button>
 
