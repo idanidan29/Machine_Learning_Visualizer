@@ -8,27 +8,6 @@ export interface Algorithm {
 
 export const algorithms: Algorithm[] = [
   {
-    name: 'K-Nearest Neighbors',
-    description: 'A simple, instance-based learning algorithm for classification.',
-    path: '/algorithms/knn',
-    icon: '🔍',
-    categories: ['supervised', 'classification']
-  },
-  {
-    name: 'Decision Trees',
-    description: 'A tree-like model of decisions and their consequences.',
-    path: '/algorithms/decision-tree',
-    icon: '🌳',
-    categories: ['supervised', 'classification']
-  },
-  {
-    name: 'Naive Bayes',
-    description: 'A probabilistic classifier based on Bayes theorem.',
-    path: '/algorithms/naive-bayes',
-    icon: '📊',
-    categories: ['supervised', 'classification']
-  },
-  {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points.',
     path: '/algorithms/kmeans',
@@ -43,6 +22,20 @@ export const algorithms: Algorithm[] = [
     categories: ['unsupervised', 'clustering']
   },
   {
+    name: 'K-Nearest Neighbors',
+    description: 'A simple, instance-based learning algorithm for classification.',
+    path: '/algorithms/knn',
+    icon: '🔍',
+    categories: ['supervised', 'classification']
+  },
+  {
+    name: 'Naive Bayes',
+    description: 'A probabilistic classifier based on Bayes theorem.',
+    path: '/algorithms/naive-bayes',
+    icon: '📊',
+    categories: ['supervised', 'classification']
+  },
+  {
     name: 'Random Forest',
     description: 'An ensemble learning method that constructs multiple decision trees.',
     path: '/algorithms/random-forest',
@@ -55,6 +48,13 @@ export const algorithms: Algorithm[] = [
     path: '/algorithms/adaboost',
     icon: '⚡',
     categories: ['supervised', 'classification', 'ensemble']
+  },
+  {
+    name: 'Decision Trees',
+    description: 'A tree-like model of decisions and their consequences.',
+    path: '/algorithms/decision-tree',
+    icon: '🌳',
+    categories: ['supervised', 'classification']
   },
 ];
 
