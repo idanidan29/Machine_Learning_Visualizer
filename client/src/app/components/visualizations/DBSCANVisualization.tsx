@@ -87,7 +87,7 @@ const DBSCANVisualization: React.FC = () => {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [showClusters, setShowClusters] = useState<boolean>(false);
   const [is2D, setIs2D] = useState<boolean>(false);
-  const [stepDelay, setStepDelay] = useState<number>(500);
+  const [stepDelay, setStepDelay] = useState<number>(25);
   const [clusterCount, setClusterCount] = useState<number>(0);
   const [noiseCount, setNoiseCount] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState<number>(0);
