@@ -36,6 +36,13 @@ export const algorithms: Algorithm[] = [
     categories: ['unsupervised', 'clustering']
   },
   {
+    name: 'DBSCAN',
+    description: 'A density-based clustering algorithm that identifies clusters of varying shapes.',
+    path: '/algorithms/dbscan',
+    icon: '🌐',
+    categories: ['unsupervised', 'clustering']
+  },
+  {
     name: 'Random Forest',
     description: 'An ensemble learning method that constructs multiple decision trees.',
     path: '/algorithms/random-forest',
@@ -56,13 +63,6 @@ export const algorithms: Algorithm[] = [
     icon: '⚡',
     categories: ['supervised', 'classification', 'ensemble']
   },
-  {
-    name: 'Stacking',
-    description: 'A meta-learning technique that combines multiple models.',
-    path: '/algorithms/stacking',
-    icon: '🏗️',
-    categories: ['supervised', 'classification', 'regression', 'ensemble']
-  }
 ];
 
 export const categories = [
