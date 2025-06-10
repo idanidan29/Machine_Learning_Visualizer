@@ -5,8 +5,9 @@ import { kMeansQuestions } from './kMeans';
 import { knnQuestions } from './knn';
 import { randomForestQuestions } from './randomForest';
 import { adaboostQuestions } from './adaboost';
+import { dbscanQuestions } from './dbscan';
 
-export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost';
+export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan';
 
 export const quizData: Record<AlgorithmType, {
   questions: Question[];
@@ -35,5 +36,9 @@ export const quizData: Record<AlgorithmType, {
   'adaboost': {
     questions: adaboostQuestions,
     title: 'AdaBoost Quiz'
+  },
+  'dbscan': {
+    questions: dbscanQuestions,
+    title: 'DBSCAN Quiz'
   }
 }; 

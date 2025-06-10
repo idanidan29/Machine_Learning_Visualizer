@@ -10,7 +10,6 @@ import Formula from '../../components/ui/Formula';
 import HowItWorks from '../../components/ui/HowItWorks';
 import WhenToUse from '../../components/ui/WhenToUse';
 import { dbscanImplementation } from '../../data/psudo-code/dbscan';
-import { dbscanQuiz } from '../../data/quizzes/dbscan';
 import DBSCANVisualization from '../../components/visualizations/DBSCANVisualization';
 
 export default function DBSCANPage() {
@@ -43,7 +42,7 @@ export default function DBSCANPage() {
           {/* Main Content */}
           <div className="lg:ml-72">
             <PageHeader
-              title="DBSCAN (Density-Based Spatial Clustering of Applications with Noise)"
+              title="DBSCAN"
               description="Explore how DBSCAN identifies clusters based on density and handles noise points. Visualize how the algorithm groups data points into clusters of varying shapes."
               onQuizClick={() => {
                 const section = document.getElementById('quiz');
@@ -54,6 +53,7 @@ export default function DBSCANPage() {
               }}
             />
 
+            {/* Content Sections */}
             <div className="space-y-6">
               {/* Overview Section */}
               <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
@@ -61,8 +61,8 @@ export default function DBSCANPage() {
                 <div className="prose prose-invert max-w-none">
                   <p className="text-gray-300 text-sm sm:text-base">
                     DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is a density-based clustering algorithm
-                    that groups together points that are closely packed together and marks points that lie alone in low-density
-                    regions as outliers. Unlike K-means, DBSCAN doesn't require specifying the number of clusters beforehand
+                    that groups together points that are closely packed together and marks as outliers the points that lie alone
+                    in low-density regions. Unlike K-means, DBSCAN doesn&apos;t require specifying the number of clusters beforehand
                     and can find clusters of arbitrary shapes.
                   </p>
                 </div>
@@ -73,133 +73,74 @@ export default function DBSCANPage() {
                 <DBSCANVisualization />
               </section>
 
-              {/* Documentation Sections */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">How DBSCAN Works</h2>
-                <div className="prose prose-invert max-w-none space-y-6">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-purple-400">Key Concepts</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-gray-700/50 p-4 rounded-lg">
-                        <h4 className="font-medium text-white mb-2">Epsilon (ε)</h4>
-                        <p className="text-gray-300 text-sm">
-                          The maximum distance between two points to be considered neighbors. Points within this distance
-                          are considered part of the same neighborhood.
-                        </p>
-                      </div>
-                      <div className="bg-gray-700/50 p-4 rounded-lg">
-                        <h4 className="font-medium text-white mb-2">MinPts</h4>
-                        <p className="text-gray-300 text-sm">
-                          The minimum number of points required to form a dense region. If a point has fewer than MinPts
-                          neighbors within ε distance, it is marked as noise.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              {/* How It Works Section */}
+              <HowItWorks
+                title="How It Works"
+                steps={[
+                  { number: 1, description: "Start with an unvisited point and find its neighbors within ε distance" },
+                  { number: 2, description: "If the point has at least minPts neighbors, mark it as a core point and start a new cluster" },
+                  { number: 3, description: "Recursively add all density-reachable points to the cluster" },
+                  { number: 4, description: "If a point is not a core point but is reachable from a core point, mark it as a border point" },
+                  { number: 5, description: "If a point is neither a core point nor a border point, mark it as noise" },
+                  { number: 6, description: "Repeat the process for all unvisited points" }
+                ]}
+              />
 
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-purple-400">Algorithm Steps</h3>
-                    <ol className="list-decimal pl-5 space-y-2 text-gray-300 text-sm">
-                      <li>
-                        <strong>Point Classification:</strong>
-                        <ul className="list-disc pl-5 mt-1 space-y-1">
-                          <li>Core Point: Has at least MinPts neighbors within ε distance</li>
-                          <li>Border Point: Has fewer than MinPts neighbors but is reachable from a core point</li>
-                          <li>Noise Point: Neither a core point nor a border point</li>
-                        </ul>
-                      </li>
-                      <li>
-                        <strong>Cluster Formation:</strong>
-                        <ul className="list-disc pl-5 mt-1 space-y-1">
-                          <li>Start with an unvisited point</li>
-                          <li>If it's a core point, start a new cluster</li>
-                          <li>Add all density-reachable points to the cluster</li>
-                          <li>Repeat until all points are visited</li>
-                        </ul>
-                      </li>
-                    </ol>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-purple-400">Advantages</h3>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-300 text-sm">
-                      <li>No need to specify the number of clusters beforehand</li>
-                      <li>Can find clusters of arbitrary shapes</li>
-                      <li>Robust to outliers</li>
-                      <li>Works well with spatial data</li>
-                    </ul>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-purple-400">Limitations</h3>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-300 text-sm">
-                      <li>Sensitive to parameter selection (ε and MinPts)</li>
-                      <li>May struggle with clusters of varying densities</li>
-                      <li>Performance can be slow on large datasets</li>
-                      <li>Not suitable for high-dimensional data</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              {/* Applications Section */}
-              <section id="applications" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Applications</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="font-medium text-white mb-2">Spatial Data Analysis</h3>
-                    <p className="text-gray-300 text-sm">
-                      Identifying regions of interest in geographical data, such as crime hotspots or
-                      areas of high population density.
-                    </p>
-                  </div>
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="font-medium text-white mb-2">Anomaly Detection</h3>
-                    <p className="text-gray-300 text-sm">
-                      Detecting unusual patterns or outliers in data, such as fraudulent transactions
-                      or system intrusions.
-                    </p>
-                  </div>
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="font-medium text-white mb-2">Image Segmentation</h3>
-                    <p className="text-gray-300 text-sm">
-                      Grouping similar pixels in images to identify objects or regions of interest.
-                    </p>
-                  </div>
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="font-medium text-white mb-2">Customer Segmentation</h3>
-                    <p className="text-gray-300 text-sm">
-                      Identifying groups of customers with similar behaviors or characteristics
-                      without predefined categories.
-                    </p>
-                  </div>
-                </div>
-              </section>
+              {/* When to Use Section */}
+              <WhenToUse
+                idealUseCases={{
+                  title: "Ideal Use Cases",
+                  items: [
+                    "Finding clusters of arbitrary shapes",
+                    "Identifying outliers and noise",
+                    "Spatial data clustering",
+                    "Image segmentation",
+                    "Anomaly detection"
+                  ]
+                }}
+                keyAdvantages={{
+                  title: "Key Advantages",
+                  items: [
+                    "No need to specify number of clusters",
+                    "Can find clusters of arbitrary shapes",
+                    "Robust to outliers",
+                    "Works well with spatial data",
+                    "Only requires two parameters"
+                  ]
+                }}
+              />
 
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Formulas</h2>
-                <div className="space-y-8">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Mathematical Formulas</h2>
+                <div className="space-y-6">
                   <Formula
                     title="Epsilon Neighborhood"
                     formula="N_eps(p) = {q ∈ D | dist(p,q) ≤ eps}"
                     variables={[
-                      { name: "N_eps(p)", description: "the epsilon neighborhood of point p" },
-                      { name: "D", description: "the dataset" },
-                      { name: "dist(p,q)", description: "the distance between points p and q" },
-                      { name: "eps", description: "the maximum distance between points in a neighborhood" }
+                      { name: "N_eps(p)", description: "set of points within ε distance of point p" },
+                      { name: "eps", description: "maximum distance between points in a cluster" },
+                      { name: "dist(p,q)", description: "distance between points p and q" }
                     ]}
-                    gradient="purple-blue"
                   />
 
                   <Formula
                     title="Core Point Condition"
                     formula="|N_eps(p)| ≥ minPts"
                     variables={[
-                      { name: "|N_eps(p)|", description: "the number of points in the epsilon neighborhood of p" },
-                      { name: "minPts", description: "the minimum number of points required to form a core point" }
+                      { name: "|N_eps(p)|", description: "number of points in the ε-neighborhood of p" },
+                      { name: "minPts", description: "minimum number of points required to form a cluster" }
                     ]}
-                    gradient="blue-purple"
+                  />
+
+                  <Formula
+                    title="Distance Calculation"
+                    formula="d(p,q) = √(Σ(p_i - q_i)²)"
+                    variables={[
+                      { name: "d(p,q)", description: "Euclidean distance between points p and q" },
+                      { name: "p_i, q_i", description: "coordinates of points p and q in dimension i" },
+                      { name: "n", description: "number of dimensions" }
+                    ]}
                   />
 
                   <div className="bg-purple-900/30 p-4 rounded-lg">
@@ -210,6 +151,47 @@ export default function DBSCANPage() {
                       <li>Border points connect to core points but don&apos;t have enough neighbors themselves</li>
                       <li>Noise points are neither core points nor border points</li>
                     </ul>
+                  </div>
+                </div>
+              </section>
+
+              {/* Practical Example Section */}
+              <section id="practical-example" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Practical Example</h2>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-gray-300 text-sm sm:text-base">
+                    Let&apos;s consider a real-world example of using DBSCAN for customer segmentation in a retail store:
+                  </p>
+                  <div className="mt-4 space-y-4">
+                    <div className="bg-gray-700/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Problem</h3>
+                      <p className="text-gray-300 text-sm">
+                        A retail store wants to identify groups of customers based on their shopping patterns and behavior.
+                      </p>
+                    </div>
+                    <div className="bg-gray-700/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Solution</h3>
+                      <p className="text-gray-300 text-sm">
+                        Using DBSCAN to cluster customers based on features like:
+                      </p>
+                      <ul className="list-disc list-inside text-gray-300 text-sm mt-2">
+                        <li>Purchase frequency</li>
+                        <li>Average transaction value</li>
+                        <li>Time spent in store</li>
+                        <li>Product categories purchased</li>
+                      </ul>
+                    </div>
+                    <div className="bg-gray-700/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Results</h3>
+                      <p className="text-gray-300 text-sm">
+                        DBSCAN identifies:
+                      </p>
+                      <ul className="list-disc list-inside text-gray-300 text-sm mt-2">
+                        <li>Core customer segments (frequent shoppers)</li>
+                        <li>Border customers (occasional shoppers)</li>
+                        <li>Noise points (one-time or irregular customers)</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -231,29 +213,24 @@ export default function DBSCANPage() {
                       <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
                         <li>No need to specify number of clusters</li>
                         <li>Can find clusters of arbitrary shapes</li>
-                        <li>Robust to noise and outliers</li>
+                        <li>Robust to outliers</li>
                         <li>Works well with spatial data</li>
-                        <li>Only requires two parameters</li>
                       </ul>
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-4">
                     <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-2">Complexity</h3>
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Parameters</h3>
                       <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
-                        <li>Time Complexity: O(n²) in worst case</li>
-                        <li>Space Complexity: O(n)</li>
-                        <li>where:</li>
-                        <li>n = number of data points</li>
+                        <li>ε (eps): Maximum distance between points</li>
+                        <li>minPts: Minimum points to form a cluster</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-purple-400 mb-2">Limitations</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm sm:text-base">
-                        <li>Sensitive to parameter selection</li>
-                        <li>Struggles with varying density clusters</li>
-                        <li>Can be computationally expensive</li>
-                        <li>Requires careful distance metric selection</li>
+                      <h3 className="text-lg font-medium text-purple-400 mb-2">Complexity</h3>
+                      <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
+                        <li>Time: O(n²) in worst case</li>
+                        <li>Space: O(n) for storing points</li>
                       </ul>
                     </div>
                   </div>
@@ -268,23 +245,24 @@ export default function DBSCANPage() {
                     <div className="bg-gray-700 rounded-lg p-4">
                       <h3 className="text-lg font-medium text-purple-400 mb-3">Technical Limitations</h3>
                       <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Parameter sensitivity (eps and minPts)</li>
-                        <li>Difficulty with varying density clusters</li>
-                        <li>High computational cost for large datasets</li>
-                        <li>Dependency on distance metric choice</li>
-                        <li>Memory usage for neighborhood calculations</li>
-                        <li>Curse of dimensionality</li>
+                        <li>Sensitive to parameter selection</li>
+                        <li>Struggles with varying density clusters</li>
+                        <li>High-dimensional data challenges</li>
+                        <li>Computationally expensive for large datasets</li>
+                        <li>Requires distance metric scaling</li>
+                        <li>Memory intensive for large datasets</li>
                       </ul>
                     </div>
+                    
                     <div className="bg-gray-700 rounded-lg p-4">
                       <h3 className="text-lg font-medium text-purple-400 mb-3">Mitigation Strategies</h3>
                       <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Use parameter optimization techniques</li>
+                        <li>Use domain knowledge for parameters</li>
                         <li>Apply data normalization</li>
+                        <li>Use dimensionality reduction</li>
                         <li>Implement spatial indexing</li>
+                        <li>Consider data sampling</li>
                         <li>Use approximate nearest neighbors</li>
-                        <li>Consider dimensionality reduction</li>
-                        <li>Apply data sampling for large datasets</li>
                       </ul>
                     </div>
                   </div>
@@ -293,7 +271,7 @@ export default function DBSCANPage() {
 
               {/* Pseudocode Section */}
               <section id="pseudocode" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudo-code</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Pseudocode</h2>
                 <Code
                   code={dbscanImplementation}
                   language="python"
@@ -302,9 +280,7 @@ export default function DBSCANPage() {
 
               {/* Quiz Section */}
               <section id="quiz" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <Quiz
-                  questions={dbscanQuiz}
-                />
+                <Quiz algorithm='dbscan'/>
               </section>
             </div>
           </div>

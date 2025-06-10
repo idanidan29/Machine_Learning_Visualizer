@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import * as THREE from 'three';
+
 
 interface Point {
   x: number;
@@ -14,17 +14,13 @@ interface Point {
   isNoise?: boolean;
 }
 
-interface DBSCANParams {
-  eps: number;
-  minPts: number;
-}
 
 const PointSphere: React.FC<{ 
   position: [number, number, number]; 
   color: string;
   is2D: boolean;
   isNoise?: boolean;
-}> = ({ position, color, is2D, isNoise }) => {
+}> = ({ position, color, isNoise }) => {
   return (
     <mesh position={position}>
       <sphereGeometry args={[0.25, 16, 16]} />
@@ -91,8 +87,7 @@ const DBSCANVisualization: React.FC = () => {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [showClusters, setShowClusters] = useState<boolean>(false);
   const [is2D, setIs2D] = useState<boolean>(true);
-  const [isStepByStep, setIsStepByStep] = useState<boolean>(false);
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [isStepByStep] = useState<boolean>(false);
   const [clusterCount, setClusterCount] = useState<number>(0);
   const [noiseCount, setNoiseCount] = useState<number>(0);
 
@@ -337,7 +332,7 @@ const DBSCANVisualization: React.FC = () => {
       </div>
 
       {/* Visualization Canvas */}
-      <div className="relative bg-gray-800 rounded-lg overflow-hidden shadow-xl" style={{ height: '500px' }}>
+      <div className="relative bg-gray-900 rounded-lg overflow-hidden shadow-xl" style={{ height: '500px' }}>
         <Canvas>
           <PerspectiveCamera 
             makeDefault 
@@ -379,25 +374,6 @@ const DBSCANVisualization: React.FC = () => {
             <span className="font-medium text-sm">Paused</span>
           </div>
         )}
-      </div>
-
-      {/* Information Panel */}
-      <div className="bg-gray-800/50 rounded-lg p-4 text-gray-300">
-        <h3 className="text-lg font-semibold mb-2">How DBSCAN Works</h3>
-        <div className="space-y-2 text-sm">
-          <p>DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is a clustering algorithm that:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Groups points that are closely packed together (density-based)</li>
-            <li>Marks points that lie alone in low-density regions as outliers</li>
-            <li>Doesn't require specifying the number of clusters beforehand</li>
-            <li>Can find clusters of arbitrary shapes</li>
-          </ul>
-          <p className="mt-2">Parameters:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li><strong>Epsilon (ε):</strong> Maximum distance between points to be considered neighbors</li>
-            <li><strong>MinPts:</strong> Minimum number of points required to form a cluster</li>
-          </ul>
-        </div>
       </div>
     </div>
   );
