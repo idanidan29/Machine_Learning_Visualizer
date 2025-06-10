@@ -146,17 +146,37 @@ const DBSCANVisualization: React.FC = () => {
         break;
 
       case 'rings':
-        // Generate points in concentric rings
-        for (let i = 0; i < count; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const radius = 2 + Math.floor(i / (count / 3)) * 3;
-          const noise = (Math.random() - 0.5) * 0.5;
+        // Generate points in concentric rings with proportional distribution
+        const ringCount = 2;
+        const baseRadius = 2;
+        const ringSpacing = 3;
+        
+        // Calculate points per ring based on circumference
+        const pointsPerRing = Array.from({ length: ringCount }, (_, i) => {
+          const radius = baseRadius + i * ringSpacing;
+          const circumference = 2 * Math.PI * radius;
+          return Math.floor((circumference / (2 * Math.PI * baseRadius)) * (count / ringCount));
+        });
+        
+        // Adjust total points to match desired count
+        const totalPoints = pointsPerRing.reduce((sum, points) => sum + points, 0);
+        const scaleFactor = count / totalPoints;
+        const scaledPointsPerRing = pointsPerRing.map(points => Math.floor(points * scaleFactor));
+        
+        for (let ring = 0; ring < ringCount; ring++) {
+          const radius = baseRadius + ring * ringSpacing;
+          const ringPoints = scaledPointsPerRing[ring];
           
-          newPoints.push({
-            x: Math.cos(angle) * (radius + noise),
-            y: Math.sin(angle) * (radius + noise),
-            z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
-          });
+          for (let i = 0; i < ringPoints; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const noise = (Math.random() - 0.5) * 0.2;
+            
+            newPoints.push({
+              x: Math.cos(angle) * (radius + noise),
+              y: Math.sin(angle) * (radius + noise),
+              z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
+            });
+          }
         }
         break;
 
@@ -305,7 +325,7 @@ const DBSCANVisualization: React.FC = () => {
 
   // Generate points when component mounts or shape changes
   useEffect(() => {
-    setPoints(generateRandomPoints(100));
+    setPoints(generateRandomPoints(shape === 'rings' ? 400 : 100));
     handleReset();
   }, [shape]);
 

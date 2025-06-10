@@ -264,7 +264,16 @@ const KMeansVisualization: React.FC = () => {
   const updateCentroids = (points: Point[], centroids: Centroid[]) => {
     return centroids.map((centroid, index) => {
       const clusterPoints = points.filter(p => p.cluster === index);
-      if (clusterPoints.length === 0) return centroid;
+      
+      // If no points in cluster, reinitialize the centroid to a random position
+      if (clusterPoints.length === 0) {
+        return {
+          ...centroid,
+          x: (Math.random() - 0.5) * 10,
+          y: (Math.random() - 0.5) * 10,
+          z: is2D ? 0 : (Math.random() - 0.5) * 10,
+        };
+      }
 
       const sumX = clusterPoints.reduce((sum, p) => sum + p.x, 0);
       const sumY = clusterPoints.reduce((sum, p) => sum + p.y, 0);
