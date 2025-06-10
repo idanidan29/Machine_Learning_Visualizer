@@ -6,6 +6,7 @@ import AlgorithmFilter from './AlgoFilter'
 import DragCloseDrawer from './ui/DragCloseDrawer'
 import { useAuth } from '../contexts/AuthContext'
 import FeatureCard from './FeatureCard'
+import Footer from './Footer'
 
 export default function HeroSection() {
   const [open, setOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function HeroSection() {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-900 py-6 overflow-hidden min-h-screen flex flex-col relative">
+      <section className="bg-gray-900 pt-6 overflow-hidden min-h-screen flex flex-col relative">
         {/* Background elements */}
         <div className="absolute top-0 left-0 -translate-x-[54%] -translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
         <div className="absolute bottom-0 right-0 translate-x-[54%] translate-y-[70%] w-2/5 rounded-full aspect-square bg-purple-600/70 backdrop-filter blur-3xl opacity-50" />
@@ -30,7 +31,7 @@ export default function HeroSection() {
         </div>
 
         {/* Content container */}
-        <div className="mx-auto w-full max-w-7xl p-5 flex flex-col h-full">
+        <div className="mx-auto w-full max-w-7xl px-5 flex flex-col h-full">
           {/* Hero content */}
           <div className="flex flex-col items-center justify-center p-6 mb-8 mt-16">
             <div className="text-center flex flex-col items-center space-y-6 md:space-y-7 max-w-4xl">
@@ -120,6 +121,9 @@ export default function HeroSection() {
           <div id="algorithms" className="mt-8">
             <AlgorithmFilter />
           </div>
+
+          {/* Footer */}
+          <Footer/>
         </div>
       </section>
 
