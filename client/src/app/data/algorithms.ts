@@ -50,13 +50,6 @@ export const algorithms: Algorithm[] = [
     categories: ['supervised', 'classification', 'ensemble']
   },
   {
-    name: 'Gradient Boosting',
-    description: 'A powerful ensemble technique that builds models sequentially.',
-    path: '/algorithms/gradient-boosting',
-    icon: '📈',
-    categories: ['supervised', 'classification', 'regression', 'ensemble']
-  },
-  {
     name: 'AdaBoost',
     description: 'An adaptive boosting algorithm that combines weak classifiers.',
     path: '/algorithms/adaboost',
