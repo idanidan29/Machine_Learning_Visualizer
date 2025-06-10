@@ -44,56 +44,5 @@ namespace Api.Controllers
                 return StatusCode(500, new { error = ex.Message });
             }
         }
-
-        [HttpPost("add-test-data")]
-        public async Task<IActionResult> AddTestData()
-        {
-            try
-            {
-                var db = _firestoreService.GetFirestoreDb();
-                
-                // Create a sample job application
-                var jobApp = new JobApplication
-                {
-                    Company = "Test Company",
-                    Position = "Software Developer",
-                    Status = "Applied"
-                };
-                
-                // Add to Firestore
-                var docRef = await db.Collection(CollectionName).AddAsync(jobApp);
-                
-                return Ok(new { 
-                    message = "Test document added successfully",
-                    documentId = docRef.Id
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to add test data");
-                return StatusCode(500, new { error = ex.Message });
-            }
-        }
-
-        [HttpGet("get-all")]
-        public async Task<IActionResult> GetAll()
-        {
-            try
-            {
-                var db = _firestoreService.GetFirestoreDb();
-                var snapshot = await db.Collection(CollectionName).GetSnapshotAsync();
-                
-                var applications = snapshot.Documents
-                    .Select(doc => doc.ConvertTo<JobApplication>())
-                    .ToList();
-                
-                return Ok(applications);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to retrieve data");
-                return StatusCode(500, new { error = ex.Message });
-            }
-        }
     }
 }
