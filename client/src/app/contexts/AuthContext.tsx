@@ -153,7 +153,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const handleOAuthCallback = async (provider: 'google' | 'github', code: string): Promise<void> => {
     try {
-      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/auth/${provider}/callback`, {
+      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/auth/${provider}/callback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -162,7 +162,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (!response.ok) {
-        throw new Error(`${provider} authentication failed`);
+        const errorData = await response.json().catch(() => ({ message: 'Authentication failed' }));
+        throw new Error(errorData.message || `${provider} authentication failed`);
       }
 
       const data = await response.json();
