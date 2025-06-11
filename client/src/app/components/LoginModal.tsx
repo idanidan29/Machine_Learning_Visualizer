@@ -7,7 +7,6 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/app/lib/utils";
 import {
-  IconBrandGithub,
   IconBrandGoogle,
   IconX,
 } from "@tabler/icons-react";

@@ -8,7 +8,6 @@ import { Input } from "./ui/input";
 import { cn } from "@/app/lib/utils";
 import { Toast } from "./ui/toast";
 import {
-  IconBrandGithub,
   IconBrandGoogle,
   IconX,
 } from "@tabler/icons-react";
