@@ -10,7 +10,8 @@ export const linearRegressionQuestions: Question[] = [
       'To reduce the dimensionality of data'
     ],
     correctAnswer: 0,
-    explanation: 'Linear regression aims to find the best-fitting straight line (or hyperplane in higher dimensions) that minimizes the sum of squared differences between the predicted and actual values.'
+    explanation: 'Linear regression aims to find the best-fitting straight line (or hyperplane in higher dimensions) that minimizes the sum of squared differences between the predicted and actual values.',
+    id: 1
   },
   {
     question: 'What is the cost function typically used in linear regression?',
@@ -21,7 +22,8 @@ export const linearRegressionQuestions: Question[] = [
       'Absolute Error'
     ],
     correctAnswer: 0,
-    explanation: 'Mean Squared Error (MSE) is the most commonly used cost function in linear regression. It measures the average squared difference between the predicted and actual values.'
+    explanation: 'Mean Squared Error (MSE) is the most commonly used cost function in linear regression. It measures the average squared difference between the predicted and actual values.',
+    id: 2
   },
   {
     question: 'What is gradient descent used for in linear regression?',
@@ -32,7 +34,8 @@ export const linearRegressionQuestions: Question[] = [
       'To visualize the data'
     ],
     correctAnswer: 0,
-    explanation: 'Gradient descent is an optimization algorithm used to find the optimal values of the model parameters (slope and intercept) by minimizing the cost function.'
+    explanation: 'Gradient descent is an optimization algorithm used to find the optimal values of the model parameters (slope and intercept) by minimizing the cost function.',
+    id: 3
   },
   {
     question: 'What is the difference between simple and multiple linear regression?',
@@ -43,7 +46,8 @@ export const linearRegressionQuestions: Question[] = [
       'Multiple linear regression can only handle categorical data'
     ],
     correctAnswer: 0,
-    explanation: 'Simple linear regression models the relationship between one independent variable and the dependent variable, while multiple linear regression models the relationship between multiple independent variables and the dependent variable.'
+    explanation: 'Simple linear regression models the relationship between one independent variable and the dependent variable, while multiple linear regression models the relationship between multiple independent variables and the dependent variable.',
+    id: 4
   },
   {
     question: 'What is the purpose of the learning rate in gradient descent?',
@@ -54,7 +58,8 @@ export const linearRegressionQuestions: Question[] = [
       'To split the data into batches'
     ],
     correctAnswer: 0,
-    explanation: 'The learning rate determines how large the steps are when updating the model parameters during gradient descent. A too large learning rate can cause overshooting, while a too small learning rate can make the algorithm converge slowly.'
+    explanation: 'The learning rate determines how large the steps are when updating the model parameters during gradient descent. A too large learning rate can cause overshooting, while a too small learning rate can make the algorithm converge slowly.',
+    id: 5
   },
   {
     question: 'What is the difference between linear and polynomial regression?',
@@ -65,7 +70,8 @@ export const linearRegressionQuestions: Question[] = [
       'Polynomial regression can only handle categorical data'
     ],
     correctAnswer: 0,
-    explanation: 'Polynomial regression extends linear regression by adding polynomial terms of the independent variables, allowing it to model non-linear relationships between variables.'
+    explanation: 'Polynomial regression extends linear regression by adding polynomial terms of the independent variables, allowing it to model non-linear relationships between variables.',
+    id: 6
   },
   {
     question: 'What is the purpose of regularization in linear regression?',
@@ -76,7 +82,8 @@ export const linearRegressionQuestions: Question[] = [
       'To normalize the input features'
     ],
     correctAnswer: 0,
-    explanation: 'Regularization techniques like Ridge (L2) and Lasso (L1) regression add a penalty term to the cost function to prevent overfitting by discouraging large coefficient values.'
+    explanation: 'Regularization techniques like Ridge (L2) and Lasso (L1) regression add a penalty term to the cost function to prevent overfitting by discouraging large coefficient values.',
+    id: 7
   },
   {
     question: 'What is the difference between Ridge and Lasso regression?',
@@ -87,7 +94,8 @@ export const linearRegressionQuestions: Question[] = [
       'Ridge regression can only handle categorical data'
     ],
     correctAnswer: 0,
-    explanation: 'Ridge regression uses L2 regularization (sum of squared coefficients), while Lasso regression uses L1 regularization (sum of absolute coefficients). Lasso can perform feature selection by setting some coefficients to zero.'
+    explanation: 'Ridge regression uses L2 regularization (sum of squared coefficients), while Lasso regression uses L1 regularization (sum of absolute coefficients). Lasso can perform feature selection by setting some coefficients to zero.',
+    id: 8
   },
   {
     question: 'What is the purpose of the intercept term in linear regression?',
@@ -98,7 +106,8 @@ export const linearRegressionQuestions: Question[] = [
       'To speed up the training process'
     ],
     correctAnswer: 0,
-    explanation: 'The intercept term (bias) allows the regression line to cross the y-axis at any point, making the model more flexible and able to fit data that doesn\'t pass through the origin.'
+    explanation: 'The intercept term (bias) allows the regression line to cross the y-axis at any point, making the model more flexible and able to fit data that doesn\'t pass through the origin.',
+    id: 9
   },
   {
     question: 'What is the difference between correlation and causation in linear regression?',
@@ -109,6 +118,7 @@ export const linearRegressionQuestions: Question[] = [
       'Correlation can only be shown with continuous data'
     ],
     correctAnswer: 0,
-    explanation: 'While linear regression can show correlation between variables, it cannot prove causation. Additional evidence and domain knowledge are needed to establish causal relationships.'
+    explanation: 'While linear regression can show correlation between variables, it cannot prove causation. Additional evidence and domain knowledge are needed to establish causal relationships.',
+    id: 10
   }
 ]; 
