@@ -39,7 +39,6 @@ namespace Api.Controllers
             _logger.LogInformation("Google OAuth Configuration:");
             _logger.LogInformation($"ClientId: {_configuration["Google:ClientId"]}");
             _logger.LogInformation($"ClientSecret: {!string.IsNullOrEmpty(_configuration["Google:ClientSecret"])}");
-            _logger.LogInformation($"RedirectUri: {_configuration["Google:RedirectUri"]}");
         }
 
         [HttpPost("google/callback")]
@@ -129,11 +128,12 @@ namespace Api.Controllers
                 var tokenEndpoint = "https://oauth2.googleapis.com/token";
                 var clientId = _configuration["Google:ClientId"];
                 var clientSecret = _configuration["Google:ClientSecret"];
-                var redirectUri = _configuration["Google:RedirectUri"];
+                // Use the frontend callback URL for token exchange
+                var redirectUri = "https://machine-learning-visualizer.onrender.com/auth/callback/google";
 
-                if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(redirectUri))
+                if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
                 {
-                    _logger.LogError($"Missing configuration. ClientId: {!string.IsNullOrEmpty(clientId)}, ClientSecret: {!string.IsNullOrEmpty(clientSecret)}, RedirectUri: {!string.IsNullOrEmpty(redirectUri)}");
+                    _logger.LogError($"Missing configuration. ClientId: {!string.IsNullOrEmpty(clientId)}, ClientSecret: {!string.IsNullOrEmpty(clientSecret)}");
                     throw new InvalidOperationException("Missing required Google OAuth configuration");
                 }
 
