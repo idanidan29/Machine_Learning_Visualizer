@@ -34,6 +34,12 @@ namespace Api.Controllers
             _configuration = configuration;
             _httpClient = httpClient;
             _logger = logger;
+
+            // Log configuration values on startup
+            _logger.LogInformation("Google OAuth Configuration:");
+            _logger.LogInformation($"ClientId: {_configuration["Google:ClientId"]}");
+            _logger.LogInformation($"ClientSecret: {!string.IsNullOrEmpty(_configuration["Google:ClientSecret"])}");
+            _logger.LogInformation($"RedirectUri: {_configuration["Google:RedirectUri"]}");
         }
 
         [HttpPost("google/callback")]
@@ -62,7 +68,7 @@ namespace Api.Controllers
                 // Validate the ID token
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new[] { _configuration["Google__ClientId"] }
+                    Audience = new[] { _configuration["Google:ClientId"] }
                 };
 
                 var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, settings);
@@ -121,9 +127,9 @@ namespace Api.Controllers
             try
             {
                 var tokenEndpoint = "https://oauth2.googleapis.com/token";
-                var clientId = _configuration["Google__ClientId"];
-                var clientSecret = _configuration["Google__ClientSecret"];
-                var redirectUri = _configuration["Google__RedirectUri"];
+                var clientId = _configuration["Google:ClientId"];
+                var clientSecret = _configuration["Google:ClientSecret"];
+                var redirectUri = _configuration["Google:RedirectUri"];
 
                 if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(redirectUri))
                 {
