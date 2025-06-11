@@ -1,31 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { Card, CardContent, Typography, Box, Slider } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Card, CardContent, Typography, Slider } from '@mui/material';
 
 interface Point {
   x: number;
   y: number;
   label: number;
 }
-
-const MainContainer = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  padding: 16,
-  backgroundColor: '#101828',
-  color: 'white',
-  minHeight: '100vh',
-  maxWidth: '100%'
-});
-
-const ContentContainer = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  width: '100%'
-});
 
 const LogisticRegressionVisualization: React.FC = () => {
   const sigmoidRef = useRef<SVGSVGElement>(null);
@@ -289,24 +270,33 @@ const LogisticRegressionVisualization: React.FC = () => {
   }, [dataPoints, weight1, weight2, bias]);
 
   return (
-    <MainContainer>
-      <Typography variant="h5" gutterBottom sx={{ color: 'white' }}>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '16px',
+      padding: '16px',
+      backgroundColor: '#101828',
+      color: 'white',
+      minHeight: '100vh',
+      maxWidth: '100%'
+    }}>
+      <Typography variant="h5" gutterBottom style={{ color: 'white' }}>
         Logistic Regression Visualization
       </Typography>
       
-      <ContentContainer>
-        <Card sx={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
-          <CardContent sx={{ width: '100%', overflow: 'hidden' }}>
-            <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+        <Card style={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
+          <CardContent style={{ width: '100%', overflow: 'hidden' }}>
+            <Typography variant="h6" gutterBottom style={{ color: 'white' }}>
               Sigmoid Function
             </Typography>
-            <Typography variant="body2" sx={{ color: '#D1D5DB', mb: 2 }}>
+            <Typography variant="body2" style={{ color: '#D1D5DB', marginBottom: '16px' }}>
               The sigmoid function σ(z) = 1/(1 + e^(-z)) maps any real number to a value between 0 and 1.
               Use the slider or mouse wheel to move the point along the curve.
             </Typography>
             
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="body2" sx={{ color: '#D1D5DB', mb: 1 }}>
+            <div style={{ marginBottom: '16px' }}>
+              <Typography variant="body2" style={{ color: '#D1D5DB', marginBottom: '8px' }}>
                 Input Value (z)
               </Typography>
               <Slider
@@ -322,31 +312,31 @@ const LogisticRegressionVisualization: React.FC = () => {
                 step={0.1}
                 sx={{ color: '#8B5CF6' }}
               />
-            </Box>
+            </div>
 
-            <Box sx={{ width: '100%', overflow: 'hidden' }}>
+            <div style={{ width: '100%', overflow: 'hidden' }}>
               <svg ref={sigmoidRef}></svg>
-            </Box>
+            </div>
           </CardContent>
         </Card>
 
-        <Card sx={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
-          <CardContent sx={{ width: '100%', overflow: 'hidden' }}>
-            <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
+        <Card style={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
+          <CardContent style={{ width: '100%', overflow: 'hidden' }}>
+            <Typography variant="h6" gutterBottom style={{ color: 'white' }}>
               Classification Visualization
             </Typography>
-            <Typography variant="body2" sx={{ color: '#D1D5DB', mb: 2 }}>
+            <Typography variant="body2" style={{ color: '#D1D5DB', marginBottom: '16px' }}>
               This visualization shows how logistic regression separates two classes using a decision boundary.
               Purple points represent class 1, pink points represent class 0.
             </Typography>
 
-            <Box sx={{ mb: 3 }}>
-              <Typography variant="subtitle1" sx={{ color: 'white', mb: 1 }}>
+            <div style={{ marginBottom: '24px' }}>
+              <Typography variant="subtitle1" style={{ color: 'white', marginBottom: '8px' }}>
                 Model Parameters
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="body2" sx={{ color: '#D1D5DB' }}>Weight 1</Typography>
+              <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                <div style={{ flex: 1 }}>
+                  <Typography variant="body2" style={{ color: '#D1D5DB' }}>Weight 1</Typography>
                   <Slider
                     value={weight1}
                     onChange={(_, value) => setWeight1(value as number)}
@@ -355,9 +345,9 @@ const LogisticRegressionVisualization: React.FC = () => {
                     step={0.1}
                     sx={{ color: '#8B5CF6' }}
                   />
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="body2" sx={{ color: '#D1D5DB' }}>Weight 2</Typography>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <Typography variant="body2" style={{ color: '#D1D5DB' }}>Weight 2</Typography>
                   <Slider
                     value={weight2}
                     onChange={(_, value) => setWeight2(value as number)}
@@ -366,9 +356,9 @@ const LogisticRegressionVisualization: React.FC = () => {
                     step={0.1}
                     sx={{ color: '#8B5CF6' }}
                   />
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="body2" sx={{ color: '#D1D5DB' }}>Bias</Typography>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <Typography variant="body2" style={{ color: '#D1D5DB' }}>Bias</Typography>
                   <Slider
                     value={bias}
                     onChange={(_, value) => setBias(value as number)}
@@ -377,17 +367,17 @@ const LogisticRegressionVisualization: React.FC = () => {
                     step={0.1}
                     sx={{ color: '#8B5CF6' }}
                   />
-                </Box>
-              </Box>
-            </Box>
+                </div>
+              </div>
+            </div>
 
-            <Box sx={{ width: '100%', overflow: 'hidden' }}>
+            <div style={{ width: '100%', overflow: 'hidden' }}>
               <svg ref={classificationRef}></svg>
-            </Box>
+            </div>
           </CardContent>
         </Card>
-      </ContentContainer>
-    </MainContainer>
+      </div>
+    </div>
   );
 };
 
