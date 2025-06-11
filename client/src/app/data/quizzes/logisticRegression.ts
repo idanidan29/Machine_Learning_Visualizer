@@ -10,7 +10,8 @@ export const logisticRegressionQuestions: Question[] = [
       'To reduce dimensionality'
     ],
     correctAnswer: 1,
-    explanation: 'Logistic regression is primarily used for binary classification problems, where the goal is to predict one of two possible outcomes.'
+    explanation: 'Logistic regression is primarily used for binary classification problems, where the goal is to predict one of two possible outcomes.',
+    id: 1
   },
   {
     question: 'What function is used in logistic regression to convert linear predictions into probabilities?',
@@ -21,7 +22,8 @@ export const logisticRegressionQuestions: Question[] = [
       'Tanh function'
     ],
     correctAnswer: 1,
-    explanation: 'The sigmoid function (also called the logistic function) is used to convert linear predictions into probabilities between 0 and 1.'
+    explanation: 'The sigmoid function (also called the logistic function) is used to convert linear predictions into probabilities between 0 and 1.',
+    id: 2
   },
   {
     question: 'What is the range of the sigmoid function?',
@@ -32,7 +34,8 @@ export const logisticRegressionQuestions: Question[] = [
       '(0, 1)'
     ],
     correctAnswer: 2,
-    explanation: 'The sigmoid function outputs values between 0 and 1, making it suitable for probability estimation.'
+    explanation: 'The sigmoid function outputs values between 0 and 1, making it suitable for probability estimation.',
+    id: 3
   },
   {
     question: 'Which loss function is commonly used in logistic regression?',
@@ -43,7 +46,8 @@ export const logisticRegressionQuestions: Question[] = [
       'Absolute Error'
     ],
     correctAnswer: 1,
-    explanation: 'Binary Cross-Entropy (also called log loss) is the standard loss function for logistic regression as it penalizes incorrect probability estimates.'
+    explanation: 'Binary Cross-Entropy (also called log loss) is the standard loss function for logistic regression as it penalizes incorrect probability estimates.',
+    id: 4
   },
   {
     question: 'What is the decision boundary in logistic regression?',
@@ -54,7 +58,8 @@ export const logisticRegressionQuestions: Question[] = [
       'A circle'
     ],
     correctAnswer: 2,
-    explanation: 'In logistic regression, the decision boundary is a hyperplane that separates the two classes. In 2D space, this appears as a line.'
+    explanation: 'In logistic regression, the decision boundary is a hyperplane that separates the two classes. In 2D space, this appears as a line.',
+    id: 5
   },
   {
     question: 'How does logistic regression handle outliers?',
@@ -65,7 +70,8 @@ export const logisticRegressionQuestions: Question[] = [
       'It automatically removes outliers'
     ],
     correctAnswer: 2,
-    explanation: 'Logistic regression is moderately robust to outliers because the sigmoid function compresses extreme values, making the model less sensitive to outliers compared to linear regression.'
+    explanation: 'Logistic regression is moderately robust to outliers because the sigmoid function compresses extreme values, making the model less sensitive to outliers compared to linear regression.',
+    id: 6
   },
   {
     question: 'What is the main advantage of logistic regression over more complex models?',
@@ -76,7 +82,8 @@ export const logisticRegressionQuestions: Question[] = [
       'Ability to handle non-linear relationships'
     ],
     correctAnswer: 1,
-    explanation: 'Logistic regression is highly interpretable as the coefficients directly indicate the impact of each feature on the probability of the positive class.'
+    explanation: 'Logistic regression is highly interpretable as the coefficients directly indicate the impact of each feature on the probability of the positive class.',
+    id: 7
   },
   {
     question: 'Which of the following is NOT a limitation of logistic regression?',
@@ -87,7 +94,8 @@ export const logisticRegressionQuestions: Question[] = [
       'Cannot handle categorical variables'
     ],
     correctAnswer: 3,
-    explanation: 'Logistic regression can handle categorical variables through one-hot encoding or other encoding techniques. The other options are actual limitations.'
+    explanation: 'Logistic regression can handle categorical variables through one-hot encoding or other encoding techniques. The other options are actual limitations.',
+    id: 8
   },
   {
     question: 'What is the purpose of regularization in logistic regression?',
@@ -98,7 +106,8 @@ export const logisticRegressionQuestions: Question[] = [
       'To handle missing values'
     ],
     correctAnswer: 1,
-    explanation: 'Regularization (L1 or L2) helps prevent overfitting by penalizing large coefficients and encouraging simpler models.'
+    explanation: 'Regularization (L1 or L2) helps prevent overfitting by penalizing large coefficients and encouraging simpler models.',
+    id: 9
   },
   {
     question: 'How does logistic regression handle multi-class classification?',
@@ -109,6 +118,7 @@ export const logisticRegressionQuestions: Question[] = [
       'Using softmax function'
     ],
     correctAnswer: 1,
-    explanation: 'For multi-class problems, logistic regression typically uses the one-vs-rest (OvR) approach, where a separate binary classifier is trained for each class.'
+    explanation: 'For multi-class problems, logistic regression typically uses the one-vs-rest (OvR) approach, where a separate binary classifier is trained for each class.',
+    id: 10
   }
 ]; 
