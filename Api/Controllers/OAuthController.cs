@@ -12,8 +12,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Controllers
 {
-    [Route("api/auth")]
     [ApiController]
+    [Route("api/[controller]")]
     public class OAuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -41,11 +41,23 @@ namespace Api.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(callbackDto?.Code))
+                {
+                    _logger.LogError("No code provided in callback");
+                    return BadRequest(new { message = "Authorization code is required" });
+                }
+
                 _logger.LogInformation("Received Google callback with code");
                 
                 // Exchange the authorization code for tokens
                 var tokenResponse = await ExchangeCodeForTokens(callbackDto.Code);
                 _logger.LogInformation("Successfully exchanged code for tokens");
+
+                if (string.IsNullOrEmpty(tokenResponse?.IdToken))
+                {
+                    _logger.LogError("No ID token received from Google");
+                    return BadRequest(new { message = "Failed to get ID token from Google" });
+                }
 
                 // Validate the ID token
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
@@ -100,43 +112,57 @@ namespace Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error processing Google callback");
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 
         private async Task<GoogleTokenResponse> ExchangeCodeForTokens(string code)
         {
-            var tokenEndpoint = "https://oauth2.googleapis.com/token";
-            var clientId = _configuration["Google:ClientId"];
-            var clientSecret = _configuration["Google:ClientSecret"];
-            var redirectUri = _configuration["Google:RedirectUri"];
-
-            _logger.LogInformation($"Exchanging code for tokens. ClientId: {clientId}, RedirectUri: {redirectUri}");
-
-            var tokenRequest = new
+            try
             {
-                code = code,
-                client_id = clientId,
-                client_secret = clientSecret,
-                redirect_uri = redirectUri,
-                grant_type = "authorization_code"
-            };
+                var tokenEndpoint = "https://oauth2.googleapis.com/token";
+                var clientId = _configuration["Google:ClientId"];
+                var clientSecret = _configuration["Google:ClientSecret"];
+                var redirectUri = _configuration["Google:RedirectUri"];
 
-            var response = await _httpClient.PostAsync(
-                tokenEndpoint,
-                new StringContent(JsonSerializer.Serialize(tokenRequest), Encoding.UTF8, "application/json")
-            );
+                if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(redirectUri))
+                {
+                    _logger.LogError($"Missing configuration. ClientId: {!string.IsNullOrEmpty(clientId)}, ClientSecret: {!string.IsNullOrEmpty(clientSecret)}, RedirectUri: {!string.IsNullOrEmpty(redirectUri)}");
+                    throw new InvalidOperationException("Missing required Google OAuth configuration");
+                }
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                _logger.LogError($"Failed to exchange code for tokens. Status: {response.StatusCode}, Error: {error}");
-                throw new Exception($"Failed to exchange code for tokens: {error}");
+                _logger.LogInformation($"Exchanging code for tokens. ClientId: {clientId}, RedirectUri: {redirectUri}");
+
+                var tokenRequest = new
+                {
+                    code = code,
+                    client_id = clientId,
+                    client_secret = clientSecret,
+                    redirect_uri = redirectUri,
+                    grant_type = "authorization_code"
+                };
+
+                var response = await _httpClient.PostAsync(
+                    tokenEndpoint,
+                    new StringContent(JsonSerializer.Serialize(tokenRequest), Encoding.UTF8, "application/json")
+                );
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Failed to exchange code for tokens. Status: {response.StatusCode}, Error: {content}");
+                    throw new Exception($"Failed to exchange code for tokens: {content}");
+                }
+
+                _logger.LogInformation("Successfully received token response");
+                return JsonSerializer.Deserialize<GoogleTokenResponse>(content);
             }
-
-            var content = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation("Successfully received token response");
-            return JsonSerializer.Deserialize<GoogleTokenResponse>(content);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in ExchangeCodeForTokens");
+                throw;
+            }
         }
     }
 

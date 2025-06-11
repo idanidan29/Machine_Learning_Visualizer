@@ -64,6 +64,9 @@ builder.Services.AddAuthentication(options =>
 // Register FirestoreService as a singleton (keeping your existing service)
 builder.Services.AddSingleton<FirestoreService>();
 
+// Register HttpClient
+builder.Services.AddHttpClient();
+
 // Register repositories and services for authentication
 builder.Services.AddScoped<IUserRepository, FirestoreUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -108,6 +111,9 @@ app.UseExceptionHandler(errorApp =>
         var error = context.Features.Get<IExceptionHandlerFeature>();
         if (error != null)
         {
+            var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+            logger.LogError(error.Error, "Unhandled exception");
+            
             await context.Response.WriteAsJsonAsync(new { 
                 message = "An error occurred while processing your request.",
                 error = error.Error.Message
