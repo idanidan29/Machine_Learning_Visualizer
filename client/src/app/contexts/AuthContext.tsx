@@ -25,8 +25,6 @@ interface AuthContextType {
   closeLoginModal: () => void;
   openSignUpModal: () => void;
   closeSignUpModal: () => void;
-  initiateOAuth: (provider: 'google') => void;
-  handleOAuthCallback: (provider: 'google', code: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -95,23 +93,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({ email, password, firstName, lastName }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Registration failed' }));
+        const errorData = await response.json();
         throw new Error(errorData.message || 'Registration failed');
       }
 
-      const data = await response.json();
-      console.log('Registration successful:', data);
-      return await login(email, password);
+      return true;
     } catch (error) {
-      console.error('Sign up error:', error);
-      throw error;
+      console.error('Registration error:', error);
+      return false;
     }
   };
 
@@ -119,58 +113,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem('user');
-  };
-
-  const initiateOAuth = (provider: 'google') => {
-    const clientId = AUTH_CONFIG.GOOGLE_CLIENT_ID;
-    const redirectUri = AUTH_CONFIG.GOOGLE_REDIRECT_URI;
-    const authUrl = AUTH_CONFIG.GOOGLE_AUTH_URL;
-    const scope = 'email profile';
-
-    const url = new URL(authUrl);
-    url.searchParams.append('client_id', clientId);
-    url.searchParams.append('redirect_uri', redirectUri);
-    url.searchParams.append('response_type', 'code');
-    url.searchParams.append('scope', scope);
-
-    window.location.href = url.toString();
-  };
-
-  const handleOAuthCallback = async (provider: 'google', code: string): Promise<void> => {
-    try {
-      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/oauth/${provider}/callback`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Authentication failed' }));
-        throw new Error(errorData.message || `${provider} authentication failed`);
-      }
-
-      const data = await response.json();
-      
-      const userData: User = {
-        id: data.userId,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        token: data.token,
-        expiration: data.expiration,
-      };
-      
-      setUser(userData);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setShowLoginModal(false);
-      setShowSignUpModal(false);
-    } catch (error) {
-      console.error(`${provider} OAuth error:`, error);
-      throw error;
-    }
   };
 
   const openLoginModal = () => {
@@ -203,8 +145,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     closeLoginModal,
     openSignUpModal,
     closeSignUpModal,
-    initiateOAuth,
-    handleOAuthCallback,
   };
 
   return (

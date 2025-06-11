@@ -7,16 +7,19 @@ interface ToastProps {
   message: string;
   type: "success" | "error" | "info";
   onClose: () => void;
+  show: boolean;
 }
 
-export function Toast({ message, type, onClose }: ToastProps) {
+export function Toast({ message, type, onClose, show }: ToastProps) {
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 3000);
+    if (show) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [onClose]);
+      return () => clearTimeout(timer);
+    }
+  }, [onClose, show]);
 
   const bgColor = {
     success: "bg-green-500",
@@ -26,14 +29,16 @@ export function Toast({ message, type, onClose }: ToastProps) {
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 50 }}
-        className={`fixed bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50`}
-      >
-        {message}
-      </motion.div>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          className={`fixed bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50`}
+        >
+          {message}
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 } 
