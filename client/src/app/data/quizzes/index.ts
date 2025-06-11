@@ -7,8 +7,9 @@ import { randomForestQuestions } from './randomForest';
 import { adaboostQuestions } from './adaboost';
 import { dbscanQuestions } from './dbscan';
 import { linearRegressionQuestions } from './linearRegression';
+import { logisticRegressionQuestions } from './logisticRegression';
 
-export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan' | 'linear-regression';
+export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan' | 'linear-regression' | 'logistic-regression';
 
 export const quizData: Record<AlgorithmType, {
   questions: Question[];
@@ -45,5 +46,9 @@ export const quizData: Record<AlgorithmType, {
   'linear-regression': {
     questions: linearRegressionQuestions,
     title: 'Linear Regression Quiz'
+  },
+  'logistic-regression': {
+    questions: logisticRegressionQuestions,
+    title: 'Logistic Regression Quiz'
   }
 }; 

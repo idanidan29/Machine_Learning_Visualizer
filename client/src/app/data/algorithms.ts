@@ -15,6 +15,13 @@ export const algorithms: Algorithm[] = [
     categories: ['supervised', 'regression']
   },
   {
+    name: 'Logistic Regression',
+    description: 'A supervised learning algorithm for binary classification that models the probability of a binary outcome.',
+    path: '/algorithms/logistic-regression',
+    icon: '🎲',
+    categories: ['supervised', 'classification']
+  },
+  {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points.',
     path: '/algorithms/kmeans',
