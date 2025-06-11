@@ -55,11 +55,6 @@ export function LoginModal() {
     initiateOAuth('google');
   };
 
-  const handleGitHubLogin = (e: React.MouseEvent) => {
-    e.preventDefault();
-    initiateOAuth('github');
-  };
-
   return (
     <AnimatePresence>
       {showLoginModal && (
@@ -147,15 +142,6 @@ export function LoginModal() {
                 <div className="my-4 h-[1px] w-full bg-gradient-to-r from-transparent to-transparent via-gray-600" />
 
                 <div className="flex flex-col space-y-3">
-                  <button
-                    className="group/btn shadow-input relative flex h-9 w-full items-center justify-center space-x-2 rounded-md px-4 font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 border border-gray-600 transition-colors duration-200"
-                    type="button"
-                    onClick={handleGitHubLogin}
-                  >
-                    <IconBrandGithub className="h-4 w-4" />
-                    <span className="text-sm">Continue with GitHub</span>
-                  </button>
-                  
                   <button
                     className="group/btn shadow-input relative flex h-9 w-full items-center justify-center space-x-2 rounded-md px-4 font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 border border-gray-600 transition-colors duration-200"
                     type="button"

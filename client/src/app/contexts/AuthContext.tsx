@@ -25,8 +25,8 @@ interface AuthContextType {
   closeLoginModal: () => void;
   openSignUpModal: () => void;
   closeSignUpModal: () => void;
-  initiateOAuth: (provider: 'google' | 'github') => void;
-  handleOAuthCallback: (provider: 'google' | 'github', code: string) => Promise<void>;
+  initiateOAuth: (provider: 'google') => void;
+  handleOAuthCallback: (provider: 'google', code: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -121,37 +121,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('user');
   };
 
-  const initiateOAuth = (provider: 'google' | 'github') => {
-    const clientId = provider === 'google' 
-      ? AUTH_CONFIG.GOOGLE_CLIENT_ID 
-      : AUTH_CONFIG.GITHUB_CLIENT_ID;
-    
-    const redirectUri = provider === 'google'
-      ? AUTH_CONFIG.GOOGLE_REDIRECT_URI
-      : AUTH_CONFIG.GITHUB_REDIRECT_URI;
-
-    const authUrl = provider === 'google'
-      ? AUTH_CONFIG.GOOGLE_AUTH_URL
-      : AUTH_CONFIG.GITHUB_AUTH_URL;
-
-    const scope = provider === 'google'
-      ? 'email profile'
-      : 'user:email';
+  const initiateOAuth = (provider: 'google') => {
+    const clientId = AUTH_CONFIG.GOOGLE_CLIENT_ID;
+    const redirectUri = AUTH_CONFIG.GOOGLE_REDIRECT_URI;
+    const authUrl = AUTH_CONFIG.GOOGLE_AUTH_URL;
+    const scope = 'email profile';
 
     const url = new URL(authUrl);
     url.searchParams.append('client_id', clientId);
     url.searchParams.append('redirect_uri', redirectUri);
     url.searchParams.append('response_type', 'code');
     url.searchParams.append('scope', scope);
-    
-    if (provider === 'github') {
-      url.searchParams.append('state', Math.random().toString(36).substring(7));
-    }
 
     window.location.href = url.toString();
   };
 
-  const handleOAuthCallback = async (provider: 'google' | 'github', code: string): Promise<void> => {
+  const handleOAuthCallback = async (provider: 'google', code: string): Promise<void> => {
     try {
       const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/oauth/${provider}/callback`, {
         method: 'POST',
