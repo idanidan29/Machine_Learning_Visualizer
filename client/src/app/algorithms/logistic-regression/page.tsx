@@ -71,7 +71,6 @@ export default function LogisticRegressionPage() {
               </section>
 
               {/* How It Works Section */}
-              <section id="how-it-works" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <HowItWorks
                   title="How It Works"
                   steps={[
@@ -83,10 +82,8 @@ export default function LogisticRegressionPage() {
                     { number: 6, description: "Repeat steps 3-5 until convergence or maximum iterations reached" }
                   ]}
                 />
-              </section>
 
               {/* When to Use Section */}
-              <section id="when-to-use" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <WhenToUse
                   idealUseCases={{
                     title: "Ideal Use Cases",
@@ -109,7 +106,6 @@ export default function LogisticRegressionPage() {
                     ]
                   }}
                 />
-              </section>
 
               {/* Formulas Section */}
               <section id="formulas" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
