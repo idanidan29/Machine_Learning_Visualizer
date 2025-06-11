@@ -1,4 +1,4 @@
-import { Question } from './decisionTree';
+import { Question } from './types';
 import { decisionTreeQuestions } from './decisionTree';
 import { naiveBayesQuestions } from './naiveBayes';
 import { kMeansQuestions } from './kMeans';

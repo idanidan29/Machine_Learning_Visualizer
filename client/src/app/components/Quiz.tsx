@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Question } from '../data/quizzes/decisionTree';
+import { Question } from '../data/quizzes/types';
 import { quizData, AlgorithmType } from '../data/quizzes';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';

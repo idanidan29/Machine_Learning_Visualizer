@@ -1,6 +1,6 @@
-import { QuizQuestion } from './types';
+import { Question } from './types';
 
-export const logisticRegressionQuestions: QuizQuestion[] = [
+export const logisticRegressionQuestions: Question[] = [
   {
     question: 'What is the main purpose of logistic regression?',
     options: [

@@ -1,4 +1,4 @@
-import { Question } from './decisionTree';
+import { Question } from './types';
 
 export const randomForestQuestions: Question[] = [
   {
