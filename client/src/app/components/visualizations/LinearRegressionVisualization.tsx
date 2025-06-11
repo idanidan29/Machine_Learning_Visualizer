@@ -168,15 +168,15 @@ config: config.stiff
   const yTicks = Array.from({ length: Y_MAX / 5 + 1 }, (_, i) => i * 5);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       {/* R^2 bar and Reset button */}
-      <div className="mb-2 w-full flex flex-col items-center">
-        <div className="flex items-center gap-4 w-full max-w-xl">
-          <div className="flex-1">
-            <div className="bg-gray-800 rounded-lg px-4 py-2 flex flex-col gap-1 shadow relative overflow-hidden">
+      <div className="mb-2 w-full flex flex-col items-center px-2">
+        <div className="flex flex-col sm:flex-row items-center sm:justify-center gap-2 sm:gap-4 w-full max-w-xl mx-auto">
+          <div className="flex-1 w-full max-w-md mx-auto">
+            <div className="bg-gray-800 rounded-lg px-2 sm:px-4 py-2 flex flex-col gap-1 shadow relative overflow-hidden">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-white font-semibold">R²:</span>
-                <span className="text-purple-300 font-mono text-lg">{r2.toFixed(4)}</span>
+                <span className="text-white font-semibold text-sm sm:text-base">R²:</span>
+                <span className="text-purple-300 font-mono text-base sm:text-lg">{r2.toFixed(4)}</span>
               </div>
               <div className="w-full h-3 bg-gray-700 rounded relative overflow-hidden">
                 <animated.div style={{ ...r2Spring, height: '100%', borderRadius: 6, position: 'absolute', left: 0, top: 0 }} />
@@ -184,81 +184,84 @@ config: config.stiff
             </div>
           </div>
           <button
-            className="px-4 py-2 rounded bg-purple-600 text-white font-semibold hover:bg-purple-700 transition whitespace-nowrap"
+            className="px-3 py-2 sm:px-4 rounded bg-purple-600 text-white font-semibold hover:bg-purple-700 transition whitespace-nowrap w-full sm:w-auto max-w-xs mx-auto"
             onClick={handleReset}
           >
             Reset Graph
           </button>
         </div>
       </div>
-      <svg
-        ref={svgRef}
-        width={WIDTH}
-        height={HEIGHT}
-        style={{ background: '#101727', borderRadius: 12, boxShadow: '0 2px 8px #0002', cursor: dragIndex === null ? 'crosshair' : 'grabbing' }}
-        onClick={handleSvgClick}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-      >
-        {/* Axes */}
-        <line x1={scaleX(X_MIN)} y1={scaleY(Y_MIN)} x2={scaleX(X_MIN)} y2={scaleY(Y_MAX)} stroke="#fff" strokeWidth={2} />
-        <line x1={scaleX(X_MIN)} y1={scaleY(Y_MIN)} x2={scaleX(X_MAX)} y2={scaleY(Y_MIN)} stroke="#fff" strokeWidth={2} />
-        {/* X ticks */}
-        {xTicks.map((x) => (
-          <g key={x}>
-            <line x1={scaleX(x)} y1={scaleY(Y_MIN)} x2={scaleX(x)} y2={scaleY(Y_MIN) + 6} stroke="#fff" />
-            <text x={scaleX(x)} y={scaleY(Y_MIN) + 20} fontSize={14} textAnchor="middle" fill="#fff">{x}</text>
-          </g>
-        ))}
-        {/* Y ticks */}
-        {yTicks.map((y) => (
-          <g key={y}>
-            <line x1={scaleX(X_MIN) - 6} y1={scaleY(y)} x2={scaleX(X_MIN)} y2={scaleY(y)} stroke="#fff" />
-            <text x={scaleX(X_MIN) - 12} y={scaleY(y) + 5} fontSize={14} textAnchor="end" fill="#fff">{y}</text>
-          </g>
-        ))}
-        {/* Regression line (animated) */}
-        <animated.line
-          x1={lineSpring.x1}
-          y1={lineSpring.y1}
-          x2={lineSpring.x2}
-          y2={lineSpring.y2}
-          stroke={PURPLE}
-          strokeWidth={3}
-        />
-        {/* Error bars and Points (animated) */}
-        {springs.map((spring, i) => (
-          <g key={i}>
-            {/* Error bar (vertical line from point to regression line) */}
-            <animated.line
-              x1={spring.cx}
-              y1={spring.cy}
-              x2={spring.cx}
-              y2={spring.cyPred}
-              stroke="#ff6b6b"
-              strokeWidth={2}
-              opacity={0.8}
-            />
-            {/* Data point (draggable) */}
-            <animated.circle
-              cx={spring.cx}
-              cy={spring.cy}
-              r={DOT_RADIUS}
-              fill={PURPLE}
-              stroke="#fff"
-              strokeWidth={2}
-              style={{ cursor: 'grab' }}
-              onPointerDown={(e) => handlePointerDown(e, i)}
-            />
-          </g>
-        ))}
-      </svg>
-      <div className="mt-4 flex flex-col items-center gap-2 w-full max-w-xl">
-        <div className="mt-2 text-white text-sm">
+      <div className="w-full flex justify-center overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <svg
+          ref={svgRef}
+          width={WIDTH}
+          height={HEIGHT}
+          style={{ maxWidth: '100%', height: 'auto', background: '#101727', borderRadius: 12, boxShadow: '0 2px 8px #0002', cursor: dragIndex === null ? 'crosshair' : 'grabbing', minWidth: 320 }}
+          onClick={handleSvgClick}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        >
+          {/* Axes */}
+          <line x1={scaleX(X_MIN)} y1={scaleY(Y_MIN)} x2={scaleX(X_MIN)} y2={scaleY(Y_MAX)} stroke="#fff" strokeWidth={2} />
+          <line x1={scaleX(X_MIN)} y1={scaleY(Y_MIN)} x2={scaleX(X_MAX)} y2={scaleY(Y_MIN)} stroke="#fff" strokeWidth={2} />
+          {/* X ticks */}
+          {xTicks.map((x) => (
+            <g key={x}>
+              <line x1={scaleX(x)} y1={scaleY(Y_MIN)} x2={scaleX(x)} y2={scaleY(Y_MIN) + 6} stroke="#fff" />
+              <text x={scaleX(x)} y={scaleY(Y_MIN) + 20} fontSize={10} textAnchor="middle" fill="#fff">{x}</text>
+            </g>
+          ))}
+          {/* Y ticks */}
+          {yTicks.map((y) => (
+            <g key={y}>
+              <line x1={scaleX(X_MIN) - 6} y1={scaleY(y)} x2={scaleX(X_MIN)} y2={scaleY(y)} stroke="#fff" />
+              <text x={scaleX(X_MIN) - 12} y={scaleY(y) + 5} fontSize={10} textAnchor="end" fill="#fff">{y}</text>
+            </g>
+          ))}
+          {/* Regression line (animated) */}
+          <animated.line
+            x1={lineSpring.x1}
+            y1={lineSpring.y1}
+            x2={lineSpring.x2}
+            y2={lineSpring.y2}
+            stroke={PURPLE}
+            strokeWidth={3}
+          />
+          {/* Error bars and Points (animated) */}
+          {springs.map((spring, i) => (
+            <g key={i}>
+              {/* Error bar (vertical line from point to regression line) */}
+              <animated.line
+                x1={spring.cx}
+                y1={spring.cy}
+                x2={spring.cx}
+                y2={spring.cyPred}
+                stroke="#ff6b6b"
+                strokeWidth={2}
+                opacity={0.8}
+              />
+              {/* Data point (draggable) */}
+              <animated.circle
+                cx={spring.cx}
+                cy={spring.cy}
+                r={DOT_RADIUS}
+                fill={PURPLE}
+                stroke="#fff"
+                strokeWidth={2}
+                style={{ cursor: 'grab' }}
+                onPointerDown={(e) => handlePointerDown(e, i)}
+              />
+            </g>
+          ))}
+        </svg>
+      </div>
+      <div className="mt-4 flex flex-col items-center gap-2 w-full max-w-xl px-2">
+        <div className="mt-2 text-white text-xs sm:text-sm">
           <span className="font-semibold">Next prediction:</span> For x = {nextX.toFixed(2)}, y = {nextY.toFixed(2)}
         </div>
       </div>
-      <div className="mt-2 text-white text-sm">Click anywhere on the graph to add a new data point. Drag a dot to move it. The regression line will update automatically.</div>
+      <div className="mt-2 text-white text-xs sm:text-sm px-2 text-center">Click anywhere on the graph to add a new data point. Drag a dot to move it. The regression line will update automatically.</div>
     </div>
   );
 };
