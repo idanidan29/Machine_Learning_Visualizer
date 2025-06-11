@@ -153,7 +153,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const handleOAuthCallback = async (provider: 'google' | 'github', code: string): Promise<void> => {
     try {
-      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/auth/${provider}/callback`, {
+      const response = await fetch(`${AUTH_CONFIG.API_BASE_URL}/api/oauth/${provider}/callback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
