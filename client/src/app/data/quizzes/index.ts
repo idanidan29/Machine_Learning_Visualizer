@@ -6,8 +6,9 @@ import { knnQuestions } from './knn';
 import { randomForestQuestions } from './randomForest';
 import { adaboostQuestions } from './adaboost';
 import { dbscanQuestions } from './dbscan';
+import { linearRegressionQuestions } from './linearRegression';
 
-export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan';
+export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan' | 'linear-regression';
 
 export const quizData: Record<AlgorithmType, {
   questions: Question[];
@@ -40,5 +41,9 @@ export const quizData: Record<AlgorithmType, {
   'dbscan': {
     questions: dbscanQuestions,
     title: 'DBSCAN Quiz'
+  },
+  'linear-regression': {
+    questions: linearRegressionQuestions,
+    title: 'Linear Regression Quiz'
   }
 }; 

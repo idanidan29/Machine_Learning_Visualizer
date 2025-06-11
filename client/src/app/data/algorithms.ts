@@ -8,6 +8,13 @@ export interface Algorithm {
 
 export const algorithms: Algorithm[] = [
   {
+    name: 'Linear Regression',
+    description: 'A fundamental supervised learning algorithm that models the relationship between variables using a linear equation.',
+    path: '/algorithms/linear-regression',
+    icon: '📈',
+    categories: ['supervised', 'regression']
+  },
+  {
     name: 'K-Means Clustering',
     description: 'An unsupervised learning algorithm that groups similar data points.',
     path: '/algorithms/kmeans',
