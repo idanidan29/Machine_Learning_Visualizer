@@ -62,7 +62,7 @@ namespace Api.Controllers
                 // Validate the ID token
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new[] { _configuration["Google:ClientId"] }
+                    Audience = new[] { _configuration["Google__ClientId"] }
                 };
 
                 var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, settings);
@@ -121,9 +121,9 @@ namespace Api.Controllers
             try
             {
                 var tokenEndpoint = "https://oauth2.googleapis.com/token";
-                var clientId = _configuration["Google:ClientId"];
-                var clientSecret = _configuration["Google:ClientSecret"];
-                var redirectUri = _configuration["Google:RedirectUri"];
+                var clientId = _configuration["Google__ClientId"];
+                var clientSecret = _configuration["Google__ClientSecret"];
+                var redirectUri = _configuration["Google__RedirectUri"];
 
                 if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(redirectUri))
                 {
