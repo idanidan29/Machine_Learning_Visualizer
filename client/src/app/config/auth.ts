@@ -1,7 +1,8 @@
 export const AUTH_CONFIG = {
   // Google OAuth
-  GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
-  GOOGLE_REDIRECT_URI: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || 'https://machine-learning-visualizer.onrender.com/auth/callback/google',
+  GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',    
+  GOOGLE_REDIRECT_URI: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || 'https://machine-learning-visualizer.onrender.com/OAuth/google/callback',
+
   
   // GitHub OAuth
   GITHUB_CLIENT_ID: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || '',
