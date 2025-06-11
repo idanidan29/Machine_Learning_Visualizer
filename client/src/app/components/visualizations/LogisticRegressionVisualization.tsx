@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { Card, CardContent, Typography, Slider } from '@mui/material';
+import { Card, CardContent, Typography, Slider, useMediaQuery, useTheme } from '@mui/material';
 
 interface Point {
   x: number;
@@ -9,6 +9,8 @@ interface Point {
 }
 
 const LogisticRegressionVisualization: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const sigmoidRef = useRef<SVGSVGElement>(null);
   const classificationRef = useRef<SVGSVGElement>(null);
   const [inputValue, setInputValue] = useState<number>(0);
@@ -66,9 +68,9 @@ const LogisticRegressionVisualization: React.FC = () => {
 
     // Set up dimensions
     const containerWidth = sigmoidRef.current.parentElement?.clientWidth || 800;
-    const margin = { top: 20, right: 150, bottom: 40, left: 40 };
+    const margin = { top: 20, right: isMobile ? 80 : 150, bottom: 40, left: 40 };
     const width = containerWidth - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
+    const height = isMobile ? 200 : 300 - margin.top - margin.bottom;
 
     // Create SVG
     const svg = d3.select(sigmoidRef.current)
@@ -158,7 +160,7 @@ const LogisticRegressionVisualization: React.FC = () => {
       .attr("fill", outputValue >= 0.5 ? "#8B5CF6" : "#F472B6")
       .text(`Class: ${outputValue >= 0.5 ? "1" : "0"}`);
 
-  }, [inputValue, outputValue]);
+  }, [inputValue, outputValue, isMobile]);
 
   // Classification visualization effect
   useEffect(() => {
@@ -171,7 +173,7 @@ const LogisticRegressionVisualization: React.FC = () => {
     const containerWidth = classificationRef.current.parentElement?.clientWidth || 800;
     const margin = { top: 20, right: 20, bottom: 40, left: 40 };
     const width = containerWidth - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
+    const height = isMobile ? 200 : 300 - margin.top - margin.bottom;
 
     // Create SVG
     const svg = d3.select(classificationRef.current)
@@ -267,27 +269,27 @@ const LogisticRegressionVisualization: React.FC = () => {
       .attr("fill", "white")
       .text("Feature 2");
 
-  }, [dataPoints, weight1, weight2, bias]);
+  }, [dataPoints, weight1, weight2, bias, isMobile]);
 
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
       gap: '16px',
-      padding: '16px',
+      padding: isMobile ? '8px' : '16px',
       backgroundColor: '#101828',
       color: 'white',
       minHeight: '100vh',
       maxWidth: '100%'
     }}>
-      <Typography variant="h5" gutterBottom style={{ color: 'white' }}>
+      <Typography variant={isMobile ? "h6" : "h5"} gutterBottom style={{ color: 'white' }}>
         Logistic Regression Visualization
       </Typography>
       
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
         <Card style={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
-          <CardContent style={{ width: '100%', overflow: 'hidden' }}>
-            <Typography variant="h6" gutterBottom style={{ color: 'white' }}>
+          <CardContent style={{ width: '100%', overflow: 'hidden', padding: isMobile ? '12px' : '24px' }}>
+            <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom style={{ color: 'white' }}>
               Sigmoid Function
             </Typography>
             <Typography variant="body2" style={{ color: '#D1D5DB', marginBottom: '16px' }}>
@@ -321,8 +323,8 @@ const LogisticRegressionVisualization: React.FC = () => {
         </Card>
 
         <Card style={{ backgroundColor: '#1F2937', color: 'white', width: '100%' }}>
-          <CardContent style={{ width: '100%', overflow: 'hidden' }}>
-            <Typography variant="h6" gutterBottom style={{ color: 'white' }}>
+          <CardContent style={{ width: '100%', overflow: 'hidden', padding: isMobile ? '12px' : '24px' }}>
+            <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom style={{ color: 'white' }}>
               Classification Visualization
             </Typography>
             <Typography variant="body2" style={{ color: '#D1D5DB', marginBottom: '16px' }}>
@@ -334,7 +336,12 @@ const LogisticRegressionVisualization: React.FC = () => {
               <Typography variant="subtitle1" style={{ color: 'white', marginBottom: '8px' }}>
                 Model Parameters
               </Typography>
-              <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: isMobile ? 'column' : 'row',
+                gap: '16px', 
+                marginBottom: '16px' 
+              }}>
                 <div style={{ flex: 1 }}>
                   <Typography variant="body2" style={{ color: '#D1D5DB' }}>Weight 1</Typography>
                   <Slider
