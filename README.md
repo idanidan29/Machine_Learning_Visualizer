@@ -2,7 +2,7 @@
 
 Welcome to the **Machine Learning Visualizer App**, an interactive full-stack platform to explore, understand, and compare machine learning algorithms through live visualizations and pseudocode walkthroughs.
 
-> ⚠️ **Note**: This project is still in active development—expect frequent updates and features!
+> ⚠️ **Note**: This project is still in active development expect frequent updates and features!
 
 🔗 Live App: https://machine-learning-visualizer.vercel.app
 
