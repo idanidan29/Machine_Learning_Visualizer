@@ -8,8 +8,9 @@ import { adaboostQuestions } from './adaboost';
 import { dbscanQuestions } from './dbscan';
 import { linearRegressionQuestions } from './linearRegression';
 import { logisticRegressionQuestions } from './logisticRegression';
+import { deepNeuralNetworksQuestions } from './deepNeuralNetworks';
 
-export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan' | 'linear-regression' | 'logistic-regression';
+export type AlgorithmType = 'decision-tree' | 'naive-bayes' | 'k-means' | 'knn' | 'random-forest' | 'adaboost' | 'dbscan' | 'linear-regression' | 'logistic-regression' | 'deep-neural-networks';
 
 export const quizData: Record<AlgorithmType, {
   questions: Question[];
@@ -50,5 +51,9 @@ export const quizData: Record<AlgorithmType, {
   'logistic-regression': {
     questions: logisticRegressionQuestions,
     title: 'Logistic Regression Quiz'
+  },
+  'deep-neural-networks': {
+    questions: deepNeuralNetworksQuestions,
+    title: 'Deep Neural Networks Quiz'
   }
 }; 
