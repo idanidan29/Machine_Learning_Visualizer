@@ -16,8 +16,8 @@ export default function DeepNeuralNetworksPage() {
   const [activeSection, setActiveSection] = useState('overview');
 
   const sections = [
-    { id: 'visualization', title: 'Visualization', icon: '🖼️' },
     { id: 'overview', title: 'Overview', icon: '📋' },
+    { id: 'visualization', title: 'Visualization', icon: '🖼️' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
@@ -55,12 +55,7 @@ export default function DeepNeuralNetworksPage() {
 
             {/* Content Sections */}
             <div className="space-y-8">
-
-               {/* Visualization Section */}
-              <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <DeepNeuralNetworksVisualization />
-              </section>
-
+              
               {/* Overview Section */}
               <section id="overview" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Overview</h2>
@@ -69,6 +64,11 @@ export default function DeepNeuralNetworksPage() {
                     Deep Neural Networks (DNNs) are a class of machine learning models inspired by the human brain&apos;s neural structure. They consist of multiple layers of interconnected neurons that can learn hierarchical representations of data. DNNs have revolutionized fields like computer vision, natural language processing, and speech recognition by achieving state-of-the-art performance on complex tasks.
                   </p>
                 </div>
+              </section>
+
+               {/* Visualization Section */}
+              <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <DeepNeuralNetworksVisualization />
               </section>
 
               {/* How It Works Section */}
