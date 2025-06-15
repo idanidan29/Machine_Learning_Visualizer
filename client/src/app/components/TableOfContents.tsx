@@ -62,9 +62,13 @@ const AlgorithmsView = ({ setIsMobileMenuOpen }: {
     'ensemble': '🌳'
   };
 
-  const filteredAlgorithms = selectedCategory
-    ? algorithms.filter(alg => alg.categories.includes(selectedCategory))
-    : algorithms;
+  // Get current pathname
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+
+  // Filter out the current algorithm and apply category filter
+  const filteredAlgorithms = algorithms
+    .filter(alg => alg.path !== currentPath)
+    .filter(alg => !selectedCategory || alg.categories.includes(selectedCategory));
 
   return (
     <div className="space-y-3">
