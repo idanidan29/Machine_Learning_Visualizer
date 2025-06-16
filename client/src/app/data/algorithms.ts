@@ -75,7 +75,7 @@ export const algorithms: Algorithm[] = [
     description: 'A powerful machine learning model inspired by the human brain, capable of learning complex patterns through multiple layers of interconnected neurons.',
     path: '/algorithms/deep-neural-networks',
     icon: '🧠',
-    categories: ['supervised', 'deep-learning']
+    categories: ['supervised']
   },
 ];
 
@@ -115,9 +115,4 @@ export const categories = [
     name: 'Ensemble Methods',
     description: 'Algorithms that combine multiple models for better performance'
   },
-  {
-    id: 'deep-learning',
-    name: 'Deep Learning',
-    description: 'Neural network-based algorithms with multiple layers for complex pattern recognition'
-  }
 ]; 
