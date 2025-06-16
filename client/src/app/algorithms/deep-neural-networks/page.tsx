@@ -11,16 +11,20 @@ import HowItWorks from '../../components/ui/HowItWorks';
 import WhenToUse from '../../components/ui/WhenToUse';
 import { deepNeuralNetworksImplementation } from '../../data/psudo-code/deepNeuralNetworks';
 import DeepNeuralNetworksVisualization from '../../components/visualizations/DeepNeuralNetworksVisualization';
+import SingleNeuronVisualization from '../../components/visualizations/SingleNeuronVisualization';
 
 export default function DeepNeuralNetworksPage() {
   const [activeSection, setActiveSection] = useState('overview');
 
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
-    { id: 'visualization', title: 'Visualization', icon: '🖼️' },
+    { id: 'visualization', title: 'Visualization', icon: '🎯' },
     { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'formulas', title: 'Formulas', icon: '📐' },
+    { id: 'cnn-architecture', title: 'CNN', icon: '🖼️' },
+    { id: 'rnn-architecture', title: 'RNN', icon: '🔄' },
+    { id: 'transformer-architecture', title: 'Transformer', icon: '⚡' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'characteristics', title: 'Characteristics', icon: '📊' },
     { id: 'limitations', title: 'Limitations', icon: '⚠️' },
@@ -68,7 +72,13 @@ export default function DeepNeuralNetworksPage() {
 
                {/* Visualization Section */}
               <section id="visualization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <DeepNeuralNetworksVisualization />
+                <div className="space-y-8">
+                  <SingleNeuronVisualization />
+                  <div className="mt-8">
+                    <h3 className="text-lg font-semibold text-white mb-4">Full Neural Network</h3>
+                    <DeepNeuralNetworksVisualization />
+                  </div>
+                </div>
               </section>
 
               {/* How It Works Section */}
@@ -156,6 +166,97 @@ export default function DeepNeuralNetworksPage() {
                       <li>Loss functions measure prediction accuracy</li>
                       <li>Regularization techniques prevent overfitting</li>
                     </ul>
+                  </div>
+                </div>
+              </section>
+
+              {/* Architecture Types Sections */}
+              <section id="cnn-architecture" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">CNN Architecture</h2>
+                <div className="bg-gray-700/50 p-6 rounded-lg">
+                  <h3 className="text-lg font-medium text-purple-400 mb-4">Convolutional Neural Networks (CNNs)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-gray-300 text-sm sm:text-base mb-4">
+                        CNNs are specialized for processing grid-like data such as images. They use convolutional layers to automatically learn spatial hierarchies of features.
+                      </p>
+                      <h4 className="text-md font-medium text-white mb-2">Key Components:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Convolutional Layers</li>
+                        <li>Pooling Layers</li>
+                        <li>Fully Connected Layers</li>
+                        <li>Activation Functions</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-md font-medium text-white mb-2">Use Cases:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Image Classification</li>
+                        <li>Object Detection</li>
+                        <li>Image Segmentation</li>
+                        <li>Video Analysis</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section id="rnn-architecture" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">RNN Architecture</h2>
+                <div className="bg-gray-700/50 p-6 rounded-lg">
+                  <h3 className="text-lg font-medium text-purple-400 mb-4">Recurrent Neural Networks (RNNs)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-gray-300 text-sm sm:text-base mb-4">
+                        RNNs are designed to process sequential data by maintaining an internal memory of previous inputs. They can handle variable-length sequences and capture temporal dependencies.
+                      </p>
+                      <h4 className="text-md font-medium text-white mb-2">Key Components:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>LSTM Cells</li>
+                        <li>GRU Cells</li>
+                        <li>Bidirectional Layers</li>
+                        <li>Recurrent Connections</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-md font-medium text-white mb-2">Use Cases:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Natural Language Processing</li>
+                        <li>Time Series Prediction</li>
+                        <li>Speech Recognition</li>
+                        <li>Music Generation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section id="transformer-architecture" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Transformer Architecture</h2>
+                <div className="bg-gray-700/50 p-6 rounded-lg">
+                  <h3 className="text-lg font-medium text-purple-400 mb-4">Transformers</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-gray-300 text-sm sm:text-base mb-4">
+                        Transformers use self-attention mechanisms to process input data in parallel, making them highly efficient for handling long-range dependencies in sequential data.
+                      </p>
+                      <h4 className="text-md font-medium text-white mb-2">Key Components:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Self-Attention Layers</li>
+                        <li>Multi-Head Attention</li>
+                        <li>Positional Encoding</li>
+                        <li>Feed-Forward Networks</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-md font-medium text-white mb-2">Use Cases:</h4>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Machine Translation</li>
+                        <li>Text Generation</li>
+                        <li>Question Answering</li>
+                        <li>Document Summarization</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </section>
