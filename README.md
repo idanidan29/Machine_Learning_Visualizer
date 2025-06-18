@@ -58,10 +58,6 @@ An interactive web application that lets users visually explore how different ma
    * Step-through animations explaining how data flows through the algorithm
    * Optionally toggle labels, confidence, or metrics overlays
 
-5. **Custom Dataset Uploads** 📂 *(Planned)*
-
-   * Upload simple CSV files to test algorithms on your own data
-
 ---
 
 ## 🤝 Contributing
