@@ -5,6 +5,8 @@ import { Question } from '../data/quizzes/types';
 import { quizData, AlgorithmType } from '../data/quizzes';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { useBadge } from '../contexts/BadgeContext';
+import { QuizCompletion } from '../../types/badge';
 
 interface QuizProps {
   questions?: Question[];
@@ -27,6 +29,9 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [streak, setStreak] = useState(0);
+  const [processingBadges, setProcessingBadges] = useState(false);
+
+  const { processQuizCompletion } = useBadge();
 
   // Get questions and title either directly or from algorithm data
   const { questions, title } = algorithm 
@@ -64,6 +69,28 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
     setIsCorrect(null);
     if (currentQuestion === questions.length - 1) {
       setQuizCompleted(true);
+      handleQuizCompletion();
+    }
+  };
+
+  const handleQuizCompletion = async () => {
+    if (!algorithm) return;
+
+    try {
+      setProcessingBadges(true);
+      const quizCompletion: QuizCompletion = {
+        algorithmType: algorithm,
+        score: score,
+        totalQuestions: questions.length,
+        isPerfectScore: score === questions.length,
+        streak: streak
+      };
+
+      await processQuizCompletion(quizCompletion);
+    } catch (error) {
+      console.error('Error processing quiz completion:', error);
+    } finally {
+      setProcessingBadges(false);
     }
   };
 
@@ -74,6 +101,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
     setScore(0);
     setQuizCompleted(false);
     setIsCorrect(null);
+    setStreak(0);
   };
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -116,14 +144,20 @@ const Quiz: React.FC<QuizProps> = ({ questions: directQuestions, title: directTi
                   ? "Great job! Keep learning! 💪" 
                   : "Keep practicing, you'll get better! 📚"}
             </div>
+            {processingBadges && (
+              <div className="text-purple-300 text-sm mt-2">
+                Processing achievements... 🏆
+              </div>
+            )}
           </MotionDiv>
           <MotionButton
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(147, 51, 234, 0.5)" }}
             whileTap={{ scale: 0.95 }}
             onClick={handleRestartQuiz}
-            className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-3 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-lg font-medium shadow-lg shadow-purple-600/20"
+            disabled={processingBadges}
+            className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-3 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-lg font-medium shadow-lg shadow-purple-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Try Again
+            {processingBadges ? 'Processing...' : 'Try Again'}
           </MotionButton>
         </div>
       </MotionDiv>
