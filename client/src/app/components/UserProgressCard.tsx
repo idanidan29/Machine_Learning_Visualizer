@@ -124,7 +124,7 @@ const UserProgressCard: React.FC<UserProgressCardProps> = ({
           <div>
             <h4 className="text-lg font-semibold text-white mb-2">Learning Journey</h4>
             <p className="text-purple-100 text-sm">
-              You've completed {progress.totalQuizzesCompleted} quizzes and earned {progress.badges.length} badges!
+              You&apos;ve completed {progress.totalQuizzesCompleted} quizzes and earned {progress.badges.length} badges!
             </p>
           </div>
           <div className="text-4xl">🎓</div>
