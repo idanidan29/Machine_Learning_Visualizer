@@ -5,7 +5,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BadgeProvider } from "./contexts/BadgeContext";
 import { LoginModal } from "./components/LoginModal";
 import { SignUpModal } from "./components/SignUpModal";
-import BadgeNotificationWrapper from "./components/BadgeNotificationWrapper";
+import BadgeNotification from "./components/BadgeNotification";
+import { useBadge } from "./contexts/BadgeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,18 @@ export const metadata: Metadata = {
   title: "ML visualizer",
   description: "Visualize machine learning algorithms",
 };
+
+function BadgeNotificationWrapper() {
+  const { badgeNotification, hideBadgeNotification } = useBadge();
+  
+  return (
+    <BadgeNotification
+      badge={badgeNotification?.badge}
+      show={badgeNotification?.show || false}
+      onClose={hideBadgeNotification}
+    />
+  );
+}
 
 export default function RootLayout({
   children,
