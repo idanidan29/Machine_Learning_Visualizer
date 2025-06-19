@@ -12,7 +12,7 @@ namespace Api.Services
 {
     public class BadgeService : IBadgeService
     {
-        private readonly FirestoreService _firestoreService;
+        private readonly FirestoreDb _firestoreDb;
         private readonly ILogger<BadgeService> _logger;
         private readonly CollectionReference _badgesCollection;
         private readonly CollectionReference _progressCollection;
@@ -94,13 +94,12 @@ namespace Api.Services
             }
         };
 
-        public BadgeService(FirestoreService firestoreService, ILogger<BadgeService> logger)
+        public BadgeService(FirestoreDb firestoreDb, ILogger<BadgeService> logger)
         {
-            _firestoreService = firestoreService;
+            _firestoreDb = firestoreDb;
             _logger = logger;
-            var firestoreDb = _firestoreService.GetFirestoreDb();
-            _badgesCollection = firestoreDb.Collection("badges");
-            _progressCollection = firestoreDb.Collection("userProgress");
+            _badgesCollection = _firestoreDb.Collection("badges");
+            _progressCollection = _firestoreDb.Collection("userProgress");
         }
 
         public async Task<List<BadgeDto>> GetUserBadgesAsync(string userId)
