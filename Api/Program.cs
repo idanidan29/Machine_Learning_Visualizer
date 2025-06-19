@@ -70,7 +70,6 @@ builder.Services.AddHttpClient();
 // Register repositories and services for authentication
 builder.Services.AddScoped<IUserRepository, FirestoreUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IBadgeService, BadgeService>();
 
 // Keep your existing CORS policy
 builder.Services.AddCors(options =>

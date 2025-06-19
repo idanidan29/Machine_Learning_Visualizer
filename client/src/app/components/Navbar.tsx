@@ -2,14 +2,12 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useBadge } from '../contexts/BadgeContext'
 import { LogoutModal } from './LogoutModal'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const { isAuthenticated, user, logout, openLoginModal } = useAuth()
-  const { badges } = useBadge()
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -59,20 +57,6 @@ export default function Navbar() {
                 Home
               </Link>
               
-              {isAuthenticated && (
-                <Link 
-                  href="/profile" 
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 relative"
-                >
-                  Profile
-                  {badges.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-purple-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                      {badges.length}
-                    </span>
-                  )}
-                </Link>
-              )}
-              
               {isAuthenticated ? (
                 <button
                   onClick={handleLogoutClick}
@@ -111,20 +95,6 @@ export default function Navbar() {
                 >
                   Home
                 </Link>
-                
-                {isAuthenticated && (
-                  <Link 
-                    href="/profile" 
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 relative"
-                  >
-                    Profile
-                    {badges.length > 0 && (
-                      <span className="ml-2 bg-purple-500 text-white text-xs rounded-full px-2 py-1">
-                        {badges.length} badges
-                      </span>
-                    )}
-                  </Link>
-                )}
                 
                 {isAuthenticated ? (
                   <div className="border-t border-gray-700 pt-2 mt-2">
