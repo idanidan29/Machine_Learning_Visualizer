@@ -1,3 +1,5 @@
+[![ML Visualizer Banner](https://user-images.githubusercontent.com/placeholder/banner-image.png)](https://machine-learning-visualizer.vercel.app)
+
 # Machine Learning Visualizer App *(In Development🚧)*
 
 Welcome to the **Machine Learning Visualizer App**, an interactive full-stack platform to explore, understand, and compare machine learning algorithms through live visualizations and pseudocode walkthroughs.
@@ -8,7 +10,6 @@ Welcome to the **Machine Learning Visualizer App**, an interactive full-stack pl
 
 ---
 
-[![ML Visualizer Banner](https://github.com/user-attachments/assets/b885bcc0-96ee-4b50-ad8d-3d9a105abcab)](https://machine-learning-visualizer.vercel.app)
 ## 🔍 Overview
 
 An interactive web application that lets users visually explore how different machine learning algorithms behave in real-time. Users can switch between algorithms, understand their workings through animations and pseudocode, and learn when and why to use each.
@@ -57,6 +58,10 @@ An interactive web application that lets users visually explore how different ma
 
    * Step-through animations explaining how data flows through the algorithm
    * Optionally toggle labels, confidence, or metrics overlays
+
+5. **Custom Dataset Uploads** 📂 *(Planned)*
+
+   * Upload simple CSV files to test algorithms on your own data
 
 ---
 
