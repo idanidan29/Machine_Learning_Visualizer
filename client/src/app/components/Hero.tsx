@@ -130,7 +130,7 @@ export default function HeroSection() {
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6 text-gray-200">
           <div className="text-center mb-6">
-            <h2 className="text-4xl font-bold text-white mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Welcome to ML Visualizer
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>

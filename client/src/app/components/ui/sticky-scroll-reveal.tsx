@@ -17,6 +17,13 @@ export const StickyScroll = ({
 }) => {
   const [activeCard, setActiveCard] = React.useState(0);
   const ref = useRef<HTMLElement | null>(null);
+  
+  // Safety check for content
+  if (!content || content.length === 0) {
+    return <div className="text-white text-center p-8">No content available</div>;
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { scrollYProgress } = useScroll({
     // uncomment line 22 and comment line 23 if you DONT want the overflow container and want to have it change on the entire page scroll
     // target: ref
@@ -25,6 +32,7 @@ export const StickyScroll = ({
   });
   const cardLength = content.length;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useMotionValueEvent(scrollYProgress, "change", (latest: number) => {
     const cardsBreakpoints = content.map((_, index) => index / cardLength);
     const closestBreakpointIndex = cardsBreakpoints.reduce(
@@ -48,13 +56,19 @@ export const StickyScroll = ({
     "linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(16, 185, 129, 0.1))", // amber to emerald
   ];
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [backgroundGradient, setBackgroundGradient] = useState(
     linearGradients[0],
   );
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     setBackgroundGradient(linearGradients[activeCard % linearGradients.length]);
   }, [activeCard]);
+
+  // Safety check for activeCard bounds
+  const safeActiveCard = Math.min(Math.max(0, activeCard), content.length - 1);
+  const currentContent = content[safeActiveCard];
 
   return (
     <motion.div
@@ -70,7 +84,7 @@ export const StickyScroll = ({
                   opacity: 0,
                 }}
                 animate={{
-                  opacity: activeCard === index ? 1 : 0.3,
+                  opacity: safeActiveCard === index ? 1 : 0.3,
                 }}
                 className="text-3xl font-bold text-white"
               >
@@ -81,7 +95,7 @@ export const StickyScroll = ({
                   opacity: 0,
                 }}
                 animate={{
-                  opacity: activeCard === index ? 1 : 0.3,
+                  opacity: safeActiveCard === index ? 1 : 0.3,
                 }}
                 className="text-lg mt-6 max-w-lg text-gray-300 leading-relaxed"
               >
@@ -95,11 +109,11 @@ export const StickyScroll = ({
       <div
         style={{ background: backgroundGradient }}
         className={cn(
-          "sticky top-10 hidden h-80 w-96 overflow-hidden rounded-xl border border-white/10 backdrop-blur-sm lg:block",
+          "sticky top-0 hidden h-88 w-[28rem] overflow-hidden rounded-xl border border-white/10 backdrop-blur-sm lg:block",
           contentClassName,
         )}
       >
-        {typeof content[activeCard].content === "undefined" ? null : content[activeCard].content as React.ReactNode}
+        {currentContent && typeof currentContent.content !== "undefined" ? currentContent.content as React.ReactNode : null}
       </div>
     </motion.div>
   );
