@@ -2,6 +2,7 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { StickyScroll } from '../components/ui/sticky-scroll-reveal'
+import { categories } from '../data/algorithms'
 
 export default function BackgroundPage() {
   // Create content focused on ML categories
@@ -154,18 +155,11 @@ export default function BackgroundPage() {
       description: "Deep learning is a subset of machine learning that uses artificial neural networks with multiple layers to model and understand complex patterns in data. These networks are inspired by the human brain and can automatically learn hierarchical representations from raw data. Deep learning has revolutionized fields like computer vision, natural language processing, speech recognition, and autonomous systems. Popular architectures include Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), and Transformers.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🧠</div>
-            <h3 className="text-xl font-bold text-white mb-2">Deep Learning</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Multi-layered neural networks
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">CNNs</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">RNNs</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Transformers</span>
-            </div>
-          </div>
+          <img 
+            src="/deepLearning.jpg" 
+            alt="Deep Learning"
+            className="w-full h-full object-cover rounded-lg"
+          />
         </div>
       )
     }
@@ -179,7 +173,7 @@ export default function BackgroundPage() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
         {/* Page Header */}
-        <div className="pt-25 pb-8">
+        <div className="pt-20 pb-8">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               Machine Learning Categories
@@ -191,7 +185,7 @@ export default function BackgroundPage() {
         </div>
 
         {/* Fullscreen Sticky Scroll Content */}
-        <div className="pt-7 h-[calc(107vh-200px)]">
+        <div className="h-[calc(100vh-200px)]">
           {categoryContent && categoryContent.length > 0 ? (
             <StickyScroll content={categoryContent} />
           ) : (

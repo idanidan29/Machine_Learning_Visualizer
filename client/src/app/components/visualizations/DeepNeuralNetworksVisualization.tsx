@@ -15,6 +15,10 @@ interface Connection {
   weight: number;
 }
 
+interface DeepNeuralNetworksVisualizationProps {
+  hideExplanation?: boolean;
+}
+
 // Simplified network configuration
 const WIDTH = 1200;
 const HEIGHT = 500;
@@ -32,7 +36,7 @@ const LAYER_COLORS = ['#4CAF50', '#2196F3', '#9C27B0', '#FF9800'];
 // Single pattern for focused visualization
 const DEMO_PATTERN = { inputs: [0.3, 0.6, 0.9], target: 0.7 };
 
-const DeepNeuralNetworksVisualization: React.FC = () => {
+const DeepNeuralNetworksVisualization: React.FC<DeepNeuralNetworksVisualizationProps> = ({ hideExplanation = false }) => {
   const [neurons, setNeurons] = useState<Neuron[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
   const [isTraining] = useState(true);
@@ -271,56 +275,58 @@ const DeepNeuralNetworksVisualization: React.FC = () => {
           margin: '0 auto'
         }}>
           {/* Step Guide */}
-          <div className="absolute top-0 left-0 right-0 flex justify-center pt-5">
-            <div className="bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 shadow-xl border border-gray-700 w-[600px]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`w-2.5 h-2.5 rounded-full ${steps[currentStep].color.replace('text-', 'bg-')}`} />
-                  <h3 className={`text-base font-semibold ${steps[currentStep].color}`}>
-                    {steps[currentStep].title}
-                  </h3>
-                </div>
-                <div className="flex items-center gap-4">
-                  <p className="text-gray-300 text-sm">
-                    {steps[currentStep].description}
-                  </p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setCurrentStep(prev => (prev > 0 ? prev - 1 : prev))}
-                      className="p-1 rounded-lg hover:bg-gray-700/50 transition-colors disabled:opacity-50 disabled:hover:bg-transparent"
-                      disabled={currentStep === 0}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    <div className="flex gap-1.5 pt-1.5">
-                      {steps.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentStep(index)}
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === currentStep 
-                              ? 'bg-blue-500 scale-125' 
-                              : 'bg-gray-600 hover:bg-gray-500'
-                          }`}
-                        />
-                      ))}
+          {!hideExplanation && (
+            <div className="absolute top-0 left-0 right-0 flex justify-center pt-5">
+              <div className="bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 shadow-xl border border-gray-700 w-[600px]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2.5 h-2.5 rounded-full ${steps[currentStep].color.replace('text-', 'bg-')}`} />
+                    <h3 className={`text-base font-semibold ${steps[currentStep].color}`}>
+                      {steps[currentStep].title}
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <p className="text-gray-300 text-sm">
+                      {steps[currentStep].description}
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setCurrentStep(prev => (prev > 0 ? prev - 1 : prev))}
+                        className="p-1 rounded-lg hover:bg-gray-700/50 transition-colors disabled:opacity-50 disabled:hover:bg-transparent"
+                        disabled={currentStep === 0}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      <div className="flex gap-1.5 pt-1.5">
+                        {steps.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentStep(index)}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              index === currentStep 
+                                ? 'bg-blue-500 scale-125' 
+                                : 'bg-gray-600 hover:bg-gray-500'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setCurrentStep(prev => (prev < steps.length - 1 ? prev + 1 : prev))}
+                        className="p-1 rounded-lg hover:bg-gray-700/50 transition-colors disabled:opacity-50 disabled:hover:bg-transparent"
+                        disabled={currentStep === steps.length - 1}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
                     </div>
-                    <button
-                      onClick={() => setCurrentStep(prev => (prev < steps.length - 1 ? prev + 1 : prev))}
-                      className="p-1 rounded-lg hover:bg-gray-700/50 transition-colors disabled:opacity-50 disabled:hover:bg-transparent"
-                      disabled={currentStep === steps.length - 1}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           <svg
             width="100%"
