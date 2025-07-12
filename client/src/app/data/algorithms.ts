@@ -70,13 +70,6 @@ export const algorithms: Algorithm[] = [
     icon: '🌳',
     categories: ['supervised', 'classification']
   },
-  {
-    name: 'Deep Neural Networks',
-    description: 'A powerful machine learning model inspired by the human brain, capable of learning complex patterns through multiple layers of interconnected neurons.',
-    path: '/algorithms/deep-neural-networks',
-    icon: '🧠',
-    categories: ['supervised']
-  },
 ];
 
 export const categories = [
