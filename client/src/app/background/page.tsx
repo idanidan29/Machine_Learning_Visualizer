@@ -2,7 +2,6 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { StickyScroll } from '../components/ui/sticky-scroll-reveal'
-import { categories } from '../data/algorithms'
 
 export default function BackgroundPage() {
   // Create content focused on ML categories
