@@ -12,13 +12,12 @@ export default function BackgroundPage() {
       description: "Machine learning algorithms can be organized into different categories based on their learning approach and the type of problems they solve. Understanding these categories helps in choosing the right algorithm for your specific use case and provides a framework for learning machine learning systematically.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-8xl mb-6">🤖</div>
-            <h3 className="text-3xl font-bold text-white mb-4">ML Categories</h3>
-            <p className="text-lg text-gray-300 max-w-md">
-              Understanding the different types of machine learning
-            </p>
-          </div>
+          <img 
+            src="/Categories.png" 
+            alt="Categories Visualization"
+            className="w-full h-full object-contain rounded-lg"
+            style={{ maxHeight: '100%', maxWidth: '100%', display: 'block', background: '#fff' }}
+          />
         </div>
       )
     },
@@ -70,18 +69,12 @@ export default function BackgroundPage() {
       description: "Classification algorithms predict discrete categories or classes for given inputs. They learn to assign labels to data points based on their features. Classification can be binary (two classes like spam/not spam) or multi-class (multiple classes like different types of animals). These algorithms are widely used in image recognition, text classification, medical diagnosis, and fraud detection.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🏷️</div>
-            <h3 className="text-xl font-bold text-white mb-2">Classification</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Predicting discrete categories
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Binary</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Multi-class</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Categories</span>
-            </div>
-          </div>
+          <img 
+            src="/classification.png" 
+            alt="Classification Visualization"
+            className="w-full h-full object-contain rounded-lg"
+            style={{ maxHeight: '100%', maxWidth: '100%', display: 'block', background: '#fff' }}
+          />
         </div>
       )
     },
@@ -91,18 +84,12 @@ export default function BackgroundPage() {
       description: "Regression algorithms predict continuous numerical values based on input features. They model the relationship between dependent and independent variables to make predictions. Regression is used for forecasting sales, predicting house prices, estimating stock values, analyzing trends, and any scenario where you need to predict a continuous outcome. Linear regression is the most fundamental algorithm in this category.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-6xl mb-4">📈</div>
-            <h3 className="text-xl font-bold text-white mb-2">Regression</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Predicting continuous values
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Linear</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Polynomial</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Forecasting</span>
-            </div>
-          </div>
+          <img 
+            src="/Regression.png" 
+            alt="Regression Visualization"
+            className="w-full h-full object-cover rounded-lg"
+            style={{ display: 'block', background: '#fff' }}
+          />
         </div>
       )
     },
@@ -112,18 +99,11 @@ export default function BackgroundPage() {
       description: "Clustering algorithms group similar data points together based on their features, without any prior knowledge of the groups. They identify natural groupings in the data, making it useful for customer segmentation, image segmentation, document organization, and anomaly detection. Popular clustering algorithms include K-means, DBSCAN, and hierarchical clustering, each with different approaches to defining similarity and forming clusters.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🎯</div>
-            <h3 className="text-xl font-bold text-white mb-2">Clustering</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Grouping similar data points
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">K-means</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">DBSCAN</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Segmentation</span>
-            </div>
-          </div>
+          <img 
+            src="/clustring.webp" 
+            alt="Clustering Visualization"
+            className="w-full h-full object-cover rounded-lg"
+          />
         </div>
       )
     },
@@ -133,18 +113,12 @@ export default function BackgroundPage() {
       description: "Ensemble methods combine multiple machine learning models to improve overall performance and reduce overfitting. They work on the principle that a group of weak learners can create a strong learner. Common ensemble techniques include bagging (Random Forest), boosting (AdaBoost, Gradient Boosting), and stacking. These methods are particularly effective for complex problems and often achieve state-of-the-art performance in competitions.",
       content: (
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🌲</div>
-            <h3 className="text-xl font-bold text-white mb-2">Ensemble Methods</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Combining multiple models
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Bagging</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Boosting</span>
-              <span className="px-2 py-1 text-xs bg-white/20 text-white rounded-full">Stacking</span>
-            </div>
-          </div>
+          <img 
+            src="/ensamble.avif" 
+            alt="Ensemble Methods Visualization"
+            className="w-full h-full object-contain rounded-lg"
+            style={{ maxHeight: '100%', maxWidth: '100%', display: 'block', background: '#fff' }}
+          />
         </div>
       )
     },
