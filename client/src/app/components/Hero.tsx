@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import AlgorithmFilter from './AlgoFilter'
 import DragCloseDrawer from './ui/DragCloseDrawer'
-import { useAuth } from '../contexts/AuthContext'
+// import { useAuth } from '../contexts/AuthContext'
 import FeatureCard from './FeatureCard'
 import Footer from './Footer'
 
 export default function HeroSection() {
   const [open, setOpen] = useState(false);
-  const { openLoginModal, isAuthenticated } = useAuth();
+  // const { openLoginModal, isAuthenticated } = useAuth();
 
   return (
     <>
@@ -69,7 +69,7 @@ export default function HeroSection() {
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/50 to-purple-500/50 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
                 </button>
 
-                {!isAuthenticated && (
+                {/* {!isAuthenticated && (
                   <button
                     onClick={openLoginModal}
                     className="group relative px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-white transition-all duration-300 ease-out hover:scale-102"
@@ -93,7 +93,7 @@ export default function HeroSection() {
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-90"></span>
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 blur-md opacity-30 transition-opacity duration-300 group-hover:opacity-40"></span>
                   </button>
-                )}
+                )} */}
               </div>
 
               {/* Feature Highlights */}

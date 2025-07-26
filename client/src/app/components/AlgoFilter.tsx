@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { algorithms, categories } from '../data/algorithms'
-import { useAuth } from '../contexts/AuthContext'
+// import { useAuth } from '../contexts/AuthContext'
 
 export default function AlgorithmFilter() {
-  const { isAuthenticated, openLoginModal } = useAuth()
+  // const { isAuthenticated, openLoginModal } = useAuth()
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all'])
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -44,12 +44,13 @@ export default function AlgorithmFilter() {
   const handleAlgorithmClick = (algorithmPath: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (!isAuthenticated) {
-      openLoginModal();
-      return;
-    }
+    // Remove authentication requirement - allow direct navigation
+    // if (!isAuthenticated) {
+    //   openLoginModal();
+    //   return;
+    // }
     
-    // If authenticated, navigate to the algorithm page
+    // Navigate directly to the algorithm page
     window.location.href = algorithmPath;
   }
 

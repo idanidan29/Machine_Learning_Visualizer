@@ -1,13 +1,13 @@
 "use client"
 import Link from 'next/link'
 import { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import { LogoutModal } from './LogoutModal'
+// import { useAuth } from '../contexts/AuthContext'
+// import { LogoutModal } from './LogoutModal'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [showLogoutModal, setShowLogoutModal] = useState(false)
-  const { isAuthenticated, user, logout, openLoginModal } = useAuth()
+  // const [showLogoutModal, setShowLogoutModal] = useState(false)
+  // const { isAuthenticated, user, logout, openLoginModal } = useAuth()
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -16,16 +16,16 @@ export default function Navbar() {
     })
   }
 
-  const handleLogoutClick = () => {
-    console.log('Logout button clicked')
-    setShowLogoutModal(true)
-  }
+  // const handleLogoutClick = () => {
+  //   console.log('Logout button clicked')
+  //   setShowLogoutModal(true)
+  // }
 
-  const handleLogoutConfirm = () => {
-    console.log('Logout confirmed')
-    logout()
-    setShowLogoutModal(false)
-  }
+  // const handleLogoutConfirm = () => {
+  //   console.log('Logout confirmed')
+  //   logout()
+  //   setShowLogoutModal(false)
+  // }
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function Navbar() {
             </div>
 
             {/* Center - Welcome message */}
-            {isAuthenticated && (
+            {/* {isAuthenticated && (
               <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
                 <span className="text-gray-300 text-sm flex items-center space-x-1">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@ export default function Navbar() {
                   <span>Welcome, {user?.firstName}</span>
                 </span>
               </div>
-            )}
+            )} */}
 
             {/* Right side - Navigation */}
             <div className="flex items-center space-x-4">
@@ -76,7 +76,7 @@ export default function Navbar() {
                 <span>Background</span>
               </Link>
               
-              {isAuthenticated ? (
+              {/* {isAuthenticated ? (
                 <button
                   onClick={handleLogoutClick}
                   className="flex items-center space-x-1 text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
@@ -96,7 +96,7 @@ export default function Navbar() {
                   </svg>
                   <span>Login</span>
                 </button>
-              )}
+              )} */}
             </div>
 
             {/* Mobile menu button */}
@@ -148,7 +148,7 @@ export default function Navbar() {
                   <span>Background</span>
                 </Link>
                 
-                {isAuthenticated ? (
+                {/* {isAuthenticated ? (
                   <div className="border-t border-gray-700 pt-2 mt-2">
                     <div className="px-3 py-2">
                       <span className="text-gray-300 text-sm flex items-center space-x-1">
@@ -178,7 +178,7 @@ export default function Navbar() {
                     </svg>
                     <span>Login</span>
                   </button>
-                )}
+                )} */}
               </div>
             </div>
           )}
@@ -186,11 +186,11 @@ export default function Navbar() {
       </nav>
 
       {/* Logout Modal */}
-      <LogoutModal
+      {/* <LogoutModal
         isOpen={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
         onConfirm={handleLogoutConfirm}
-      />
+      /> */}
     </>
   )
 } 
