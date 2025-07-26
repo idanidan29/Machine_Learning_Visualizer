@@ -19,17 +19,17 @@ export default function DecisionTreePage() {
   const sections = [
     { id: 'overview', title: 'Overview', icon: '📋' },
     { id: 'visualization', title: 'Visualization', icon: '🌳' },
-        { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
+    { id: 'how-it-works', title: 'How It Works', icon: '⚙️' },
     { id: 'when-to-use', title: 'When to Use', icon: '⏰' },
     { id: 'decisions', title: 'Decisions', icon: '🎯' },
+    { id: 'limitations', title: 'Limitations', icon: '⚠️' },
     { id: 'information-gain', title: 'Information Gain', icon: '📈' },
     { id: 'gini-impurity', title: 'Gini Impurity', icon: '🎲' },
     { id: 'chi-square', title: 'Chi-Square', icon: '📊' },
     { id: 'practical-example', title: 'Practical Example', icon: '📝' },
     { id: 'pdf-download', title: 'Complex Example', icon: '📄' },
+    { id: 'discretization', title: 'Discretization', icon: '🔢' },
     { id: 'pseudocode', title: 'Pseudo-code', icon: '💻' },
-    { id: 'characteristics', title: 'Characteristics', icon: '📊' },
-    { id: 'limitations', title: 'Limitations', icon: '⚠️' },
     { id: 'quiz', title: 'Quiz', icon: '❓' }
   ];
 
@@ -148,6 +148,38 @@ export default function DecisionTreePage() {
                       <li>Minimum information gain threshold</li>
                       <li>All samples in a node belong to the same class</li>
                     </ul>
+                  </div>
+                </div>
+              </section>
+
+              {/* Limitations Section */}
+              <section id="limitations" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Limitations</h2>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gray-700 rounded-lg p-4">
+                      <h3 className="text-lg font-medium text-purple-400 mb-3">Technical Limitations</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Can overfit with complex trees</li>
+                        <li>Sensitive to small data changes</li>
+                        <li>Can create biased trees with imbalanced data</li>
+                        <li>Limited to axis-parallel splits</li>
+                        <li>May not capture complex relationships</li>
+                        <li>Can be unstable with high variance</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-gray-700 rounded-lg p-4">
+                      <h3 className="text-lg font-medium text-purple-400 mb-3">Mitigation Strategies</h3>
+                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                        <li>Use pruning techniques</li>
+                        <li>Implement cross-validation</li>
+                        <li>Apply ensemble methods (Random Forest)</li>
+                        <li>Balance the dataset</li>
+                        <li>Feature engineering</li>
+                        <li>Hyperparameter tuning</li>
+                    </ul>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -664,15 +696,57 @@ export default function DecisionTreePage() {
 
               {/* PDF Download Section */}
               <section id="pdf-download" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Complex Example</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Solving Example</h2>
                 <div className="space-y-4">
-                  <p className="text-gray-300">
-                    Download our example that demonstrates how to solve a more complex decision tree problem using information gain.
-                  </p>
                   <PDFDownloadCard
-                    title="Decision Tree Complex Example"
-                    description="A detailed guide with step-by-step example for how to create a decision tree by comparing information gain."
+                    title="Decision Tree Complex Example (ID3)"
+                    description="A detailed guide with step-by-step example for how to create a decision tree by comparing information gain (ID3 algorithm)."
                     pdfPath="/pdfs/Decision_tree.pdf"
+                  />
+                </div>
+              </section>
+
+              {/* Discretization Algorithm Section */}
+              <section id="discretization" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Discretization</h2>
+                <div className="space-y-6">
+                  <div className="prose prose-invert max-w-none text-gray-300 text-sm sm:text-base">
+                    <p>
+                      <span className="text-purple-400 font-semibold">Discretization</span> is the process of converting continuous features or variables into discrete bins or intervals. In decision trees, discretization is crucial for handling continuous attributes, allowing the algorithm to determine the best split points that maximize information gain or reduce entropy.
+                    </p>
+                    <ul className="list-disc ml-6 mt-2">
+                      <li>Helps transform numerical data into categorical intervals for easier decision making.</li>
+                      <li>Enables the tree to find optimal thresholds for splitting continuous features.</li>
+                      <li>Commonly used in algorithms like ID3 and C4.5 for handling real-valued data.</li>
+                    </ul>
+                  </div>
+                  <Formula
+                    title="Entropy Induced by a Split (T)"
+                    formula={"E(A, T; S) = |S₁|/|S| Ent(S₁) + |S₂|/|S| Ent(S₂)"}
+                    variables={[
+                      { name: '|S₁|', description: 'number of samples in subset 1 after split' },
+                      { name: '|S₂|', description: 'number of samples in subset 2 after split' },
+                      { name: '|S|', description: 'total number of samples before split' },
+                      { name: 'Ent(S₁)', description: 'entropy of subset 1' },
+                      { name: 'Ent(S₂)', description: 'entropy of subset 2' },
+                    ]}
+                    gradient="purple-blue"
+                  />
+                  <div className="prose prose-invert max-w-none text-gray-300 text-sm sm:text-base">
+                    <p>
+                      <span className="text-purple-400 font-semibold">Information Gain</span> is then calculated as the reduction in entropy after the split:
+                    </p>
+                    <div className="bg-gray-900 rounded-lg p-4 my-2">
+                      <span className="text-white font-mono">Gain(A, T; S) = Ent(S) - E(A, T; S)</span>
+                    </div>
+                    <p>
+                      The split that maximizes information gain is chosen for the decision node. Discretization is especially useful when working with real-world datasets containing continuous variables. See example below for a practical application of discretization.
+                    </p>
+                  </div>
+                  <PDFDownloadCard
+                    title="Discretization Example"
+                    description="Download a worked example showing how to discretize a continuous attributes."
+                    pdfPath="/pdfs/discritization.pdf"
                   />
                 </div>
               </section>
@@ -685,71 +759,6 @@ export default function DecisionTreePage() {
                     code={decisionTreeImplementation}
                     language="python"
                   />
-                </div>
-              </section>
-
-              {/* Characteristics Section */}
-              <section id="characteristics" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Characteristics</h2>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-gray-700 rounded-lg p-4">
-                      <h3 className="text-lg font-medium text-purple-400 mb-3">Advantages</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Easy to understand and interpret</li>
-                        <li>Can handle both numerical and categorical data</li>
-                        <li>Requires little data preprocessing</li>
-                        <li>Can capture non-linear relationships</li>
-                        <li>Feature importance is inherent</li>
-                        <li>Fast training and prediction</li>
-                        <li>Works well with missing values</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-gray-700 rounded-lg p-4">
-                      <h3 className="text-lg font-medium text-purple-400 mb-3">Performance Metrics</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Accuracy: Overall prediction correctness</li>
-                        <li>Precision: True positives / (True positives + False positives)</li>
-                        <li>Recall: True positives / (True positives + False negatives)</li>
-                        <li>F1 Score: Harmonic mean of precision and recall</li>
-                        <li>ROC-AUC: Area under the ROC curve</li>
-                        <li>Cross-validation score</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Limitations Section */}
-              <section id="limitations" className="bg-gray-800 rounded-xl shadow-xl p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">Limitations</h2>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-gray-700 rounded-lg p-4">
-                      <h3 className="text-lg font-medium text-purple-400 mb-3">Technical Limitations</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Can overfit with complex trees</li>
-                        <li>Sensitive to small data changes</li>
-                        <li>Can create biased trees with imbalanced data</li>
-                        <li>Limited to axis-parallel splits</li>
-                        <li>May not capture complex relationships</li>
-                        <li>Can be unstable with high variance</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-gray-700 rounded-lg p-4">
-                      <h3 className="text-lg font-medium text-purple-400 mb-3">Mitigation Strategies</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-                        <li>Use pruning techniques</li>
-                        <li>Implement cross-validation</li>
-                        <li>Apply ensemble methods (Random Forest)</li>
-                        <li>Balance the dataset</li>
-                        <li>Feature engineering</li>
-                        <li>Hyperparameter tuning</li>
-                    </ul>
-                    </div>
-                  </div>
                 </div>
               </section>
 
