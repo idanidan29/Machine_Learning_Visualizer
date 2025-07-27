@@ -40,7 +40,7 @@ export const algorithms: Algorithm[] = [
     description: 'A simple, instance-based learning algorithm for classification.',
     path: '/algorithms/knn',
     icon: '🔍',
-    categories: ['supervised', 'classification']
+    categories: ['supervised', 'classification', 'regression']
   },
   {
     name: 'Naive Bayes',
@@ -54,7 +54,7 @@ export const algorithms: Algorithm[] = [
     description: 'An ensemble learning method that constructs multiple decision trees.',
     path: '/algorithms/random-forest',
     icon: '🌲',
-    categories: ['supervised', 'classification', 'ensemble']
+    categories: ['supervised', 'classification', 'ensemble', 'regression']
   },
   {
     name: 'AdaBoost',

@@ -76,6 +76,16 @@ export default function Navbar() {
                 <span>Background</span>
               </Link>
               
+              <Link 
+                href="/quiz" 
+                className="flex items-center space-x-1 text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <span>Quiz</span>
+              </Link>
+              
               {/* {isAuthenticated ? (
                 <button
                   onClick={handleLogoutClick}
@@ -146,6 +156,16 @@ export default function Navbar() {
                     <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                   </svg>
                   <span>Background</span>
+                </Link>
+                
+                <Link 
+                  href="/quiz" 
+                  className="flex items-center space-x-2 text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                  </svg>
+                  <span>Quiz</span>
                 </Link>
                 
                 {/* {isAuthenticated ? (
