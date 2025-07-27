@@ -625,7 +625,7 @@ const QuizPage: React.FC = () => {
                 <div className="text-gray-300 mb-6">
                   <p className="mb-4">
                     Are you sure you want to end the quiz early? 
-                    Your current progress will be saved and you'll see your results.
+                    Your current progress will be saved and you&apos;ll see your results.
                   </p>
                   <p className="text-sm text-gray-400">
                     Current progress: {currentQuestionIndex + 1} of {currentQuestions.length} questions
