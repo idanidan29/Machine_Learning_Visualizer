@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link'
 import { useState } from 'react'
+import { Brain } from 'lucide-react'
 // import { useAuth } from '../contexts/AuthContext'
 // import { LogoutModal } from './LogoutModal'
 
@@ -80,9 +81,7 @@ export default function Navbar() {
                 href="/quiz" 
                 className="flex items-center space-x-1 text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
+                <Brain className="w-4 h-4" />
                 <span>Quiz</span>
               </Link>
               
@@ -162,9 +161,7 @@ export default function Navbar() {
                   href="/quiz" 
                   className="flex items-center space-x-2 text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                  </svg>
+                  <Brain className="w-5 h-5" />
                   <span>Quiz</span>
                 </Link>
                 
