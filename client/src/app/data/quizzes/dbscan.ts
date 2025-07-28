@@ -15,7 +15,7 @@ export const dbscanQuestions: Question[] = [
   },
   {
     id: 2,
-    question: 'What type of points are neither core points nor border points?',
+    question: 'What type of points are neither core points nor border points in DBSCAN?',
     options: [
       'Cluster points',
       'Noise points',
@@ -39,18 +39,6 @@ export const dbscanQuestions: Question[] = [
   },
   {
     id: 4,
-    question: 'What is the time complexity of DBSCAN in the worst case?',
-    options: [
-      'O(n)',
-      'O(n log n)',
-      'O(n²)',
-      'O(n³)'
-    ],
-    correctAnswer: 2,
-    explanation: 'The time complexity of DBSCAN in the worst case is O(n²), where n is the number of data points, due to the need to compute distances between all points.'
-  },
-  {
-    id: 5,
     question: 'What is a core point in DBSCAN?',
     options: [
       'A point that is farthest from other points',
@@ -62,7 +50,7 @@ export const dbscanQuestions: Question[] = [
     explanation: 'A core point is a point that has at least minPts neighbors within its eps-neighborhood. These points form the foundation of clusters.'
   },
   {
-    id: 6,
+    id: 5,
     question: 'What is a border point in DBSCAN?',
     options: [
       'A point that is on the edge of the dataset',
@@ -74,7 +62,7 @@ export const dbscanQuestions: Question[] = [
     explanation: 'A border point has fewer than minPts neighbors but is reachable from a core point. It helps connect core points in a cluster.'
   },
   {
-    id: 7,
+    id: 6,
     question: 'Which of the following is a limitation of DBSCAN?',
     options: [
       'Cannot handle categorical data',
@@ -86,7 +74,7 @@ export const dbscanQuestions: Question[] = [
     explanation: 'DBSCAN struggles with clusters of varying densities because it uses the same eps and minPts parameters for all clusters.'
   },
   {
-    id: 8,
+    id: 7,
     question: 'What is the main advantage of DBSCAN for spatial data?',
     options: [
       'Faster computation than other algorithms',
