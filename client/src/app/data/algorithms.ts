@@ -70,6 +70,13 @@ export const algorithms: Algorithm[] = [
     icon: '🌳',
     categories: ['supervised', 'classification']
   },
+  {
+    name: 'SVM',
+    description: 'A powerful algorithm that finds optimal hyperplanes to separate classes',
+    path: '/algorithms/svm',
+    icon: '🔍',
+    categories: ['supervised', 'classification', 'regression']
+  },
 ];
 
 export const categories = [
