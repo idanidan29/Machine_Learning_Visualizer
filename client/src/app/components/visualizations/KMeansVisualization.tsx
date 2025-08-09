@@ -66,7 +66,8 @@ const Scene: React.FC<{
   colors: string[];
   showClusters: boolean;
   is2D: boolean;
-}> = ({ points, centroids, colors, showClusters, is2D }) => {
+  currentStep: number;
+}> = ({ points, centroids, colors, showClusters, is2D, currentStep }) => {
   return (
     <>
       <ambientLight intensity={0.7} />
@@ -81,7 +82,7 @@ const Scene: React.FC<{
             point.y, 
             is2D ? 0 : point.z
           ]}
-          color={showClusters && point.cluster !== undefined 
+          color={showClusters && point.cluster !== undefined && currentStep > 0
             ? colors[point.cluster % colors.length]
             : '#ffffff'}
           is2D={is2D}
@@ -116,6 +117,7 @@ const KMeansVisualization: React.FC = () => {
   const [isStepByStep, setIsStepByStep] = useState<boolean>(false);
   const [isControlsExpanded, setIsControlsExpanded] = useState<boolean>(true);
   const [shape, setShape] = useState<string>('clusters');
+  const [currentStep, setCurrentStep] = useState<number>(0); // 0: initial, 1: assignment, 2: update
 
   const colors = [
     '#FF6B6B', // Bright Coral
@@ -146,7 +148,7 @@ const KMeansVisualization: React.FC = () => {
             x: centerX + Math.cos(angle) * radius,
             y: centerY + Math.sin(angle) * radius,
             z: is2D ? 0 : (Math.random() - 0.5) * 2,
-            cluster: Math.floor(Math.random() * k)
+            // Don't assign clusters initially - this will be done by the algorithm
           });
         }
         break;
@@ -163,7 +165,7 @@ const KMeansVisualization: React.FC = () => {
             x: x + (Math.random() - 0.5) * 0.5,
             y: y + (Math.random() - 0.5) * 0.5,
             z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
-            cluster: Math.floor(Math.random() * k)
+            // Don't assign clusters initially
           });
         }
         break;
@@ -179,7 +181,7 @@ const KMeansVisualization: React.FC = () => {
             x: Math.cos(angle) * (radius + noise),
             y: Math.sin(angle) * (radius + noise),
             z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
-            cluster: Math.floor(Math.random() * k)
+            // Don't assign clusters initially
           });
         }
         break;
@@ -199,7 +201,7 @@ const KMeansVisualization: React.FC = () => {
               x: centerX + Math.cos(angle) * radius,
               y: centerY + Math.sin(angle) * radius,
               z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
-              cluster: Math.floor(Math.random() * k)
+              // Don't assign clusters initially
             });
           } else {
             // 30% of points as noise
@@ -207,7 +209,7 @@ const KMeansVisualization: React.FC = () => {
               x: (Math.random() - 0.5) * 15,
               y: (Math.random() - 0.5) * 15,
               z: is2D ? 0 : (Math.random() - 0.5) * 0.5,
-              cluster: Math.floor(Math.random() * k)
+              // Don't assign clusters initially
             });
           }
         }
@@ -292,19 +294,35 @@ const KMeansVisualization: React.FC = () => {
   useEffect(() => {
     setPoints(generateRandomPoints(100));
     setCentroids(initializeCentroids(k));
-    setShowClusters(true);
+    setShowClusters(false);
+    setCurrentStep(0);
+    setIteration(0);
   }, [k, is2D, shape]);
 
   const runIteration = () => {
     if ((!isRunning && !isStepByStep) || isPaused) return;
 
-    const newPoints = assignClusters(points, centroids);
-    const newCentroids = updateCentroids(newPoints, centroids);
-
-    setPoints(newPoints);
-    setCentroids(newCentroids);
-    setIteration(prev => prev + 1);
-    setShowClusters(true);
+    if (currentStep === 0) {
+      // Step 1: Assign points to nearest centroids
+      const newPoints = assignClusters(points, centroids);
+      setPoints(newPoints);
+      setCurrentStep(1);
+      setShowClusters(true);
+    } else if (currentStep === 1) {
+      // Step 2: Update centroids
+      const newCentroids = updateCentroids(points, centroids);
+      setCentroids(newCentroids);
+      setCurrentStep(2);
+    } else {
+      // Step 3: Move to next iteration
+      const newPoints = assignClusters(points, centroids);
+      const newCentroids = updateCentroids(newPoints, centroids);
+      
+      setPoints(newPoints);
+      setCentroids(newCentroids);
+      setCurrentStep(1);
+      setIteration(prev => prev + 1);
+    }
 
     if (isStepByStep) {
       setIsRunning(false);
@@ -316,7 +334,7 @@ const KMeansVisualization: React.FC = () => {
       const interval = setInterval(runIteration, speed);
       return () => clearInterval(interval);
     }
-  }, [isRunning, points, centroids, speed, isStepByStep, isPaused]);
+  }, [isRunning, points, centroids, speed, isStepByStep, isPaused, currentStep]);
 
   const handleStartPauseResume = () => {
     if (isStepByStep) {
@@ -327,7 +345,8 @@ const KMeansVisualization: React.FC = () => {
         setIsRunning(true);
         setIsPaused(false);
         setIteration(0);
-        setShowClusters(true);
+        setCurrentStep(0);
+        setShowClusters(false);
       } else if (isRunning && !isPaused) {
         // Pausing
         setIsPaused(true);
@@ -342,9 +361,17 @@ const KMeansVisualization: React.FC = () => {
     setPoints(generateRandomPoints(100));
     setCentroids(initializeCentroids(k));
     setIteration(0);
+    setCurrentStep(0);
     setShowClusters(false);
     setIsRunning(false);
     setIsPaused(false);
+  };
+
+  const getStepDescription = () => {
+    if (currentStep === 0) return "Initial State: Random centroids, unassigned points";
+    if (currentStep === 1) return "Step 1: Assign points to nearest centroids";
+    if (currentStep === 2) return "Step 2: Update centroids to cluster means";
+    return "Next iteration";
   };
 
   return (
@@ -545,6 +572,7 @@ const KMeansVisualization: React.FC = () => {
             colors={colors}
             showClusters={showClusters}
             is2D={is2D}
+            currentStep={currentStep}
           />
         </Canvas>
       </div>
@@ -554,6 +582,10 @@ const KMeansVisualization: React.FC = () => {
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
           <span className="font-medium text-sm">Iteration: {iteration}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+          <span className="font-medium text-sm">{getStepDescription()}</span>
         </div>
         {isPaused && !isStepByStep && (
           <div className="flex items-center gap-2">

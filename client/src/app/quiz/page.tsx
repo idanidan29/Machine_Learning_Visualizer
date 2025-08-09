@@ -92,6 +92,12 @@ const QuizPage: React.FC = () => {
     
     // Shuffle and select the requested number of questions
     const shuffled = allQuestions.sort(() => Math.random() - 0.5);
+    
+    // If "All Available" is selected, return all questions
+    if (settings.questionCount >= allQuestions.length) {
+      return shuffled;
+    }
+    
     return shuffled.slice(0, settings.questionCount);
   };
 
@@ -99,6 +105,11 @@ const QuizPage: React.FC = () => {
     const availableQuestions = getAvailableQuestionsCount();
     
     if (availableQuestions === 0) return;
+    
+    // If "All Available" is selected, update the question count to the available amount
+    if (settings.questionCount >= availableQuestions) {
+      setSettings(prev => ({ ...prev, questionCount: availableQuestions }));
+    }
     
     // Check if requested questions exceed available questions
     if (settings.questionCount > availableQuestions) {
@@ -240,26 +251,39 @@ const QuizPage: React.FC = () => {
   };
 
   const toggleTopic = (topic: AlgorithmType) => {
-    setSettings(prev => ({
-      ...prev,
-      selectedTopics: prev.selectedTopics.includes(topic)
+    setSettings(prev => {
+      const newSelectedTopics = prev.selectedTopics.includes(topic)
         ? prev.selectedTopics.filter(t => t !== topic)
-        : [...prev.selectedTopics, topic]
-    }));
+        : [...prev.selectedTopics, topic];
+      
+      // If the question count was set to "All Available", update it to the new available count
+      const availableQuestions = newSelectedTopics.reduce((total, t) => total + quizData[t].questions.length, 0);
+      const newQuestionCount = prev.questionCount >= availableQuestions ? availableQuestions : prev.questionCount;
+      
+      return {
+        ...prev,
+        selectedTopics: newSelectedTopics,
+        questionCount: newQuestionCount
+      };
+    });
   };
 
   const selectAllTopics = () => {
     const allTopics = getAllTopics().map(t => t.id);
+    const availableQuestions = allTopics.reduce((total, t) => total + quizData[t].questions.length, 0);
+    
     setSettings(prev => ({
       ...prev,
-      selectedTopics: allTopics
+      selectedTopics: allTopics,
+      questionCount: prev.questionCount >= availableQuestions ? availableQuestions : prev.questionCount
     }));
   };
 
   const clearAllTopics = () => {
     setSettings(prev => ({
       ...prev,
-      selectedTopics: []
+      selectedTopics: [],
+      questionCount: 5 // Reset to default when no topics selected
     }));
   };
 
@@ -358,8 +382,15 @@ const QuizPage: React.FC = () => {
                   Number of Questions
                 </label>
                 <select
-                  value={settings.questionCount}
-                  onChange={(e) => setSettings(prev => ({ ...prev, questionCount: parseInt(e.target.value) }))}
+                  value={settings.questionCount === getAvailableQuestionsCount() && getAvailableQuestionsCount() > 0 ? 'all' : settings.questionCount.toString()}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === 'all') {
+                      setSettings(prev => ({ ...prev, questionCount: getAvailableQuestionsCount() }));
+                    } else {
+                      setSettings(prev => ({ ...prev, questionCount: parseInt(value) }));
+                    }
+                  }}
                   className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   <option value={5}>5 Questions</option>
@@ -367,12 +398,16 @@ const QuizPage: React.FC = () => {
                   <option value={15}>15 Questions</option>
                   <option value={20}>20 Questions</option>
                   <option value={25}>25 Questions</option>
+                  <option value="all">All Available ({getAvailableQuestionsCount()})</option>
                 </select>
                 {settings.selectedTopics.length > 0 && (
                   <div className="mt-2 text-sm text-gray-400">
                     Available questions: <span className="text-purple-400 font-medium">{getAvailableQuestionsCount()}</span>
                     {settings.questionCount > getAvailableQuestionsCount() && (
                       <span className="text-yellow-400 ml-2">⚠️ Not enough questions available</span>
+                    )}
+                    {settings.questionCount === getAvailableQuestionsCount() && getAvailableQuestionsCount() > 0 && (
+                      <span className="text-green-400 ml-2">✓ All available questions selected</span>
                     )}
                   </div>
                 )}
