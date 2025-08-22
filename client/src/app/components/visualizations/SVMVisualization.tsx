@@ -13,9 +13,9 @@ type SVMVisualizationProps = object
 const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [points, setPoints] = useState<Point[]>([]);
-  const [hyperplane, setHyperplane] = useState<{ w: number[]; b: number } | null>(null);
+  const [hyperplane, setHyperplane] = useState<{ w: number[]; b: number; margin: number; supportVectors: Point[] } | null>(null);
   const [isTraining, setIsTraining] = useState(false);
-  const [margin] = useState<number>(0.15);
+  const [calculatedMargin, setCalculatedMargin] = useState<number>(0);
   const [showDecisionRegions, setShowDecisionRegions] = useState(false);
 
   // Generate sample data with better separation
@@ -26,20 +26,38 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
   const generateData = () => {
     const newPoints: Point[] = [];
     
-    // Generate class 1 points (top-left) - more concentrated
-    for (let i = 0; i < 20; i++) {
+    // Generate class 1 points (bottom-left) - left group starting lower
+    for (let i = 0; i < 18; i++) {
       newPoints.push({
-        x: Math.random() * 0.25 + 0.1,  // More concentrated in top-left
-        y: Math.random() * 0.25 + 0.65,  // Higher up
+        x: Math.random() * 0.25 + 0.1,   // Left side
+        y: Math.random() * 0.25 + 0.1,   // Lower position
         label: 1
       });
     }
     
-    // Generate class -1 points (bottom-right) - more concentrated
-    for (let i = 0; i < 20; i++) {
+    // Add a few class 1 points closer to the boundary to ensure support vectors
+    for (let i = 0; i < 2; i++) {
       newPoints.push({
-        x: Math.random() * 0.25 + 0.65,  // More concentrated in bottom-right
-        y: Math.random() * 0.25 + 0.1,   // Lower down
+        x: Math.random() * 0.15 + 0.3,   // Closer to boundary
+        y: Math.random() * 0.15 + 0.3,   // Closer to boundary
+        label: 1
+      });
+    }
+    
+    // Generate class -1 points (top-right) - right group starting higher
+    for (let i = 0; i < 18; i++) {
+      newPoints.push({
+        x: Math.random() * 0.25 + 0.65,  // Right side
+        y: Math.random() * 0.25 + 0.65,  // Higher position
+        label: -1
+      });
+    }
+    
+    // Add a few class -1 points closer to the boundary to ensure support vectors
+    for (let i = 0; i < 2; i++) {
+      newPoints.push({
+        x: Math.random() * 0.15 + 0.55,  // Closer to boundary
+        y: Math.random() * 0.15 + 0.55,  // Closer to boundary
         label: -1
       });
     }
@@ -48,92 +66,143 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
     // Reset hyperplane and decision regions when new data is generated
     setHyperplane(null);
     setShowDecisionRegions(false);
+    setCalculatedMargin(0);
   };
 
-  // Calculate the optimal hyperplane using a simplified SVM algorithm
+  // Calculate the optimal hyperplane using proper SVM algorithm
   const calculateOptimalHyperplane = (points: Point[]) => {
     // Separate points by class
     const class1Points = points.filter(p => p.label === 1);
     const class2Points = points.filter(p => p.label === -1);
     
-    // Calculate centroids of each class
-    const centroid1 = {
-      x: class1Points.reduce((sum, p) => sum + p.x, 0) / class1Points.length,
-      y: class1Points.reduce((sum, p) => sum + p.y, 0) / class1Points.length
-    };
+    if (class1Points.length === 0 || class2Points.length === 0) {
+      return null;
+    }
     
-    const centroid2 = {
-      x: class2Points.reduce((sum, p) => sum + p.x, 0) / class2Points.length,
-      y: class2Points.reduce((sum, p) => sum + p.y, 0) / class2Points.length
-    };
+    // Find the optimal hyperplane by finding the line that maximizes the minimum distance
+    // to points of both classes (this is the true SVM objective)
     
-    // Calculate the direction vector between centroids
-    const dx = centroid2.x - centroid1.x;
-    const dy = centroid2.y - centroid1.y;
-    
-    // The normal vector to the separating line (perpendicular to the line connecting centroids)
-    const w = [dy, -dx]; // Perpendicular vector
-    
-    // Normalize the weight vector
-    const norm = Math.sqrt(w[0] * w[0] + w[1] * w[1]);
-    w[0] = w[0] / norm;
-    w[1] = w[1] / norm;
-    
-    // Calculate the midpoint between centroids
-    const midpoint = {
-      x: (centroid1.x + centroid2.x) / 2,
-      y: (centroid1.y + centroid2.y) / 2
-    };
-    
-    // Calculate bias so that the hyperplane passes through the midpoint
-    const b = -(w[0] * midpoint.x + w[1] * midpoint.y);
-    
-    // Fine-tune the hyperplane to maximize margin
-    let bestW = [...w];
-    let bestB = b;
+    let bestW: number[] = [0, 0];
+    let bestB = 0;
     let maxMargin = 0;
+    let bestSupportVectors: Point[] = [];
     
-    // Try different orientations to find the one with maximum margin
-    for (let angle = -Math.PI/6; angle <= Math.PI/6; angle += Math.PI/36) {
-      const cos_a = Math.cos(angle);
-      const sin_a = Math.sin(angle);
-      
-      // Rotate the normal vector
-      const testW = [
-        w[0] * cos_a - w[1] * sin_a,
-        w[0] * sin_a + w[1] * cos_a
-      ];
-      
-      // Recalculate bias for the rotated normal
-      const testB = -(testW[0] * midpoint.x + testW[1] * midpoint.y);
-      
-      // Calculate minimum distance to hyperplane for all points
-      let minDistance = Infinity;
-      for (const point of points) {
-        const distance = Math.abs(testW[0] * point.x + testW[1] * point.y + testB) / 
-                        Math.sqrt(testW[0] * testW[0] + testW[1] * testW[1]);
-        minDistance = Math.min(minDistance, distance);
-      }
-      
-      // Check if all points are correctly classified
-      let correctClassification = true;
-      for (const point of points) {
-        const decision = testW[0] * point.x + testW[1] * point.y + testB;
-        if ((point.label === 1 && decision <= 0) || (point.label === -1 && decision >= 0)) {
-          correctClassification = false;
-          break;
+    // Instead of trying all angles, we'll use a more intelligent approach:
+    // Consider all possible lines defined by pairs of points from different classes
+    
+    for (let i = 0; i < class1Points.length; i++) {
+      for (let j = 0; j < class2Points.length; j++) {
+        const p1 = class1Points[i];
+        const p2 = class2Points[j];
+        
+        // Create a line perpendicular to the line connecting these two points
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        
+        if (Math.abs(dx) < 0.001 && Math.abs(dy) < 0.001) continue; // Skip if points are too close
+        
+        // Normal vector (perpendicular to the line connecting the points)
+        const normal = [-dy, dx];
+        const norm = Math.sqrt(normal[0] * normal[0] + normal[1] * normal[1]);
+        if (norm === 0) continue;
+        
+        const w = [normal[0] / norm, normal[1] / norm];
+        
+        // Find the optimal position for this orientation by maximizing the margin
+        // Project all points onto this direction
+        const projections = points.map(point => ({
+          projection: w[0] * point.x + w[1] * point.y,
+          point: point
+        }));
+        
+        // Separate projections by class
+        const proj1 = projections.filter(p => p.point.label === 1).map(p => p.projection);
+        const proj2 = projections.filter(p => p.point.label === -1).map(p => p.projection);
+        
+        // Find the boundaries
+        const maxProj2 = Math.max(...proj2);
+        const minProj1 = Math.min(...proj1);
+        
+        // Check if this orientation can separate the classes
+        if (minProj1 > maxProj2) {
+          // Calculate the margin
+          const margin = (minProj1 - maxProj2) / 2;
+          
+          if (margin > maxMargin) {
+            maxMargin = margin;
+            bestW = [...w];
+            
+            // Position the hyperplane at the midpoint
+            const optimalProjection = (minProj1 + maxProj2) / 2;
+            bestB = -optimalProjection;
+            
+            // Find support vectors for this configuration
+            const supportVectors: Point[] = [];
+            const tolerance = 0.02;
+            
+            // Find support vectors from class 1 (points with minimum projection)
+            projections.forEach(p => {
+              if (p.point.label === 1 && Math.abs(p.projection - minProj1) < tolerance) {
+                supportVectors.push(p.point);
+              }
+            });
+            
+            // Find support vectors from class -1 (points with maximum projection)
+            projections.forEach(p => {
+              if (p.point.label === -1 && Math.abs(p.projection - maxProj2) < tolerance) {
+                supportVectors.push(p.point);
+              }
+            });
+            
+            bestSupportVectors = supportVectors;
+          }
         }
-      }
-      
-      // Update best hyperplane if this one has larger margin and correct classification
-      if (correctClassification && minDistance > maxMargin) {
-        maxMargin = minDistance;
-        bestW = [...testW];
-        bestB = testB;
       }
     }
     
-    return { w: bestW, b: bestB };
+    // If we still haven't found a good hyperplane, try the convex hull approach
+    if (maxMargin === 0) {
+      // Find the closest pair of points between the two classes
+      let minDistance = Infinity;
+      let closestPair: [Point, Point] | null = null;
+      
+      for (const p1 of class1Points) {
+        for (const p2 of class2Points) {
+          const distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestPair = [p1, p2];
+          }
+        }
+      }
+      
+      if (closestPair) {
+        const [p1, p2] = closestPair;
+        
+        // The optimal hyperplane is perpendicular to the line connecting these closest points
+        // and passes through their midpoint
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const norm = Math.sqrt(dx * dx + dy * dy);
+        
+        if (norm > 0) {
+          // Normal vector pointing from class -1 to class 1
+          bestW = [dx / norm, dy / norm];
+          
+          // Midpoint between the closest points
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+          
+          bestB = -(bestW[0] * midX + bestW[1] * midY);
+          maxMargin = minDistance / 2;
+          
+          // These closest points are the support vectors
+          bestSupportVectors = [p1, p2];
+        }
+      }
+    }
+    
+    return { w: bestW, b: bestB, margin: maxMargin, supportVectors: bestSupportVectors };
   };
 
   // Improved SVM training with actual calculation
@@ -145,8 +214,11 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
       // Calculate optimal hyperplane based on actual data
       const optimalHyperplane = calculateOptimalHyperplane(points);
       
-      setHyperplane(optimalHyperplane);
-      setShowDecisionRegions(true);
+      if (optimalHyperplane) {
+        setHyperplane(optimalHyperplane);
+        setCalculatedMargin(optimalHyperplane.margin);
+        setShowDecisionRegions(true);
+      }
       setIsTraining(false);
     }, 1500);
   };
@@ -182,14 +254,14 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
     // Draw hyperplane and margin
     if (hyperplane) {
       drawHyperplane(ctx, hyperplane, canvas.width, canvas.height);
-      drawMargin(ctx, hyperplane, margin, canvas.width, canvas.height);
+      drawMargin(ctx, hyperplane, calculatedMargin, canvas.width, canvas.height);
     }
 
     // Draw support vectors
-    if (hyperplane) {
-      drawSupportVectors(ctx, points, hyperplane, canvas.width, canvas.height);
+    if (hyperplane && hyperplane.supportVectors) {
+      drawSupportVectorsFromHyperplane(ctx, hyperplane.supportVectors, canvas.width, canvas.height);
     }
-  }, [points, hyperplane, margin, showDecisionRegions]);
+  }, [points, hyperplane, calculatedMargin, showDecisionRegions]);
 
   const drawDecisionRegions = (ctx: CanvasRenderingContext2D, hyperplane: { w: number[]; b: number }, width: number, height: number) => {
     const { w, b } = hyperplane;
@@ -372,37 +444,31 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
     ctx.setLineDash([]);
   };
 
-  const drawSupportVectors = (ctx: CanvasRenderingContext2D, points: Point[], hyperplane: { w: number[]; b: number }, width: number, height: number) => {
-    const { w, b } = hyperplane;
-    
-    points.forEach(point => {
-      // Calculate distance to hyperplane
-      const distance = Math.abs(w[0] * point.x + w[1] * point.y + b) / Math.sqrt(w[0] * w[0] + w[1] * w[1]);
+  const drawSupportVectorsFromHyperplane = (ctx: CanvasRenderingContext2D, supportVectors: Point[], width: number, height: number) => {
+    supportVectors.forEach(point => {
+      const x = point.x * width;
+      const y = (1 - point.y) * height;
       
-      // If point is close to the margin, it's a support vector
-      if (distance < 0.08) { // Tighter threshold for better identification
-        const x = point.x * width;
-        const y = (1 - point.y) * height;
-        
-        // Draw support vector indicator with better visibility
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.arc(x, y, 15, 0, 2 * Math.PI);
-        ctx.stroke();
-        
-        // Add "SV" label
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 14px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('SV', x, y + 5);
-      }
+      // Draw support vector indicator with better visibility
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, 2 * Math.PI);
+      ctx.stroke();
+      
+      // Add "SV" label
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('SV', x, y + 5);
     });
   };
+
 
   const resetVisualization = () => {
     setHyperplane(null);
     setShowDecisionRegions(false);
+    setCalculatedMargin(0);
     generateData();
   };
 
@@ -442,6 +508,49 @@ const SVMVisualization: React.FC<SVMVisualizationProps> = () => {
           className="border-2 border-gray-600 rounded-lg bg-gray-800"
         />
       </div>
+
+      {/* SVM Information */}
+      {hyperplane && (
+        <div className="bg-gray-800 rounded-lg p-4 mx-auto max-w-md">
+          <h3 className="text-lg font-semibold text-white mb-2">SVM Results</h3>
+          <div className="space-y-2 text-sm text-gray-300">
+            <div className="flex justify-between">
+              <span>Margin:</span>
+              <span className="text-purple-400 font-mono">{calculatedMargin.toFixed(4)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Support Vectors:</span>
+              <span className="text-yellow-400 font-mono">{hyperplane.supportVectors?.length || 0}</span>
+            </div>
+            {hyperplane.supportVectors && (
+              <div className="flex justify-between text-xs">
+                <span className="ml-4">Class 1:</span>
+                <span className="text-green-400 font-mono">
+                  {hyperplane.supportVectors.filter(sv => sv.label === 1).length}
+                </span>
+              </div>
+            )}
+            {hyperplane.supportVectors && (
+              <div className="flex justify-between text-xs">
+                <span className="ml-4">Class -1:</span>
+                <span className="text-red-400 font-mono">
+                  {hyperplane.supportVectors.filter(sv => sv.label === -1).length}
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span>Weight Vector:</span>
+              <span className="text-blue-400 font-mono">
+                [{hyperplane.w[0].toFixed(3)}, {hyperplane.w[1].toFixed(3)}]
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span>Bias:</span>
+              <span className="text-green-400 font-mono">{hyperplane.b.toFixed(3)}</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Legend */}
       <div className="flex flex-wrap justify-center gap-6 text-sm">
